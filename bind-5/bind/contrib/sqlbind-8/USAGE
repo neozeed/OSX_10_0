@@ -1,0 +1,53 @@
+* USAGE for SQLBind8
+
+Command line options:
+-f file :use a different configuration file from the default (/etc/sqlbind.conf)
+-i # :set the interval in sec to wait between updating zones (default 120)
+-l # :turn on logging level 1-3 (off by default, logs are output to syslog)
+-? :display a short help on command line options
+
+Configuration file:
+The configuration file goes in /etc and is named sqlbind.conf.  If you want to
+change the file used, you can use -f on the command line to point sqlbind to 
+the proper file.  Comments are proceded by a # or / and go to the end of the
+line.  A record in the config file would look something like:
+zone "test.org" {
+   dbhost "localhost";
+   dbuser "bind";
+   dbpass "bindpass";
+};
+NOTE: you must end the record with the };
+You will also need to add a line to each zone you want to update in the named.conf.  It should look something like:
+zone "test.org" in {
+   type master;
+   file "test.org";
+   allow-update { 127.0.0.1; };
+};
+NOTE: Use the ip address of the machine that sqlbind will be running on. 
+
+Database:
+Create a database called 'bind' to host the tables that are used for each zone.
+When you make a table, it's name is taken from the name of the zone.  To 
+overcome problems with the way sql tables are named, all '.' characters are
+replaced with '_' and all '-' characters are replaced with '__'.  
+Eg: test.org becomes test_org
+    1.2.3.in-addr.arpa becomes 1_2_3_in__addr_arpa
+
+Currently SOA records are not handled so if you want to get rid of all the zone files, you will need to use the patches in sqlbind-8/patches to make named load all the records from the database. Otherwise, make a zone file with just the soa record in it.  The rest will be filled in by the sqlbind daemon.
+
+Here is the rundown on what the fields are for:
+For a normal record like this is the test.org domain:
+www	IN	A	123.123.123.123
+
+sqlID: An auto numbered field (the db server will handle this)
+sqlOrigin: test.org
+sqlOwner: www
+sqlClass: IN
+sqlTTL: (defaults to 300)
+sqlType: A
+sqlPref: 
+sqlData: 123.123.123.123
+sqlTime: A timestamp (the db server will handle this)
+sqlComment:  Text field to be used for whatever you want
+
+

@@ -1,0 +1,53 @@
+
+		   Perl extension for libmdn module
+	       Japan Network Information Center (JPNIC)
+
+
+* Overview
+
+This package provides a Perl interface to libmdn (multilingual domain
+name library) in mDNkit.
+
+The following Perl modules are currently avaiable.
+
+    MDN::Converter	interface to the convertor module of libmdn.
+    MDN::Log		interface to the log module of libmdn.
+    MDN::Normalizer	interface to the normalizer module of libmdn.
+    MDN::UTF8		interface to the utf8 module of libmdn.
+    MDN::ResConf	interface to the res and resconf modules of libmdn.
+
+For more details see the pod documentation embedded in:
+
+    Converter/Converter.pm
+    Log/Log.pm
+    Normalizer/Normalizer.pm
+    UTF8/UTF8.pm
+    ResConf/ResConf.pm
+
+
+* Compilation and installation
+
+0. Prerequisite
+
+Before building this package, you have to install:
+
+    mDNkit		version 1.0 or later.
+    perl		version 5.005 or later.
+
+1. Build
+
+Edit Makefile.PL if needed.  You may have to change $INC and $LIBS for
+telling the locations of header and libarary files of iconv and libmdn
+to your C compiler.
+
+The modules can be built by the sequence of commands:
+
+    perl Makefile.PL
+    make
+    make test
+
+2. Install
+
+Run the command below:
+
+    make install

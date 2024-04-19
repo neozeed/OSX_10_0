@@ -1,0 +1,185 @@
+$Id: CHANGES,v 1.1.1.1 2001/01/31 03:59:15 zarzycki Exp $
+
+Global Changes:
+	Moved source code control from SCCS to RCS. The source versions now
+	reflect RCS ids.
+
+Makefile.in 1.1
+	Added auto definition for FLEX
+	Added additional program names
+	Added @SHELL@ support
+
+OVERVIEW.1.1
+	Documents changes from Relaease 1.0.2
+
+README.1.1
+
+Change release version
+
+bindv8conf_lister.l.1
+	BIND V8 configuration file parser (used by domain_list.pl)
+
+configure.in 1.1
+	Added additional names for PERL, CC
+	Added search for FLEX (needed by bindv8conf_lister.l)
+
+cvtstatic.pl.1.1
+
+cvtzone.pl 1.1
+	Fixed TTL in resource record bug
+	Added more generic resource record parsing (parse_rr)
+
+domain_list.pl.1.1
+	domain lister for BIND V8 bootstrap files
+
+fields.pl.1.1
+	field definitions for gendns.pl
+
+gendhcp.pl.1.1
+	Added netbios_ns field to support the NetBios_Nameservers option
+
+gendns.pl 1.1
+	Split readinfo field defintions into fields.pl
+	Added -e flag for error level output
+	Fixed bug in "masters" IP address statement
+	Fixed domain name matching to be case-insensitive when
+		abbreviating domain names
+	$ORIGIN line domain name is case sensitive for output only
+	Added support for all BIND V8 options
+
+installdb.pl 1.1
+	Added "txt" to db_files
+	Fixed bug in prefix definition for the ip field
+
+parse_line.pl
+	fix minor varibale scoping bug
+
+poke_ns.c
+	Added support for tailing the logfile on restart or reload
+
+readinfo.pl
+	Added support for the GENERATOR directive to automatically generate
+		numeric field names
+	Added -F option to output record numbers on output
+
+tail_log.pl.1.1
+	program to tail a syslog file.
+	
+udh_stats.pl.1.1
+	Generate domain statistics report
+
+updatehosts.env.1.1
+	add "options" and "txt" file to DB_FILES
+	
+updatehosts.sh.1.1
+	Add support for gendns -e flag for error output levels
+	Check to be sure SCCS and RCS commands are in the user's PATH
+	Add -V flag to print version information
+	Fix OPTIND undefined bug
+
+man/Makefile.in
+	Added -p flag to mkdir command so it will make the man hierarchy
+		when it is missing
+
+man/readinfo.1
+	Documented changes
+
+Release 1.0.2
+
+Makefile.in 1.13
+	Added readinfo_pp dependencies
+	Added configure substitution for the staff group
+	Other minor cleanup
+
+INSTALL 1.4
+	Added docuemntaiton for the staff_group feature
+
+OVERVIEW 1.5
+	Changes for "stub" zone support
+	Minor revisions
+
+configure.in 1.1
+	Check for M4 preprocessor
+
+cvtstatic.pl 1.4
+	Code cleanup and bug fixes
+
+cvtzone.pl 1.5
+	Code cleanup and bug fixes
+
+gendns.pl 1.58
+	Add support for stub zones.
+	Optimized code.
+	Added -F option to force serial number updates. This was the
+	default behavior before this release.  Now gendns checks if a
+	zone's information has been updated before changing the serial
+	number
+
+parse_line.pl 1.1
+	Extracted readinfo line parsing code
+ 
+readinfo 1.13
+	Really fix bug in #INCLUDE directive
+	Pulled out line parsing code for reuse in readinfo_pp.pl
+
+readinfo_pp.pl 1.1
+	Pretty printer program for readinfo files
+
+updatehosts.sh 1.56
+	Rationalize alternate configuration file processing
+
+updatehosts.env 1.3
+	Change defaults to not generate DHCP configuration, nor to do SCCS
+
+man/Makefile.in
+	Changes for installing additional manual pages
+
+man/cvtstatic.1 1.1
+	New manual page
+
+man/cvtzone.1 1.1
+	New manual page
+
+man/gendns.1
+	Documentation for -F option
+
+man/readinfo_pp.1
+	New manual page
+
+Release 1.0.1
+
+INSTALL 1.3
+	Minor typographical errors
+
+Makefile.in 1.10
+	Install configuration files in @sysconfdir@.
+	Add install-conf to separately install configuration files.
+
+cvtzone.pl 1.4
+	Add support for TXT records.
+	Add -c option to add comments from zone file
+
+gendns.pl 1.57
+	Add support for TXT records by adding txt database file
+	Code cleanup.
+
+installdb.pl 1.3
+	Add db subdirectory and template files for the command
+
+readinfo.pl 1.12
+	Fix INCLUDE file bug
+
+updatehosts.env.1.XXX
+	added "txt" to filename list
+
+updatehosts.pl 1.54
+	Add -l option to just reload rather than restart the nameserver.
+	Allow environment variables set to "no" to be treated as is unset.
+
+man/Makefile.in 1.2
+	Make the man1 directory if it does not exist.
+
+man/updatehosts.1
+	Add documentation for the -l option.
+
+Release 1.0.0 - Initial release

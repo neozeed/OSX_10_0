@@ -1,0 +1,56 @@
+
+          DNS resolver parsing routines
+                 version 1.3
+
+                 Dave Shield
+           <D.T.Shield@csc.liv.ac.uk>
+
+
+
+  The standard BIND nameserver implementation provides
+routines for the common case of name to address mapping,
+and for making general queries.  However, there doesn't
+appear to be anything generally available to assist with
+interpreting the results of such queries.
+
+  This package is aimed at filling that gap.  It will
+take the opaque character string returned by the resolver
+routines, and expand it into a standard C structure.
+This can then be traversed by the programmer as required.
+It also contains routines for copying, printing and freeing
+such structures.
+
+  There's also a very simple program to test the library.
+Compile it using "make testres".
+
+
+  Acknowledgments should go to:
+	The BIND people
+		(much of the code was "sort of lifted"
+		  from their debug routines)
+	Cricket Liu
+		(for pointing me at that, and the O'Reilly book)
+	Rick McCarty
+		(for suggestions as to the data structures)
+
+plus everyone who has reported bugs.
+
+
+Feel free to use these routines if you think they might be
+of some use.  It would be helpful if you could feed back any
+problems you find.
+  The primary development environment is HP series 700 systems,
+running HP-UX 9, though it has also been reported to work on
+machines running HP-UX 10, SunOS, Solaris and FreeBSD.
+Remember to check the Makefile for system-specific settings.
+If you need to make changes to use it on other systems,
+please let me know.
+
+  This package has been tested with all RR types supported by
+the 4.9.5 release of BIND.  It is hoped to add support for the
+new RR types included with v8 BIND, but I wanted to get this
+current version of the library out to address the problems that
+have been reported.
+
+Dave
+July 1997

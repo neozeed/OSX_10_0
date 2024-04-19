@@ -1,0 +1,20 @@
+diff -rc bin/named-xfer/named-xfer.c.orig bin/named-xfer/named-xfer.c
+*** bin/named-xfer/named-xfer.c.orig	Fri May 14 11:50:55 1999
+--- bin/named-xfer/named-xfer.c	Fri May 28 16:59:59 1999
+***************
+*** 150,156 ****
+  #include <limits.h>
+  #include <ctype.h>
+  #include <errno.h>
+! #include <math.h>
+  #include <resolv.h>
+  #include <signal.h>
+  #include <stdio.h>
+--- 150,156 ----
+  #include <limits.h>
+  #include <ctype.h>
+  #include <errno.h>
+! /* #include <math.h> */
+  #include <resolv.h>
+  #include <signal.h>
+  #include <stdio.h>

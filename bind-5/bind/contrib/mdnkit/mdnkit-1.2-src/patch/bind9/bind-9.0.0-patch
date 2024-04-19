@@ -1,0 +1,5543 @@
+MDN patch for bind-9.0.0
+===========================
+
+This is a patch file for ISC BIND 9.0.0 to make it work with
+internationalized/multilingual domain names.  With this patch you'll
+get:
+	+ MDN-aware named/lwresd
+	+ MDN-aware light-weight resolver library
+	+ MDN-aware dig/host/nslookup
+
+To apply this patch, you should go to the top directory of the
+distribution (where you see `README' file), then invoke `patch'
+command like this:
+
+	% patch -p0 < this-file
+
+Then follow the instructions described in `README.mdnkit' to compile
+and install.
+
+
+Index: README.mdnkit
+diff -c /dev/null mdn/othersrc/bind9/README.mdnkit:1.5
+*** README.mdnkit	Thu Nov  2 10:10:35 2000
+--- README.mdnkit	Wed Oct 18 13:54:57 2000
+***************
+*** 0 ****
+--- 1,110 ----
++ 
++ 			BIND-9 MDN patch
++ 
++ 	       Japan Network Information Center (JPNIC)
++ 
++ 
++ * What is this patch for?
++ 
++ This patch adds multilingual domain name (MDN) support to BIND-9.
++ You'll get multilingualized version of light weight resolver and
++ dig/host/nslookup commands.
++ 
++     + multilingualized version of light weight resolver
++ 	The following APIs accept non-ASCII host name encoded in the
++ 	local codeset (such as Shift JIS, Big5 or ISO8859-1)
++ 	determined by the application's current locale, and return
++ 	host names in the local codeset.
++ 		lwres_gethostbyname
++ 		lwres_gethostbyname_r
++ 		lwres_gethostbyname2
++ 		lwres_getipnodebyname
++ 		lwres_getaddrinfo
++ 		lwres_gethostbyaddr
++ 		lwres_gethostbyaddr_r
++ 		lwres_getipnodebyaddr
++ 		lwres_getnameinfo
++ 
++     + mulltilingualized dig/host/nslookup
++ 	dig/host/nslookup accepts non-ASCII domain names in the local
++ 	codeset.  The domain names are normalized and converted to the
++ 	encoding on the DNS protocol, and sent to DNS servers.  The
++ 	replies are converted back to the local codeset and displayed.
++ 
++ 
++ * Compilation & installation
++ 
++ 0. Prerequisite
++ 
++ You have to build and install mDNkit before building this patched version
++ of bind-9.
++ 
++ 1. Running configure script
++ 
++ Run `configure' in the top directory.  See `README' for the
++ configuration options.
++ 
++ This patch adds the following 3 options to `configure'.  You should
++ at least specify `--with-mdn' option to enable MDN support.
++ 
++     --with-mdn[=PREFIX]
++ 	To enable MDN support, you have to specify `--with-mdn'
++ 	option.  If you specified installation prefix other than
++ 	`/usr/local' (which is the default) when conifguring mDNkit,
++ 	also specify the prefix, like `--with-mdn=/usr/local/mdnkit'.
++ 
++     --with-iconv=LIBSPEC
++ 	If your libc doens't provide iconv(), you need to specify the
++ 	library containing iconv() with this option.  `LIBSPEC' is the
++ 	argument(s) to `cc' or `ld' to link the library, for example,
++ 	`--with-iconv="-L/usr/local/lib -liconv"'.
++ 	You don't need to specify the header file directory for "iconv.h"
++ 	to the compiler, as it isn't included directly by bind-9 with
++ 	this patch.
++ 
++     --with-mdnlib=LIBSPEC
++ 	With this option, you can explicitly specify the argument(s)
++ 	to `cc' or `ld' to link the mDNkit's library, `libmdn'.  If
++ 	this option is not specified, `-L${PREFIX}/lib -lmdn' is
++ 	assumed, where ${PREFIX} is the installation prefix specified
++ 	with `--with-mdn' option above.  You may need to use this
++ 	option to specify extra argments, for example,
++ 	`--with-mdnlib="-L/usr/local/lib -R/usr/local/lib -lmdn"'.
++ 
++ Please consult `README' for other configuration options.
++ 
++ Note that if you want to specify some extra header file directories,
++ you should use the environment variable STD_CINCLUDES instead of
++ CFLAGS, as described in README.
++ 
++ 2. Compilation and installation
++ 
++ After running "configure", just do
++ 
++ 	make
++ 	make install
++ 
++ for compiling and installing.
++ 
++ 3. Resolver configuration
++ 
++ To handle multilingual domain names, you have to specify the
++ properties like:
++ 	+ name encoding used in DNS protocol data
++ 	+ normalization schemes
++ These properties are specified by the mDNkit's resolver configuration
++ file, "mdnres.conf".  You have to create and set up the file properly.
++ The pathname of the file and contents are described in the manual
++ "mdnres.conf".
++ 
++ 
++ * Contact information
++ 
++ Please see http//www.nic.ad.jp/jp/research/idn/ for the latest news
++ about mDNkit and this patch.
++ 
++ Bug reports and comments on this kit should be sent to
++ mdnkit-bugs@nic.ad.jp and idn-cmt@nic.ad.jp, respectively.
++ 
++ 
++ ; $Id: bind-9.0.0-patch,v 1.1.1.1 2001/01/31 03:58:59 zarzycki Exp $
+Index: acconfig.h
+diff -c mdn/othersrc/bind9/acconfig.h:1.1.1.1 mdn/othersrc/bind9/acconfig.h:1.2
+*** acconfig.h	Fri Jul 21 11:10:23 2000
+--- acconfig.h	Wed Aug 16 17:55:12 2000
+***************
+*** 102,104 ****
+--- 102,107 ----
+  		ap = (va_list)(_u.var + __va_words(__typeof(last))); \
+  	} while (0)
+  #endif /* SHUTUP_STDARG_CAST && __GNUC__ */
++ 
++ /* define if mDNkit support is to be included. */
++ #undef WITH_MDN
+Index: config.h.in
+diff -c mdn/othersrc/bind9/config.h.in:1.1.1.1 mdn/othersrc/bind9/config.h.in:1.4
+*** config.h.in	Fri Jul 21 11:10:23 2000
+--- config.h.in	Tue Sep 12 18:11:21 2000
+***************
+*** 16,21 ****
+--- 16,23 ----
+   * SOFTWARE.
+   */
+  
++ /* $Id: bind-9.0.0-patch,v 1.1.1.1 2001/01/31 03:58:59 zarzycki Exp $ */
++ 
+  /***
+   *** This file is not to be included by any public header files, because
+   *** it does not get installed.
+***************
+*** 112,117 ****
+--- 114,125 ----
+   } while (0)
+  #endif /* SHUTUP_STDARG_CAST && __GNUC__ */
+  
++ /* define if mDNkit support is to be included. */
++ #undef WITH_MDN
++ 
++ /* Define if you have the setlocale function.  */
++ #undef HAVE_SETLOCALE
++ 
+  /* Define if you have the <fcntl.h> header file.  */
+  #undef HAVE_FCNTL_H
+  
+***************
+*** 120,125 ****
+--- 128,136 ----
+  
+  /* Define if you have the <linux/prctl.h> header file.  */
+  #undef HAVE_LINUX_PRCTL_H
++ 
++ /* Define if you have the <locale.h> header file.  */
++ #undef HAVE_LOCALE_H
+  
+  /* Define if you have the <sys/sockio.h> header file.  */
+  #undef HAVE_SYS_SOCKIO_H
+Index: configure
+diff -c mdn/othersrc/bind9/configure:1.1.1.2 mdn/othersrc/bind9/configure:1.5
+*** configure	Thu Aug 10 11:00:58 2000
+--- configure	Tue Sep 12 18:11:21 2000
+***************
+*** 142,147 ****
+--- 142,153 ----
+    --enable-ipv6		use IPv6 [default=autodetect]"
+  ac_help="$ac_help
+    --with-kame[=PATH]	use Kame IPv6 [default path /usr/local/v6]"
++ ac_help="$ac_help
++   --with-mdn[=PREFIX]    enable MDN support using mDNkit [default prefix /usr/local]"
++ ac_help="$ac_help
++   --with-iconv[=LIBSPEC]   specify iconv library [default -liconv]"
++ ac_help="$ac_help
++   --with-mdnlib=ARG    specify libmdn"
+  
+  # Initialize some variables set by options.
+  # The variables have the same names as the options, with
+***************
+*** 682,688 ****
+  fi
+  
+  echo $ac_n "checking host system type""... $ac_c" 1>&6
+! echo "configure:686: checking host system type" >&5
+  
+  host_alias=$host
+  case "$host_alias" in
+--- 688,694 ----
+  fi
+  
+  echo $ac_n "checking host system type""... $ac_c" 1>&6
+! echo "configure:692: checking host system type" >&5
+  
+  host_alias=$host
+  case "$host_alias" in
+***************
+*** 704,710 ****
+  
+  
+  echo $ac_n "checking whether ${MAKE-make} sets \${MAKE}""... $ac_c" 1>&6
+! echo "configure:708: checking whether ${MAKE-make} sets \${MAKE}" >&5
+  set dummy ${MAKE-make}; ac_make=`echo "$2" | sed 'y%./+-%__p_%'`
+  if eval "test \"`echo '$''{'ac_cv_prog_make_${ac_make}_set'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+--- 710,716 ----
+  
+  
+  echo $ac_n "checking whether ${MAKE-make} sets \${MAKE}""... $ac_c" 1>&6
+! echo "configure:714: checking whether ${MAKE-make} sets \${MAKE}" >&5
+  set dummy ${MAKE-make}; ac_make=`echo "$2" | sed 'y%./+-%__p_%'`
+  if eval "test \"`echo '$''{'ac_cv_prog_make_${ac_make}_set'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+***************
+*** 733,739 ****
+  # Extract the first word of "ranlib", so it can be a program name with args.
+  set dummy ranlib; ac_word=$2
+  echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
+! echo "configure:737: checking for $ac_word" >&5
+  if eval "test \"`echo '$''{'ac_cv_prog_RANLIB'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+--- 739,745 ----
+  # Extract the first word of "ranlib", so it can be a program name with args.
+  set dummy ranlib; ac_word=$2
+  echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
+! echo "configure:743: checking for $ac_word" >&5
+  if eval "test \"`echo '$''{'ac_cv_prog_RANLIB'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+***************
+*** 772,778 ****
+  # SVR4 /usr/ucb/install, which tries to use the nonexistent group "staff"
+  # ./install, which can be erroneously created by make from ./install.sh.
+  echo $ac_n "checking for a BSD compatible install""... $ac_c" 1>&6
+! echo "configure:776: checking for a BSD compatible install" >&5
+  if test -z "$INSTALL"; then
+  if eval "test \"`echo '$''{'ac_cv_path_install'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+--- 778,784 ----
+  # SVR4 /usr/ucb/install, which tries to use the nonexistent group "staff"
+  # ./install, which can be erroneously created by make from ./install.sh.
+  echo $ac_n "checking for a BSD compatible install""... $ac_c" 1>&6
+! echo "configure:782: checking for a BSD compatible install" >&5
+  if test -z "$INSTALL"; then
+  if eval "test \"`echo '$''{'ac_cv_path_install'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+***************
+*** 833,839 ****
+  # Extract the first word of "ar", so it can be a program name with args.
+  set dummy ar; ac_word=$2
+  echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
+! echo "configure:837: checking for $ac_word" >&5
+  if eval "test \"`echo '$''{'ac_cv_path_AR'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+--- 839,845 ----
+  # Extract the first word of "ar", so it can be a program name with args.
+  set dummy ar; ac_word=$2
+  echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
+! echo "configure:843: checking for $ac_word" >&5
+  if eval "test \"`echo '$''{'ac_cv_path_AR'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+***************
+*** 889,895 ****
+  # Extract the first word of "$ac_prog", so it can be a program name with args.
+  set dummy $ac_prog; ac_word=$2
+  echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
+! echo "configure:893: checking for $ac_word" >&5
+  if eval "test \"`echo '$''{'ac_cv_path_ETAGS'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+--- 895,901 ----
+  # Extract the first word of "$ac_prog", so it can be a program name with args.
+  set dummy $ac_prog; ac_word=$2
+  echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
+! echo "configure:899: checking for $ac_word" >&5
+  if eval "test \"`echo '$''{'ac_cv_path_ETAGS'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+***************
+*** 934,940 ****
+  # Extract the first word of "$ac_prog", so it can be a program name with args.
+  set dummy $ac_prog; ac_word=$2
+  echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
+! echo "configure:938: checking for $ac_word" >&5
+  if eval "test \"`echo '$''{'ac_cv_path_PERL'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+--- 940,946 ----
+  # Extract the first word of "$ac_prog", so it can be a program name with args.
+  set dummy $ac_prog; ac_word=$2
+  echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
+! echo "configure:944: checking for $ac_word" >&5
+  if eval "test \"`echo '$''{'ac_cv_path_PERL'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+***************
+*** 1082,1095 ****
+  # Find the machine's endian flavor.
+  #
+  echo $ac_n "checking whether byte ordering is bigendian""... $ac_c" 1>&6
+! echo "configure:1086: checking whether byte ordering is bigendian" >&5
+  if eval "test \"`echo '$''{'ac_cv_c_bigendian'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    ac_cv_c_bigendian=unknown
+  # See if sys/param.h defines the BYTE_ORDER macro.
+  cat > conftest.$ac_ext <<EOF
+! #line 1093 "configure"
+  #include "confdefs.h"
+  #include <sys/types.h>
+  #include <sys/param.h>
+--- 1088,1101 ----
+  # Find the machine's endian flavor.
+  #
+  echo $ac_n "checking whether byte ordering is bigendian""... $ac_c" 1>&6
+! echo "configure:1092: checking whether byte ordering is bigendian" >&5
+  if eval "test \"`echo '$''{'ac_cv_c_bigendian'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    ac_cv_c_bigendian=unknown
+  # See if sys/param.h defines the BYTE_ORDER macro.
+  cat > conftest.$ac_ext <<EOF
+! #line 1099 "configure"
+  #include "confdefs.h"
+  #include <sys/types.h>
+  #include <sys/param.h>
+***************
+*** 1100,1110 ****
+  #endif
+  ; return 0; }
+  EOF
+! if { (eval echo configure:1104: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    # It does; now see whether it defined to BIG_ENDIAN or not.
+  cat > conftest.$ac_ext <<EOF
+! #line 1108 "configure"
+  #include "confdefs.h"
+  #include <sys/types.h>
+  #include <sys/param.h>
+--- 1106,1116 ----
+  #endif
+  ; return 0; }
+  EOF
+! if { (eval echo configure:1110: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    # It does; now see whether it defined to BIG_ENDIAN or not.
+  cat > conftest.$ac_ext <<EOF
+! #line 1114 "configure"
+  #include "confdefs.h"
+  #include <sys/types.h>
+  #include <sys/param.h>
+***************
+*** 1115,1121 ****
+  #endif
+  ; return 0; }
+  EOF
+! if { (eval echo configure:1119: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    ac_cv_c_bigendian=yes
+  else
+--- 1121,1127 ----
+  #endif
+  ; return 0; }
+  EOF
+! if { (eval echo configure:1125: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    ac_cv_c_bigendian=yes
+  else
+***************
+*** 1135,1141 ****
+      { echo "configure: error: can not run test program while cross compiling" 1>&2; exit 1; }
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 1139 "configure"
+  #include "confdefs.h"
+  main () {
+    /* Are we little or big endian?  From Harbison&Steele.  */
+--- 1141,1147 ----
+      { echo "configure: error: can not run test program while cross compiling" 1>&2; exit 1; }
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 1145 "configure"
+  #include "confdefs.h"
+  main () {
+    /* Are we little or big endian?  From Harbison&Steele.  */
+***************
+*** 1148,1154 ****
+    exit (u.c[sizeof (long) - 1] == 1);
+  }
+  EOF
+! if { (eval echo configure:1152: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext} && (./conftest; exit) 2>/dev/null
+  then
+    ac_cv_c_bigendian=no
+  else
+--- 1154,1160 ----
+    exit (u.c[sizeof (long) - 1] == 1);
+  }
+  EOF
+! if { (eval echo configure:1158: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext} && (./conftest; exit) 2>/dev/null
+  then
+    ac_cv_c_bigendian=no
+  else
+***************
+*** 1178,1184 ****
+  # XXXMLG Implement this check!
+  #
+  echo $ac_n "checking for compatible OpenSSL library""... $ac_c" 1>&6
+! echo "configure:1182: checking for compatible OpenSSL library" >&5
+  
+  DST_PRIVATEOPENSSL='-DDST_USE_PRIVATE_OPENSSL'
+  dst_privateopenssl='openssl'
+--- 1184,1190 ----
+  # XXXMLG Implement this check!
+  #
+  echo $ac_n "checking for compatible OpenSSL library""... $ac_c" 1>&6
+! echo "configure:1188: checking for compatible OpenSSL library" >&5
+  
+  DST_PRIVATEOPENSSL='-DDST_USE_PRIVATE_OPENSSL'
+  dst_privateopenssl='openssl'
+***************
+*** 1224,1230 ****
+    *-netbsd*)
+  	CC="gcc"
+  	echo $ac_n "checking which NetBSD thread library to use""... $ac_c" 1>&6
+! echo "configure:1228: checking which NetBSD thread library to use" >&5
+  
+  	# Check whether --with-ptl2 or --without-ptl2 was given.
+  if test "${with_ptl2+set}" = set; then
+--- 1230,1236 ----
+    *-netbsd*)
+  	CC="gcc"
+  	echo $ac_n "checking which NetBSD thread library to use""... $ac_c" 1>&6
+! echo "configure:1234: checking which NetBSD thread library to use" >&5
+  
+  	# Check whether --with-ptl2 or --without-ptl2 was given.
+  if test "${with_ptl2+set}" = set; then
+***************
+*** 1266,1272 ****
+  # Extract the first word of "gcc", so it can be a program name with args.
+  set dummy gcc; ac_word=$2
+  echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
+! echo "configure:1270: checking for $ac_word" >&5
+  if eval "test \"`echo '$''{'ac_cv_prog_CC'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+--- 1272,1278 ----
+  # Extract the first word of "gcc", so it can be a program name with args.
+  set dummy gcc; ac_word=$2
+  echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
+! echo "configure:1276: checking for $ac_word" >&5
+  if eval "test \"`echo '$''{'ac_cv_prog_CC'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+***************
+*** 1296,1302 ****
+    # Extract the first word of "cc", so it can be a program name with args.
+  set dummy cc; ac_word=$2
+  echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
+! echo "configure:1300: checking for $ac_word" >&5
+  if eval "test \"`echo '$''{'ac_cv_prog_CC'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+--- 1302,1308 ----
+    # Extract the first word of "cc", so it can be a program name with args.
+  set dummy cc; ac_word=$2
+  echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
+! echo "configure:1306: checking for $ac_word" >&5
+  if eval "test \"`echo '$''{'ac_cv_prog_CC'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+***************
+*** 1347,1353 ****
+        # Extract the first word of "cl", so it can be a program name with args.
+  set dummy cl; ac_word=$2
+  echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
+! echo "configure:1351: checking for $ac_word" >&5
+  if eval "test \"`echo '$''{'ac_cv_prog_CC'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+--- 1353,1359 ----
+        # Extract the first word of "cl", so it can be a program name with args.
+  set dummy cl; ac_word=$2
+  echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
+! echo "configure:1357: checking for $ac_word" >&5
+  if eval "test \"`echo '$''{'ac_cv_prog_CC'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+***************
+*** 1379,1385 ****
+  fi
+  
+  echo $ac_n "checking whether the C compiler ($CC $CFLAGS $LDFLAGS) works""... $ac_c" 1>&6
+! echo "configure:1383: checking whether the C compiler ($CC $CFLAGS $LDFLAGS) works" >&5
+  
+  ac_ext=c
+  # CFLAGS is not in ac_cpp because -g, -O, etc. are not valid cpp options.
+--- 1385,1391 ----
+  fi
+  
+  echo $ac_n "checking whether the C compiler ($CC $CFLAGS $LDFLAGS) works""... $ac_c" 1>&6
+! echo "configure:1389: checking whether the C compiler ($CC $CFLAGS $LDFLAGS) works" >&5
+  
+  ac_ext=c
+  # CFLAGS is not in ac_cpp because -g, -O, etc. are not valid cpp options.
+***************
+*** 1390,1401 ****
+  
+  cat > conftest.$ac_ext << EOF
+  
+! #line 1394 "configure"
+  #include "confdefs.h"
+  
+  main(){return(0);}
+  EOF
+! if { (eval echo configure:1399: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    ac_cv_prog_cc_works=yes
+    # If we can't run a trivial program, we are probably using a cross compiler.
+    if (./conftest; exit) 2>/dev/null; then
+--- 1396,1407 ----
+  
+  cat > conftest.$ac_ext << EOF
+  
+! #line 1400 "configure"
+  #include "confdefs.h"
+  
+  main(){return(0);}
+  EOF
+! if { (eval echo configure:1405: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    ac_cv_prog_cc_works=yes
+    # If we can't run a trivial program, we are probably using a cross compiler.
+    if (./conftest; exit) 2>/dev/null; then
+***************
+*** 1421,1432 ****
+    { echo "configure: error: installation or configuration problem: C compiler cannot create executables." 1>&2; exit 1; }
+  fi
+  echo $ac_n "checking whether the C compiler ($CC $CFLAGS $LDFLAGS) is a cross-compiler""... $ac_c" 1>&6
+! echo "configure:1425: checking whether the C compiler ($CC $CFLAGS $LDFLAGS) is a cross-compiler" >&5
+  echo "$ac_t""$ac_cv_prog_cc_cross" 1>&6
+  cross_compiling=$ac_cv_prog_cc_cross
+  
+  echo $ac_n "checking whether we are using GNU C""... $ac_c" 1>&6
+! echo "configure:1430: checking whether we are using GNU C" >&5
+  if eval "test \"`echo '$''{'ac_cv_prog_gcc'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+--- 1427,1438 ----
+    { echo "configure: error: installation or configuration problem: C compiler cannot create executables." 1>&2; exit 1; }
+  fi
+  echo $ac_n "checking whether the C compiler ($CC $CFLAGS $LDFLAGS) is a cross-compiler""... $ac_c" 1>&6
+! echo "configure:1431: checking whether the C compiler ($CC $CFLAGS $LDFLAGS) is a cross-compiler" >&5
+  echo "$ac_t""$ac_cv_prog_cc_cross" 1>&6
+  cross_compiling=$ac_cv_prog_cc_cross
+  
+  echo $ac_n "checking whether we are using GNU C""... $ac_c" 1>&6
+! echo "configure:1436: checking whether we are using GNU C" >&5
+  if eval "test \"`echo '$''{'ac_cv_prog_gcc'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+***************
+*** 1435,1441 ****
+    yes;
+  #endif
+  EOF
+! if { ac_try='${CC-cc} -E conftest.c'; { (eval echo configure:1439: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }; } | egrep yes >/dev/null 2>&1; then
+    ac_cv_prog_gcc=yes
+  else
+    ac_cv_prog_gcc=no
+--- 1441,1447 ----
+    yes;
+  #endif
+  EOF
+! if { ac_try='${CC-cc} -E conftest.c'; { (eval echo configure:1445: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }; } | egrep yes >/dev/null 2>&1; then
+    ac_cv_prog_gcc=yes
+  else
+    ac_cv_prog_gcc=no
+***************
+*** 1454,1460 ****
+  ac_save_CFLAGS="$CFLAGS"
+  CFLAGS=
+  echo $ac_n "checking whether ${CC-cc} accepts -g""... $ac_c" 1>&6
+! echo "configure:1458: checking whether ${CC-cc} accepts -g" >&5
+  if eval "test \"`echo '$''{'ac_cv_prog_cc_g'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+--- 1460,1466 ----
+  ac_save_CFLAGS="$CFLAGS"
+  CFLAGS=
+  echo $ac_n "checking whether ${CC-cc} accepts -g""... $ac_c" 1>&6
+! echo "configure:1464: checking whether ${CC-cc} accepts -g" >&5
+  if eval "test \"`echo '$''{'ac_cv_prog_cc_g'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+***************
+*** 1490,1496 ****
+  # Extract the first word of "$ac_prog", so it can be a program name with args.
+  set dummy $ac_prog; ac_word=$2
+  echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
+! echo "configure:1494: checking for $ac_word" >&5
+  if eval "test \"`echo '$''{'ac_cv_prog_YACC'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+--- 1496,1502 ----
+  # Extract the first word of "$ac_prog", so it can be a program name with args.
+  set dummy $ac_prog; ac_word=$2
+  echo $ac_n "checking for $ac_word""... $ac_c" 1>&6
+! echo "configure:1500: checking for $ac_word" >&5
+  if eval "test \"`echo '$''{'ac_cv_prog_YACC'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+***************
+*** 1522,1528 ****
+  
+  
+  echo $ac_n "checking how to run the C preprocessor""... $ac_c" 1>&6
+! echo "configure:1526: checking how to run the C preprocessor" >&5
+  # On Suns, sometimes $CPP names a directory.
+  if test -n "$CPP" && test -d "$CPP"; then
+    CPP=
+--- 1528,1534 ----
+  
+  
+  echo $ac_n "checking how to run the C preprocessor""... $ac_c" 1>&6
+! echo "configure:1532: checking how to run the C preprocessor" >&5
+  # On Suns, sometimes $CPP names a directory.
+  if test -n "$CPP" && test -d "$CPP"; then
+    CPP=
+***************
+*** 1537,1549 ****
+    # On the NeXT, cc -E runs the code through the compiler's parser,
+    # not just through cpp.
+    cat > conftest.$ac_ext <<EOF
+! #line 1541 "configure"
+  #include "confdefs.h"
+  #include <assert.h>
+  Syntax Error
+  EOF
+  ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
+! { (eval echo configure:1547: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+  ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
+  if test -z "$ac_err"; then
+    :
+--- 1543,1555 ----
+    # On the NeXT, cc -E runs the code through the compiler's parser,
+    # not just through cpp.
+    cat > conftest.$ac_ext <<EOF
+! #line 1547 "configure"
+  #include "confdefs.h"
+  #include <assert.h>
+  Syntax Error
+  EOF
+  ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
+! { (eval echo configure:1553: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+  ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
+  if test -z "$ac_err"; then
+    :
+***************
+*** 1554,1566 ****
+    rm -rf conftest*
+    CPP="${CC-cc} -E -traditional-cpp"
+    cat > conftest.$ac_ext <<EOF
+! #line 1558 "configure"
+  #include "confdefs.h"
+  #include <assert.h>
+  Syntax Error
+  EOF
+  ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
+! { (eval echo configure:1564: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+  ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
+  if test -z "$ac_err"; then
+    :
+--- 1560,1572 ----
+    rm -rf conftest*
+    CPP="${CC-cc} -E -traditional-cpp"
+    cat > conftest.$ac_ext <<EOF
+! #line 1564 "configure"
+  #include "confdefs.h"
+  #include <assert.h>
+  Syntax Error
+  EOF
+  ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
+! { (eval echo configure:1570: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+  ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
+  if test -z "$ac_err"; then
+    :
+***************
+*** 1571,1583 ****
+    rm -rf conftest*
+    CPP="${CC-cc} -nologo -E"
+    cat > conftest.$ac_ext <<EOF
+! #line 1575 "configure"
+  #include "confdefs.h"
+  #include <assert.h>
+  Syntax Error
+  EOF
+  ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
+! { (eval echo configure:1581: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+  ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
+  if test -z "$ac_err"; then
+    :
+--- 1577,1589 ----
+    rm -rf conftest*
+    CPP="${CC-cc} -nologo -E"
+    cat > conftest.$ac_ext <<EOF
+! #line 1581 "configure"
+  #include "confdefs.h"
+  #include <assert.h>
+  Syntax Error
+  EOF
+  ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
+! { (eval echo configure:1587: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+  ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
+  if test -z "$ac_err"; then
+    :
+***************
+*** 1602,1613 ****
+  echo "$ac_t""$CPP" 1>&6
+  
+  echo $ac_n "checking for ANSI C header files""... $ac_c" 1>&6
+! echo "configure:1606: checking for ANSI C header files" >&5
+  if eval "test \"`echo '$''{'ac_cv_header_stdc'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 1611 "configure"
+  #include "confdefs.h"
+  #include <stdlib.h>
+  #include <stdarg.h>
+--- 1608,1619 ----
+  echo "$ac_t""$CPP" 1>&6
+  
+  echo $ac_n "checking for ANSI C header files""... $ac_c" 1>&6
+! echo "configure:1612: checking for ANSI C header files" >&5
+  if eval "test \"`echo '$''{'ac_cv_header_stdc'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 1617 "configure"
+  #include "confdefs.h"
+  #include <stdlib.h>
+  #include <stdarg.h>
+***************
+*** 1615,1621 ****
+  #include <float.h>
+  EOF
+  ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
+! { (eval echo configure:1619: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+  ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
+  if test -z "$ac_err"; then
+    rm -rf conftest*
+--- 1621,1627 ----
+  #include <float.h>
+  EOF
+  ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
+! { (eval echo configure:1625: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+  ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
+  if test -z "$ac_err"; then
+    rm -rf conftest*
+***************
+*** 1632,1638 ****
+  if test $ac_cv_header_stdc = yes; then
+    # SunOS 4.x string.h does not declare mem*, contrary to ANSI.
+  cat > conftest.$ac_ext <<EOF
+! #line 1636 "configure"
+  #include "confdefs.h"
+  #include <string.h>
+  EOF
+--- 1638,1644 ----
+  if test $ac_cv_header_stdc = yes; then
+    # SunOS 4.x string.h does not declare mem*, contrary to ANSI.
+  cat > conftest.$ac_ext <<EOF
+! #line 1642 "configure"
+  #include "confdefs.h"
+  #include <string.h>
+  EOF
+***************
+*** 1650,1656 ****
+  if test $ac_cv_header_stdc = yes; then
+    # ISC 2.0.2 stdlib.h does not declare free, contrary to ANSI.
+  cat > conftest.$ac_ext <<EOF
+! #line 1654 "configure"
+  #include "confdefs.h"
+  #include <stdlib.h>
+  EOF
+--- 1656,1662 ----
+  if test $ac_cv_header_stdc = yes; then
+    # ISC 2.0.2 stdlib.h does not declare free, contrary to ANSI.
+  cat > conftest.$ac_ext <<EOF
+! #line 1660 "configure"
+  #include "confdefs.h"
+  #include <stdlib.h>
+  EOF
+***************
+*** 1671,1677 ****
+    :
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 1675 "configure"
+  #include "confdefs.h"
+  #include <ctype.h>
+  #define ISLOWER(c) ('a' <= (c) && (c) <= 'z')
+--- 1677,1683 ----
+    :
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 1681 "configure"
+  #include "confdefs.h"
+  #include <ctype.h>
+  #define ISLOWER(c) ('a' <= (c) && (c) <= 'z')
+***************
+*** 1682,1688 ****
+  exit (0); }
+  
+  EOF
+! if { (eval echo configure:1686: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext} && (./conftest; exit) 2>/dev/null
+  then
+    :
+  else
+--- 1688,1694 ----
+  exit (0); }
+  
+  EOF
+! if { (eval echo configure:1692: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext} && (./conftest; exit) 2>/dev/null
+  then
+    :
+  else
+***************
+*** 1710,1726 ****
+  do
+  ac_safe=`echo "$ac_hdr" | sed 'y%./+-%__p_%'`
+  echo $ac_n "checking for $ac_hdr""... $ac_c" 1>&6
+! echo "configure:1714: checking for $ac_hdr" >&5
+  if eval "test \"`echo '$''{'ac_cv_header_$ac_safe'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 1719 "configure"
+  #include "confdefs.h"
+  #include <$ac_hdr>
+  EOF
+  ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
+! { (eval echo configure:1724: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+  ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
+  if test -z "$ac_err"; then
+    rm -rf conftest*
+--- 1716,1732 ----
+  do
+  ac_safe=`echo "$ac_hdr" | sed 'y%./+-%__p_%'`
+  echo $ac_n "checking for $ac_hdr""... $ac_c" 1>&6
+! echo "configure:1720: checking for $ac_hdr" >&5
+  if eval "test \"`echo '$''{'ac_cv_header_$ac_safe'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 1725 "configure"
+  #include "confdefs.h"
+  #include <$ac_hdr>
+  EOF
+  ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
+! { (eval echo configure:1730: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+  ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
+  if test -z "$ac_err"; then
+    rm -rf conftest*
+***************
+*** 1748,1759 ****
+  
+  
+  echo $ac_n "checking for working const""... $ac_c" 1>&6
+! echo "configure:1752: checking for working const" >&5
+  if eval "test \"`echo '$''{'ac_cv_c_const'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 1757 "configure"
+  #include "confdefs.h"
+  
+  int main() {
+--- 1754,1765 ----
+  
+  
+  echo $ac_n "checking for working const""... $ac_c" 1>&6
+! echo "configure:1758: checking for working const" >&5
+  if eval "test \"`echo '$''{'ac_cv_c_const'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 1763 "configure"
+  #include "confdefs.h"
+  
+  int main() {
+***************
+*** 1802,1808 ****
+  
+  ; return 0; }
+  EOF
+! if { (eval echo configure:1806: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    ac_cv_c_const=yes
+  else
+--- 1808,1814 ----
+  
+  ; return 0; }
+  EOF
+! if { (eval echo configure:1812: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    ac_cv_c_const=yes
+  else
+***************
+*** 1823,1843 ****
+  fi
+  
+  echo $ac_n "checking for inline""... $ac_c" 1>&6
+! echo "configure:1827: checking for inline" >&5
+  if eval "test \"`echo '$''{'ac_cv_c_inline'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    ac_cv_c_inline=no
+  for ac_kw in inline __inline__ __inline; do
+    cat > conftest.$ac_ext <<EOF
+! #line 1834 "configure"
+  #include "confdefs.h"
+  
+  int main() {
+  } $ac_kw foo() {
+  ; return 0; }
+  EOF
+! if { (eval echo configure:1841: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    ac_cv_c_inline=$ac_kw; break
+  else
+--- 1829,1849 ----
+  fi
+  
+  echo $ac_n "checking for inline""... $ac_c" 1>&6
+! echo "configure:1833: checking for inline" >&5
+  if eval "test \"`echo '$''{'ac_cv_c_inline'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    ac_cv_c_inline=no
+  for ac_kw in inline __inline__ __inline; do
+    cat > conftest.$ac_ext <<EOF
+! #line 1840 "configure"
+  #include "confdefs.h"
+  
+  int main() {
+  } $ac_kw foo() {
+  ; return 0; }
+  EOF
+! if { (eval echo configure:1847: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    ac_cv_c_inline=$ac_kw; break
+  else
+***************
+*** 1863,1874 ****
+  esac
+  
+  echo $ac_n "checking for size_t""... $ac_c" 1>&6
+! echo "configure:1867: checking for size_t" >&5
+  if eval "test \"`echo '$''{'ac_cv_type_size_t'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 1872 "configure"
+  #include "confdefs.h"
+  #include <sys/types.h>
+  #if STDC_HEADERS
+--- 1869,1880 ----
+  esac
+  
+  echo $ac_n "checking for size_t""... $ac_c" 1>&6
+! echo "configure:1873: checking for size_t" >&5
+  if eval "test \"`echo '$''{'ac_cv_type_size_t'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 1878 "configure"
+  #include "confdefs.h"
+  #include <sys/types.h>
+  #if STDC_HEADERS
+***************
+*** 1896,1907 ****
+  fi
+  
+  echo $ac_n "checking whether time.h and sys/time.h may both be included""... $ac_c" 1>&6
+! echo "configure:1900: checking whether time.h and sys/time.h may both be included" >&5
+  if eval "test \"`echo '$''{'ac_cv_header_time'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 1905 "configure"
+  #include "confdefs.h"
+  #include <sys/types.h>
+  #include <sys/time.h>
+--- 1902,1913 ----
+  fi
+  
+  echo $ac_n "checking whether time.h and sys/time.h may both be included""... $ac_c" 1>&6
+! echo "configure:1906: checking whether time.h and sys/time.h may both be included" >&5
+  if eval "test \"`echo '$''{'ac_cv_header_time'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 1911 "configure"
+  #include "confdefs.h"
+  #include <sys/types.h>
+  #include <sys/time.h>
+***************
+*** 1910,1916 ****
+  struct tm *tp;
+  ; return 0; }
+  EOF
+! if { (eval echo configure:1914: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    ac_cv_header_time=yes
+  else
+--- 1916,1922 ----
+  struct tm *tp;
+  ; return 0; }
+  EOF
+! if { (eval echo configure:1920: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    ac_cv_header_time=yes
+  else
+***************
+*** 1936,1942 ****
+  		;;
+  	*)
+  		echo $ac_n "checking for pthread_create in -lpthread""... $ac_c" 1>&6
+! echo "configure:1940: checking for pthread_create in -lpthread" >&5
+  ac_lib_var=`echo pthread'_'pthread_create | sed 'y%./+-%__p_%'`
+  if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+--- 1942,1948 ----
+  		;;
+  	*)
+  		echo $ac_n "checking for pthread_create in -lpthread""... $ac_c" 1>&6
+! echo "configure:1946: checking for pthread_create in -lpthread" >&5
+  ac_lib_var=`echo pthread'_'pthread_create | sed 'y%./+-%__p_%'`
+  if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+***************
+*** 1944,1950 ****
+    ac_save_LIBS="$LIBS"
+  LIBS="-lpthread  $LIBS"
+  cat > conftest.$ac_ext <<EOF
+! #line 1948 "configure"
+  #include "confdefs.h"
+  /* Override any gcc2 internal prototype to avoid an error.  */
+  /* We use char because int might match the return type of a gcc2
+--- 1950,1956 ----
+    ac_save_LIBS="$LIBS"
+  LIBS="-lpthread  $LIBS"
+  cat > conftest.$ac_ext <<EOF
+! #line 1954 "configure"
+  #include "confdefs.h"
+  /* Override any gcc2 internal prototype to avoid an error.  */
+  /* We use char because int might match the return type of a gcc2
+***************
+*** 1955,1961 ****
+  pthread_create()
+  ; return 0; }
+  EOF
+! if { (eval echo configure:1959: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_lib_$ac_lib_var=yes"
+  else
+--- 1961,1967 ----
+  pthread_create()
+  ; return 0; }
+  EOF
+! if { (eval echo configure:1965: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_lib_$ac_lib_var=yes"
+  else
+***************
+*** 1981,1987 ****
+  else
+    echo "$ac_t""no" 1>&6
+  echo $ac_n "checking for __pthread_create in -lpthread""... $ac_c" 1>&6
+! echo "configure:1985: checking for __pthread_create in -lpthread" >&5
+  ac_lib_var=`echo pthread'_'__pthread_create | sed 'y%./+-%__p_%'`
+  if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+--- 1987,1993 ----
+  else
+    echo "$ac_t""no" 1>&6
+  echo $ac_n "checking for __pthread_create in -lpthread""... $ac_c" 1>&6
+! echo "configure:1991: checking for __pthread_create in -lpthread" >&5
+  ac_lib_var=`echo pthread'_'__pthread_create | sed 'y%./+-%__p_%'`
+  if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+***************
+*** 1989,1995 ****
+    ac_save_LIBS="$LIBS"
+  LIBS="-lpthread  $LIBS"
+  cat > conftest.$ac_ext <<EOF
+! #line 1993 "configure"
+  #include "confdefs.h"
+  /* Override any gcc2 internal prototype to avoid an error.  */
+  /* We use char because int might match the return type of a gcc2
+--- 1995,2001 ----
+    ac_save_LIBS="$LIBS"
+  LIBS="-lpthread  $LIBS"
+  cat > conftest.$ac_ext <<EOF
+! #line 1999 "configure"
+  #include "confdefs.h"
+  /* Override any gcc2 internal prototype to avoid an error.  */
+  /* We use char because int might match the return type of a gcc2
+***************
+*** 2000,2006 ****
+  __pthread_create()
+  ; return 0; }
+  EOF
+! if { (eval echo configure:2004: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_lib_$ac_lib_var=yes"
+  else
+--- 2006,2012 ----
+  __pthread_create()
+  ; return 0; }
+  EOF
+! if { (eval echo configure:2010: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_lib_$ac_lib_var=yes"
+  else
+***************
+*** 2028,2034 ****
+  fi
+  
+          	     echo $ac_n "checking for __pthread_create_system in -lpthread""... $ac_c" 1>&6
+! echo "configure:2032: checking for __pthread_create_system in -lpthread" >&5
+  ac_lib_var=`echo pthread'_'__pthread_create_system | sed 'y%./+-%__p_%'`
+  if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+--- 2034,2040 ----
+  fi
+  
+          	     echo $ac_n "checking for __pthread_create_system in -lpthread""... $ac_c" 1>&6
+! echo "configure:2038: checking for __pthread_create_system in -lpthread" >&5
+  ac_lib_var=`echo pthread'_'__pthread_create_system | sed 'y%./+-%__p_%'`
+  if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+***************
+*** 2036,2042 ****
+    ac_save_LIBS="$LIBS"
+  LIBS="-lpthread  $LIBS"
+  cat > conftest.$ac_ext <<EOF
+! #line 2040 "configure"
+  #include "confdefs.h"
+  /* Override any gcc2 internal prototype to avoid an error.  */
+  /* We use char because int might match the return type of a gcc2
+--- 2042,2048 ----
+    ac_save_LIBS="$LIBS"
+  LIBS="-lpthread  $LIBS"
+  cat > conftest.$ac_ext <<EOF
+! #line 2046 "configure"
+  #include "confdefs.h"
+  /* Override any gcc2 internal prototype to avoid an error.  */
+  /* We use char because int might match the return type of a gcc2
+***************
+*** 2047,2053 ****
+  __pthread_create_system()
+  ; return 0; }
+  EOF
+! if { (eval echo configure:2051: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_lib_$ac_lib_var=yes"
+  else
+--- 2053,2059 ----
+  __pthread_create_system()
+  ; return 0; }
+  EOF
+! if { (eval echo configure:2057: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_lib_$ac_lib_var=yes"
+  else
+***************
+*** 2083,2089 ****
+  # We'd like to use sigwait() too
+  #
+  echo $ac_n "checking for sigwait in -lc""... $ac_c" 1>&6
+! echo "configure:2087: checking for sigwait in -lc" >&5
+  ac_lib_var=`echo c'_'sigwait | sed 'y%./+-%__p_%'`
+  if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+--- 2089,2095 ----
+  # We'd like to use sigwait() too
+  #
+  echo $ac_n "checking for sigwait in -lc""... $ac_c" 1>&6
+! echo "configure:2093: checking for sigwait in -lc" >&5
+  ac_lib_var=`echo c'_'sigwait | sed 'y%./+-%__p_%'`
+  if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+***************
+*** 2091,2097 ****
+    ac_save_LIBS="$LIBS"
+  LIBS="-lc  $LIBS"
+  cat > conftest.$ac_ext <<EOF
+! #line 2095 "configure"
+  #include "confdefs.h"
+  /* Override any gcc2 internal prototype to avoid an error.  */
+  /* We use char because int might match the return type of a gcc2
+--- 2097,2103 ----
+    ac_save_LIBS="$LIBS"
+  LIBS="-lc  $LIBS"
+  cat > conftest.$ac_ext <<EOF
+! #line 2101 "configure"
+  #include "confdefs.h"
+  /* Override any gcc2 internal prototype to avoid an error.  */
+  /* We use char because int might match the return type of a gcc2
+***************
+*** 2102,2108 ****
+  sigwait()
+  ; return 0; }
+  EOF
+! if { (eval echo configure:2106: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_lib_$ac_lib_var=yes"
+  else
+--- 2108,2114 ----
+  sigwait()
+  ; return 0; }
+  EOF
+! if { (eval echo configure:2112: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_lib_$ac_lib_var=yes"
+  else
+***************
+*** 2124,2130 ****
+  else
+    echo "$ac_t""no" 1>&6
+  echo $ac_n "checking for sigwait in -lpthread""... $ac_c" 1>&6
+! echo "configure:2128: checking for sigwait in -lpthread" >&5
+  ac_lib_var=`echo pthread'_'sigwait | sed 'y%./+-%__p_%'`
+  if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+--- 2130,2136 ----
+  else
+    echo "$ac_t""no" 1>&6
+  echo $ac_n "checking for sigwait in -lpthread""... $ac_c" 1>&6
+! echo "configure:2134: checking for sigwait in -lpthread" >&5
+  ac_lib_var=`echo pthread'_'sigwait | sed 'y%./+-%__p_%'`
+  if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+***************
+*** 2132,2138 ****
+    ac_save_LIBS="$LIBS"
+  LIBS="-lpthread  $LIBS"
+  cat > conftest.$ac_ext <<EOF
+! #line 2136 "configure"
+  #include "confdefs.h"
+  /* Override any gcc2 internal prototype to avoid an error.  */
+  /* We use char because int might match the return type of a gcc2
+--- 2138,2144 ----
+    ac_save_LIBS="$LIBS"
+  LIBS="-lpthread  $LIBS"
+  cat > conftest.$ac_ext <<EOF
+! #line 2142 "configure"
+  #include "confdefs.h"
+  /* Override any gcc2 internal prototype to avoid an error.  */
+  /* We use char because int might match the return type of a gcc2
+***************
+*** 2143,2149 ****
+  sigwait()
+  ; return 0; }
+  EOF
+! if { (eval echo configure:2147: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_lib_$ac_lib_var=yes"
+  else
+--- 2149,2155 ----
+  sigwait()
+  ; return 0; }
+  EOF
+! if { (eval echo configure:2153: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_lib_$ac_lib_var=yes"
+  else
+***************
+*** 2165,2171 ****
+  else
+    echo "$ac_t""no" 1>&6
+  echo $ac_n "checking for _Psigwait in -lpthread""... $ac_c" 1>&6
+! echo "configure:2169: checking for _Psigwait in -lpthread" >&5
+  ac_lib_var=`echo pthread'_'_Psigwait | sed 'y%./+-%__p_%'`
+  if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+--- 2171,2177 ----
+  else
+    echo "$ac_t""no" 1>&6
+  echo $ac_n "checking for _Psigwait in -lpthread""... $ac_c" 1>&6
+! echo "configure:2175: checking for _Psigwait in -lpthread" >&5
+  ac_lib_var=`echo pthread'_'_Psigwait | sed 'y%./+-%__p_%'`
+  if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+***************
+*** 2173,2179 ****
+    ac_save_LIBS="$LIBS"
+  LIBS="-lpthread  $LIBS"
+  cat > conftest.$ac_ext <<EOF
+! #line 2177 "configure"
+  #include "confdefs.h"
+  /* Override any gcc2 internal prototype to avoid an error.  */
+  /* We use char because int might match the return type of a gcc2
+--- 2179,2185 ----
+    ac_save_LIBS="$LIBS"
+  LIBS="-lpthread  $LIBS"
+  cat > conftest.$ac_ext <<EOF
+! #line 2183 "configure"
+  #include "confdefs.h"
+  /* Override any gcc2 internal prototype to avoid an error.  */
+  /* We use char because int might match the return type of a gcc2
+***************
+*** 2184,2190 ****
+  _Psigwait()
+  ; return 0; }
+  EOF
+! if { (eval echo configure:2188: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_lib_$ac_lib_var=yes"
+  else
+--- 2190,2196 ----
+  _Psigwait()
+  ; return 0; }
+  EOF
+! if { (eval echo configure:2194: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_lib_$ac_lib_var=yes"
+  else
+***************
+*** 2222,2228 ****
+          #
+  	*-freebsd*)
+  		echo $ac_n "checking for sigwait in -lc_r""... $ac_c" 1>&6
+! echo "configure:2226: checking for sigwait in -lc_r" >&5
+  ac_lib_var=`echo c_r'_'sigwait | sed 'y%./+-%__p_%'`
+  if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+--- 2228,2234 ----
+          #
+  	*-freebsd*)
+  		echo $ac_n "checking for sigwait in -lc_r""... $ac_c" 1>&6
+! echo "configure:2232: checking for sigwait in -lc_r" >&5
+  ac_lib_var=`echo c_r'_'sigwait | sed 'y%./+-%__p_%'`
+  if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+***************
+*** 2230,2236 ****
+    ac_save_LIBS="$LIBS"
+  LIBS="-lc_r  $LIBS"
+  cat > conftest.$ac_ext <<EOF
+! #line 2234 "configure"
+  #include "confdefs.h"
+  /* Override any gcc2 internal prototype to avoid an error.  */
+  /* We use char because int might match the return type of a gcc2
+--- 2236,2242 ----
+    ac_save_LIBS="$LIBS"
+  LIBS="-lc_r  $LIBS"
+  cat > conftest.$ac_ext <<EOF
+! #line 2240 "configure"
+  #include "confdefs.h"
+  /* Override any gcc2 internal prototype to avoid an error.  */
+  /* We use char because int might match the return type of a gcc2
+***************
+*** 2241,2247 ****
+  sigwait()
+  ; return 0; }
+  EOF
+! if { (eval echo configure:2245: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_lib_$ac_lib_var=yes"
+  else
+--- 2247,2253 ----
+  sigwait()
+  ; return 0; }
+  EOF
+! if { (eval echo configure:2251: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_lib_$ac_lib_var=yes"
+  else
+***************
+*** 2293,2304 ****
+  EOF
+  
+  		echo $ac_n "checking for pthread_setconcurrency""... $ac_c" 1>&6
+! echo "configure:2297: checking for pthread_setconcurrency" >&5
+  if eval "test \"`echo '$''{'ac_cv_func_pthread_setconcurrency'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 2302 "configure"
+  #include "confdefs.h"
+  /* System header to define __stub macros and hopefully few prototypes,
+      which can conflict with char pthread_setconcurrency(); below.  */
+--- 2299,2310 ----
+  EOF
+  
+  		echo $ac_n "checking for pthread_setconcurrency""... $ac_c" 1>&6
+! echo "configure:2303: checking for pthread_setconcurrency" >&5
+  if eval "test \"`echo '$''{'ac_cv_func_pthread_setconcurrency'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 2308 "configure"
+  #include "confdefs.h"
+  /* System header to define __stub macros and hopefully few prototypes,
+      which can conflict with char pthread_setconcurrency(); below.  */
+***************
+*** 2321,2327 ****
+  
+  ; return 0; }
+  EOF
+! if { (eval echo configure:2325: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_func_pthread_setconcurrency=yes"
+  else
+--- 2327,2333 ----
+  
+  ; return 0; }
+  EOF
+! if { (eval echo configure:2331: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_func_pthread_setconcurrency=yes"
+  else
+***************
+*** 2359,2370 ****
+  # Look for sysconf to allow detection of the number of processors.
+  #
+  echo $ac_n "checking for sysconf""... $ac_c" 1>&6
+! echo "configure:2363: checking for sysconf" >&5
+  if eval "test \"`echo '$''{'ac_cv_func_sysconf'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 2368 "configure"
+  #include "confdefs.h"
+  /* System header to define __stub macros and hopefully few prototypes,
+      which can conflict with char sysconf(); below.  */
+--- 2365,2376 ----
+  # Look for sysconf to allow detection of the number of processors.
+  #
+  echo $ac_n "checking for sysconf""... $ac_c" 1>&6
+! echo "configure:2369: checking for sysconf" >&5
+  if eval "test \"`echo '$''{'ac_cv_func_sysconf'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 2374 "configure"
+  #include "confdefs.h"
+  /* System header to define __stub macros and hopefully few prototypes,
+      which can conflict with char sysconf(); below.  */
+***************
+*** 2387,2393 ****
+  
+  ; return 0; }
+  EOF
+! if { (eval echo configure:2391: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_func_sysconf=yes"
+  else
+--- 2393,2399 ----
+  
+  ; return 0; }
+  EOF
+! if { (eval echo configure:2397: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_func_sysconf=yes"
+  else
+***************
+*** 2414,2425 ****
+  # NLS
+  #
+  echo $ac_n "checking for catgets""... $ac_c" 1>&6
+! echo "configure:2418: checking for catgets" >&5
+  if eval "test \"`echo '$''{'ac_cv_func_catgets'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 2423 "configure"
+  #include "confdefs.h"
+  /* System header to define __stub macros and hopefully few prototypes,
+      which can conflict with char catgets(); below.  */
+--- 2420,2431 ----
+  # NLS
+  #
+  echo $ac_n "checking for catgets""... $ac_c" 1>&6
+! echo "configure:2424: checking for catgets" >&5
+  if eval "test \"`echo '$''{'ac_cv_func_catgets'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 2429 "configure"
+  #include "confdefs.h"
+  /* System header to define __stub macros and hopefully few prototypes,
+      which can conflict with char catgets(); below.  */
+***************
+*** 2442,2448 ****
+  
+  ; return 0; }
+  EOF
+! if { (eval echo configure:2446: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_func_catgets=yes"
+  else
+--- 2448,2454 ----
+  
+  ; return 0; }
+  EOF
+! if { (eval echo configure:2452: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_func_catgets=yes"
+  else
+***************
+*** 2480,2486 ****
+  		;;
+  	*)
+  		echo $ac_n "checking for socket in -lsocket""... $ac_c" 1>&6
+! echo "configure:2484: checking for socket in -lsocket" >&5
+  ac_lib_var=`echo socket'_'socket | sed 'y%./+-%__p_%'`
+  if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+--- 2486,2492 ----
+  		;;
+  	*)
+  		echo $ac_n "checking for socket in -lsocket""... $ac_c" 1>&6
+! echo "configure:2490: checking for socket in -lsocket" >&5
+  ac_lib_var=`echo socket'_'socket | sed 'y%./+-%__p_%'`
+  if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+***************
+*** 2488,2494 ****
+    ac_save_LIBS="$LIBS"
+  LIBS="-lsocket  $LIBS"
+  cat > conftest.$ac_ext <<EOF
+! #line 2492 "configure"
+  #include "confdefs.h"
+  /* Override any gcc2 internal prototype to avoid an error.  */
+  /* We use char because int might match the return type of a gcc2
+--- 2494,2500 ----
+    ac_save_LIBS="$LIBS"
+  LIBS="-lsocket  $LIBS"
+  cat > conftest.$ac_ext <<EOF
+! #line 2498 "configure"
+  #include "confdefs.h"
+  /* Override any gcc2 internal prototype to avoid an error.  */
+  /* We use char because int might match the return type of a gcc2
+***************
+*** 2499,2505 ****
+  socket()
+  ; return 0; }
+  EOF
+! if { (eval echo configure:2503: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_lib_$ac_lib_var=yes"
+  else
+--- 2505,2511 ----
+  socket()
+  ; return 0; }
+  EOF
+! if { (eval echo configure:2509: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_lib_$ac_lib_var=yes"
+  else
+***************
+*** 2527,2533 ****
+  fi
+  
+  		echo $ac_n "checking for inet_ntoa in -lnsl""... $ac_c" 1>&6
+! echo "configure:2531: checking for inet_ntoa in -lnsl" >&5
+  ac_lib_var=`echo nsl'_'inet_ntoa | sed 'y%./+-%__p_%'`
+  if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+--- 2533,2539 ----
+  fi
+  
+  		echo $ac_n "checking for inet_ntoa in -lnsl""... $ac_c" 1>&6
+! echo "configure:2537: checking for inet_ntoa in -lnsl" >&5
+  ac_lib_var=`echo nsl'_'inet_ntoa | sed 'y%./+-%__p_%'`
+  if eval "test \"`echo '$''{'ac_cv_lib_$ac_lib_var'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+***************
+*** 2535,2541 ****
+    ac_save_LIBS="$LIBS"
+  LIBS="-lnsl  $LIBS"
+  cat > conftest.$ac_ext <<EOF
+! #line 2539 "configure"
+  #include "confdefs.h"
+  /* Override any gcc2 internal prototype to avoid an error.  */
+  /* We use char because int might match the return type of a gcc2
+--- 2541,2547 ----
+    ac_save_LIBS="$LIBS"
+  LIBS="-lnsl  $LIBS"
+  cat > conftest.$ac_ext <<EOF
+! #line 2545 "configure"
+  #include "confdefs.h"
+  /* Override any gcc2 internal prototype to avoid an error.  */
+  /* We use char because int might match the return type of a gcc2
+***************
+*** 2546,2552 ****
+  inet_ntoa()
+  ; return 0; }
+  EOF
+! if { (eval echo configure:2550: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_lib_$ac_lib_var=yes"
+  else
+--- 2552,2558 ----
+  inet_ntoa()
+  ; return 0; }
+  EOF
+! if { (eval echo configure:2556: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_lib_$ac_lib_var=yes"
+  else
+***************
+*** 2728,2734 ****
+  fi
+  
+  echo $ac_n "checking build system type""... $ac_c" 1>&6
+! echo "configure:2732: checking build system type" >&5
+  
+  build_alias=$build
+  case "$build_alias" in
+--- 2734,2740 ----
+  fi
+  
+  echo $ac_n "checking build system type""... $ac_c" 1>&6
+! echo "configure:2738: checking build system type" >&5
+  
+  build_alias=$build
+  case "$build_alias" in
+***************
+*** 2757,2763 ****
+  if test "$ac_cv_prog_gcc" = yes; then
+    # Check if gcc -print-prog-name=ld gives a path.
+    echo $ac_n "checking for ld used by GCC""... $ac_c" 1>&6
+! echo "configure:2761: checking for ld used by GCC" >&5
+    ac_prog=`($CC -print-prog-name=ld) 2>&5`
+    case "$ac_prog" in
+      # Accept absolute paths.
+--- 2763,2769 ----
+  if test "$ac_cv_prog_gcc" = yes; then
+    # Check if gcc -print-prog-name=ld gives a path.
+    echo $ac_n "checking for ld used by GCC""... $ac_c" 1>&6
+! echo "configure:2767: checking for ld used by GCC" >&5
+    ac_prog=`($CC -print-prog-name=ld) 2>&5`
+    case "$ac_prog" in
+      # Accept absolute paths.
+***************
+*** 2781,2790 ****
+    esac
+  elif test "$with_gnu_ld" = yes; then
+    echo $ac_n "checking for GNU ld""... $ac_c" 1>&6
+! echo "configure:2785: checking for GNU ld" >&5
+  else
+    echo $ac_n "checking for non-GNU ld""... $ac_c" 1>&6
+! echo "configure:2788: checking for non-GNU ld" >&5
+  fi
+  if eval "test \"`echo '$''{'ac_cv_path_LD'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+--- 2787,2796 ----
+    esac
+  elif test "$with_gnu_ld" = yes; then
+    echo $ac_n "checking for GNU ld""... $ac_c" 1>&6
+! echo "configure:2791: checking for GNU ld" >&5
+  else
+    echo $ac_n "checking for non-GNU ld""... $ac_c" 1>&6
+! echo "configure:2794: checking for non-GNU ld" >&5
+  fi
+  if eval "test \"`echo '$''{'ac_cv_path_LD'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+***************
+*** 2820,2826 ****
+  test -z "$LD" && { echo "configure: error: no acceptable ld found in \$PATH" 1>&2; exit 1; }
+  
+  echo $ac_n "checking if the linker ($LD) is GNU ld""... $ac_c" 1>&6
+! echo "configure:2824: checking if the linker ($LD) is GNU ld" >&5
+  if eval "test \"`echo '$''{'ac_cv_prog_gnu_ld'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+--- 2826,2832 ----
+  test -z "$LD" && { echo "configure: error: no acceptable ld found in \$PATH" 1>&2; exit 1; }
+  
+  echo $ac_n "checking if the linker ($LD) is GNU ld""... $ac_c" 1>&6
+! echo "configure:2830: checking if the linker ($LD) is GNU ld" >&5
+  if eval "test \"`echo '$''{'ac_cv_prog_gnu_ld'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+***************
+*** 2836,2842 ****
+  
+  
+  echo $ac_n "checking for BSD-compatible nm""... $ac_c" 1>&6
+! echo "configure:2840: checking for BSD-compatible nm" >&5
+  if eval "test \"`echo '$''{'ac_cv_path_NM'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+--- 2842,2848 ----
+  
+  
+  echo $ac_n "checking for BSD-compatible nm""... $ac_c" 1>&6
+! echo "configure:2846: checking for BSD-compatible nm" >&5
+  if eval "test \"`echo '$''{'ac_cv_path_NM'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+***************
+*** 2873,2879 ****
+  
+  
+  echo $ac_n "checking whether ln -s works""... $ac_c" 1>&6
+! echo "configure:2877: checking whether ln -s works" >&5
+  if eval "test \"`echo '$''{'ac_cv_prog_LN_S'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+--- 2879,2885 ----
+  
+  
+  echo $ac_n "checking whether ln -s works""... $ac_c" 1>&6
+! echo "configure:2883: checking whether ln -s works" >&5
+  if eval "test \"`echo '$''{'ac_cv_prog_LN_S'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+***************
+*** 2917,2924 ****
+  case "$host" in
+  *-*-irix6*)
+    # Find out which ABI we are using.
+!   echo '#line 2921 "configure"' > conftest.$ac_ext
+!   if { (eval echo configure:2922: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+      case "`/usr/bin/file conftest.o`" in
+      *32-bit*)
+        LD="${LD-ld} -32"
+--- 2923,2930 ----
+  case "$host" in
+  *-*-irix6*)
+    # Find out which ABI we are using.
+!   echo '#line 2927 "configure"' > conftest.$ac_ext
+!   if { (eval echo configure:2928: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+      case "`/usr/bin/file conftest.o`" in
+      *32-bit*)
+        LD="${LD-ld} -32"
+***************
+*** 2939,2957 ****
+    SAVE_CFLAGS="$CFLAGS"
+    CFLAGS="$CFLAGS -belf"
+    echo $ac_n "checking whether the C compiler needs -belf""... $ac_c" 1>&6
+! echo "configure:2943: checking whether the C compiler needs -belf" >&5
+  if eval "test \"`echo '$''{'lt_cv_cc_needs_belf'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 2948 "configure"
+  #include "confdefs.h"
+  
+  int main() {
+  
+  ; return 0; }
+  EOF
+! if { (eval echo configure:2955: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    lt_cv_cc_needs_belf=yes
+  else
+--- 2945,2963 ----
+    SAVE_CFLAGS="$CFLAGS"
+    CFLAGS="$CFLAGS -belf"
+    echo $ac_n "checking whether the C compiler needs -belf""... $ac_c" 1>&6
+! echo "configure:2949: checking whether the C compiler needs -belf" >&5
+  if eval "test \"`echo '$''{'lt_cv_cc_needs_belf'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 2954 "configure"
+  #include "confdefs.h"
+  
+  int main() {
+  
+  ; return 0; }
+  EOF
+! if { (eval echo configure:2961: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    lt_cv_cc_needs_belf=yes
+  else
+***************
+*** 3088,3096 ****
+  case "$enable_ipv6" in
+  	yes|''|autodetect)
+  		echo $ac_n "checking for IPv6 structures""... $ac_c" 1>&6
+! echo "configure:3092: checking for IPv6 structures" >&5
+  		cat > conftest.$ac_ext <<EOF
+! #line 3094 "configure"
+  #include "confdefs.h"
+  
+  #include <sys/types.h>
+--- 3094,3102 ----
+  case "$enable_ipv6" in
+  	yes|''|autodetect)
+  		echo $ac_n "checking for IPv6 structures""... $ac_c" 1>&6
+! echo "configure:3098: checking for IPv6 structures" >&5
+  		cat > conftest.$ac_ext <<EOF
+! #line 3100 "configure"
+  #include "confdefs.h"
+  
+  #include <sys/types.h>
+***************
+*** 3100,3106 ****
+  struct sockaddr_in6 sin6; return (0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3104: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+  			 found_ipv6=yes
+--- 3106,3112 ----
+  struct sockaddr_in6 sin6; return (0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3110: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+  			 found_ipv6=yes
+***************
+*** 3123,3129 ****
+  # This is done before other IPv6 linking tests to LIBS is properly set.
+  #
+  echo $ac_n "checking for Kame IPv6 support""... $ac_c" 1>&6
+! echo "configure:3127: checking for Kame IPv6 support" >&5
+  # Check whether --with-kame or --without-kame was given.
+  if test "${with_kame+set}" = set; then
+    withval="$with_kame"
+--- 3129,3135 ----
+  # This is done before other IPv6 linking tests to LIBS is properly set.
+  #
+  echo $ac_n "checking for Kame IPv6 support""... $ac_c" 1>&6
+! echo "configure:3133: checking for Kame IPv6 support" >&5
+  # Check whether --with-kame or --without-kame was given.
+  if test "${with_kame+set}" = set; then
+    withval="$with_kame"
+***************
+*** 3211,3219 ****
+  		LWRES_PLATFORM_HAVEIPV6="#define LWRES_PLATFORM_HAVEIPV6 1"
+  
+  		echo $ac_n "checking for in6addr_any""... $ac_c" 1>&6
+! echo "configure:3215: checking for in6addr_any" >&5
+  		cat > conftest.$ac_ext <<EOF
+! #line 3217 "configure"
+  #include "confdefs.h"
+  
+  #include <sys/types.h>
+--- 3217,3225 ----
+  		LWRES_PLATFORM_HAVEIPV6="#define LWRES_PLATFORM_HAVEIPV6 1"
+  
+  		echo $ac_n "checking for in6addr_any""... $ac_c" 1>&6
+! echo "configure:3221: checking for in6addr_any" >&5
+  		cat > conftest.$ac_ext <<EOF
+! #line 3223 "configure"
+  #include "confdefs.h"
+  
+  #include <sys/types.h>
+***************
+*** 3224,3230 ****
+  struct in6_addr in6; in6 = in6addr_any; return (0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3228: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+  			 ISC_PLATFORM_NEEDIN6ADDRANY="#undef ISC_PLATFORM_NEEDIN6ADDRANY"
+--- 3230,3236 ----
+  struct in6_addr in6; in6 = in6addr_any; return (0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3234: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+  			 ISC_PLATFORM_NEEDIN6ADDRANY="#undef ISC_PLATFORM_NEEDIN6ADDRANY"
+***************
+*** 3240,3248 ****
+  rm -f conftest*
+  
+  		echo $ac_n "checking for sin6_scope_id in struct sockaddr_in6""... $ac_c" 1>&6
+! echo "configure:3244: checking for sin6_scope_id in struct sockaddr_in6" >&5
+  		cat > conftest.$ac_ext <<EOF
+! #line 3246 "configure"
+  #include "confdefs.h"
+  
+  #include <sys/types.h>
+--- 3246,3254 ----
+  rm -f conftest*
+  
+  		echo $ac_n "checking for sin6_scope_id in struct sockaddr_in6""... $ac_c" 1>&6
+! echo "configure:3250: checking for sin6_scope_id in struct sockaddr_in6" >&5
+  		cat > conftest.$ac_ext <<EOF
+! #line 3252 "configure"
+  #include "confdefs.h"
+  
+  #include <sys/types.h>
+***************
+*** 3255,3261 ****
+  struct sockaddr_in6 xyzzy; xyzzy.sin6_scope_id = 0; return (0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3259: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+  			 result="#define LWRES_HAVE_SIN6_SCOPE_ID 1"
+--- 3261,3267 ----
+  struct sockaddr_in6 xyzzy; xyzzy.sin6_scope_id = 0; return (0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3265: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+  			 result="#define LWRES_HAVE_SIN6_SCOPE_ID 1"
+***************
+*** 3270,3278 ****
+  		LWRES_HAVE_SIN6_SCOPE_ID="$result"
+  
+  		echo $ac_n "checking for in6_pktinfo""... $ac_c" 1>&6
+! echo "configure:3274: checking for in6_pktinfo" >&5
+  		cat > conftest.$ac_ext <<EOF
+! #line 3276 "configure"
+  #include "confdefs.h"
+  
+  #include <sys/types.h>
+--- 3276,3284 ----
+  		LWRES_HAVE_SIN6_SCOPE_ID="$result"
+  
+  		echo $ac_n "checking for in6_pktinfo""... $ac_c" 1>&6
+! echo "configure:3280: checking for in6_pktinfo" >&5
+  		cat > conftest.$ac_ext <<EOF
+! #line 3282 "configure"
+  #include "confdefs.h"
+  
+  #include <sys/types.h>
+***************
+*** 3285,3291 ****
+  struct in6_pktinfo xyzzy; return (0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3289: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+  			 ISC_PLATFORM_HAVEIN6PKTINFO="#define ISC_PLATFORM_HAVEIN6PKTINFO 1"
+--- 3291,3297 ----
+  struct in6_pktinfo xyzzy; return (0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3295: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+  			 ISC_PLATFORM_HAVEIN6PKTINFO="#define ISC_PLATFORM_HAVEIN6PKTINFO 1"
+***************
+*** 3332,3340 ****
+  # the files.
+  #
+  echo $ac_n "checking for inet_ntop""... $ac_c" 1>&6
+! echo "configure:3336: checking for inet_ntop" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3338 "configure"
+  #include "confdefs.h"
+  
+  #include <sys/types.h>
+--- 3338,3346 ----
+  # the files.
+  #
+  echo $ac_n "checking for inet_ntop""... $ac_c" 1>&6
+! echo "configure:3342: checking for inet_ntop" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3344 "configure"
+  #include "confdefs.h"
+  
+  #include <sys/types.h>
+***************
+*** 3344,3350 ****
+  inet_ntop(0, 0, 0, 0); return (0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3348: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+          ISC_PLATFORM_NEEDNTOP="#undef ISC_PLATFORM_NEEDNTOP"
+--- 3350,3356 ----
+  inet_ntop(0, 0, 0, 0); return (0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3354: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+          ISC_PLATFORM_NEEDNTOP="#undef ISC_PLATFORM_NEEDNTOP"
+***************
+*** 3359,3367 ****
+  fi
+  rm -f conftest*
+  echo $ac_n "checking for inet_pton""... $ac_c" 1>&6
+! echo "configure:3363: checking for inet_pton" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3365 "configure"
+  #include "confdefs.h"
+  
+  #include <sys/types.h>
+--- 3365,3373 ----
+  fi
+  rm -f conftest*
+  echo $ac_n "checking for inet_pton""... $ac_c" 1>&6
+! echo "configure:3369: checking for inet_pton" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3371 "configure"
+  #include "confdefs.h"
+  
+  #include <sys/types.h>
+***************
+*** 3371,3377 ****
+  inet_pton(0, 0, 0); return (0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3375: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+          ISC_PLATFORM_NEEDPTON="#undef ISC_PLATFORM_NEEDPTON"
+--- 3377,3383 ----
+  inet_pton(0, 0, 0); return (0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3381: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+          ISC_PLATFORM_NEEDPTON="#undef ISC_PLATFORM_NEEDPTON"
+***************
+*** 3386,3394 ****
+  fi
+  rm -f conftest*
+  echo $ac_n "checking for inet_aton""... $ac_c" 1>&6
+! echo "configure:3390: checking for inet_aton" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3392 "configure"
+  #include "confdefs.h"
+  
+  #include <sys/types.h>
+--- 3392,3400 ----
+  fi
+  rm -f conftest*
+  echo $ac_n "checking for inet_aton""... $ac_c" 1>&6
+! echo "configure:3396: checking for inet_aton" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3398 "configure"
+  #include "confdefs.h"
+  
+  #include <sys/types.h>
+***************
+*** 3398,3404 ****
+  struct in_addr in; inet_aton(0, &in); return (0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3402: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+          ISC_PLATFORM_NEEDATON="#undef ISC_PLATFORM_NEEDATON"
+--- 3404,3410 ----
+  struct in_addr in; inet_aton(0, &in); return (0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3408: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+          ISC_PLATFORM_NEEDATON="#undef ISC_PLATFORM_NEEDATON"
+***************
+*** 3434,3442 ****
+  # Look for a 4.4BSD-style sa_len member in struct sockaddr.
+  #
+  echo $ac_n "checking for sa_len in struct sockaddr""... $ac_c" 1>&6
+! echo "configure:3438: checking for sa_len in struct sockaddr" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3440 "configure"
+  #include "confdefs.h"
+  
+  #include <sys/types.h>
+--- 3440,3448 ----
+  # Look for a 4.4BSD-style sa_len member in struct sockaddr.
+  #
+  echo $ac_n "checking for sa_len in struct sockaddr""... $ac_c" 1>&6
+! echo "configure:3444: checking for sa_len in struct sockaddr" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3446 "configure"
+  #include "confdefs.h"
+  
+  #include <sys/types.h>
+***************
+*** 3445,3451 ****
+  struct sockaddr sa; sa.sa_len = 0; return (0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3449: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+  	ISC_PLATFORM_HAVESALEN="#define ISC_PLATFORM_HAVESALEN 1"
+--- 3451,3457 ----
+  struct sockaddr sa; sa.sa_len = 0; return (0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3455: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+  	ISC_PLATFORM_HAVESALEN="#define ISC_PLATFORM_HAVESALEN 1"
+***************
+*** 3466,3474 ****
+  # Look for a 4.4BSD or 4.3BSD struct msghdr
+  #
+  echo $ac_n "checking for struct msghdr flavor""... $ac_c" 1>&6
+! echo "configure:3470: checking for struct msghdr flavor" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3472 "configure"
+  #include "confdefs.h"
+  
+  #include <sys/types.h>
+--- 3472,3480 ----
+  # Look for a 4.4BSD or 4.3BSD struct msghdr
+  #
+  echo $ac_n "checking for struct msghdr flavor""... $ac_c" 1>&6
+! echo "configure:3476: checking for struct msghdr flavor" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3478 "configure"
+  #include "confdefs.h"
+  
+  #include <sys/types.h>
+***************
+*** 3477,3483 ****
+  struct msghdr msg; msg.msg_flags = 0; return (0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3481: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    echo "$ac_t""4.4BSD" 1>&6
+  	ISC_PLATFORM_MSGHDRFLAVOR="#define ISC_NET_BSD44MSGHDR 1"
+--- 3483,3489 ----
+  struct msghdr msg; msg.msg_flags = 0; return (0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3487: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    echo "$ac_t""4.4BSD" 1>&6
+  	ISC_PLATFORM_MSGHDRFLAVOR="#define ISC_NET_BSD44MSGHDR 1"
+***************
+*** 3495,3503 ****
+  # Look for in_port_t.
+  #
+  echo $ac_n "checking for type in_port_t""... $ac_c" 1>&6
+! echo "configure:3499: checking for type in_port_t" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3501 "configure"
+  #include "confdefs.h"
+  
+  #include <sys/types.h>
+--- 3501,3509 ----
+  # Look for in_port_t.
+  #
+  echo $ac_n "checking for type in_port_t""... $ac_c" 1>&6
+! echo "configure:3505: checking for type in_port_t" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3507 "configure"
+  #include "confdefs.h"
+  
+  #include <sys/types.h>
+***************
+*** 3506,3512 ****
+  in_port_t port = 25; return (0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3510: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+  	ISC_PLATFORM_NEEDPORTT="#undef ISC_PLATFORM_NEEDPORTT"
+--- 3512,3518 ----
+  in_port_t port = 25; return (0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3516: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+  	ISC_PLATFORM_NEEDPORTT="#undef ISC_PLATFORM_NEEDPORTT"
+***************
+*** 3524,3532 ****
+  # Check for addrinfo
+  #
+  echo $ac_n "checking for struct addrinfo""... $ac_c" 1>&6
+! echo "configure:3528: checking for struct addrinfo" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3530 "configure"
+  #include "confdefs.h"
+  
+  #include <netdb.h>
+--- 3530,3538 ----
+  # Check for addrinfo
+  #
+  echo $ac_n "checking for struct addrinfo""... $ac_c" 1>&6
+! echo "configure:3534: checking for struct addrinfo" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3536 "configure"
+  #include "confdefs.h"
+  
+  #include <netdb.h>
+***************
+*** 3534,3540 ****
+  struct addrinfo a; return (0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3538: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+  	ISC_LWRES_NEEDADDRINFO="#undef ISC_LWRES_NEEDADDRINFO"
+--- 3540,3546 ----
+  struct addrinfo a; return (0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3544: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+  	ISC_LWRES_NEEDADDRINFO="#undef ISC_LWRES_NEEDADDRINFO"
+***************
+*** 3553,3561 ****
+  
+  
+  echo $ac_n "checking for int sethostent""... $ac_c" 1>&6
+! echo "configure:3557: checking for int sethostent" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3559 "configure"
+  #include "confdefs.h"
+  
+  #include <netdb.h>
+--- 3559,3567 ----
+  
+  
+  echo $ac_n "checking for int sethostent""... $ac_c" 1>&6
+! echo "configure:3563: checking for int sethostent" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3565 "configure"
+  #include "confdefs.h"
+  
+  #include <netdb.h>
+***************
+*** 3563,3569 ****
+  int i = sethostent(0); return(0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3567: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+  	ISC_LWRES_SETHOSTENTINT="#define ISC_LWRES_SETHOSTENTINT 1"
+--- 3569,3575 ----
+  int i = sethostent(0); return(0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3573: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+  	ISC_LWRES_SETHOSTENTINT="#define ISC_LWRES_SETHOSTENTINT 1"
+***************
+*** 3578,3586 ****
+  
+  
+  echo $ac_n "checking for int endhostent""... $ac_c" 1>&6
+! echo "configure:3582: checking for int endhostent" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3584 "configure"
+  #include "confdefs.h"
+  
+  #include <netdb.h>
+--- 3584,3592 ----
+  
+  
+  echo $ac_n "checking for int endhostent""... $ac_c" 1>&6
+! echo "configure:3588: checking for int endhostent" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3590 "configure"
+  #include "confdefs.h"
+  
+  #include <netdb.h>
+***************
+*** 3588,3594 ****
+  int i = endhostent(); return(0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3592: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+  	ISC_LWRES_ENDHOSTENTINT="#define ISC_LWRES_ENDHOSTENTINT 1"
+--- 3594,3600 ----
+  int i = endhostent(); return(0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3598: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+  	ISC_LWRES_ENDHOSTENTINT="#define ISC_LWRES_ENDHOSTENTINT 1"
+***************
+*** 3603,3611 ****
+  
+  
+  echo $ac_n "checking for getnetbyaddr(in_addr_t, ...)""... $ac_c" 1>&6
+! echo "configure:3607: checking for getnetbyaddr(in_addr_t, ...)" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3609 "configure"
+  #include "confdefs.h"
+  
+  #include <netdb.h>
+--- 3609,3617 ----
+  
+  
+  echo $ac_n "checking for getnetbyaddr(in_addr_t, ...)""... $ac_c" 1>&6
+! echo "configure:3613: checking for getnetbyaddr(in_addr_t, ...)" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3615 "configure"
+  #include "confdefs.h"
+  
+  #include <netdb.h>
+***************
+*** 3614,3620 ****
+  
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3618: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+  	ISC_LWRES_GETNETBYADDRINADDR="#define ISC_LWRES_GETNETBYADDRINADDR 1"
+--- 3620,3626 ----
+  
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3624: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+  	ISC_LWRES_GETNETBYADDRINADDR="#define ISC_LWRES_GETNETBYADDRINADDR 1"
+***************
+*** 3629,3637 ****
+  
+  
+  echo $ac_n "checking for int setnetent""... $ac_c" 1>&6
+! echo "configure:3633: checking for int setnetent" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3635 "configure"
+  #include "confdefs.h"
+  
+  #include <netdb.h>
+--- 3635,3643 ----
+  
+  
+  echo $ac_n "checking for int setnetent""... $ac_c" 1>&6
+! echo "configure:3639: checking for int setnetent" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3641 "configure"
+  #include "confdefs.h"
+  
+  #include <netdb.h>
+***************
+*** 3639,3645 ****
+  int i = setnetent(0); return(0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3643: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+  	ISC_LWRES_SETNETENTINT="#define ISC_LWRES_SETNETENTINT 1"
+--- 3645,3651 ----
+  int i = setnetent(0); return(0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3649: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+  	ISC_LWRES_SETNETENTINT="#define ISC_LWRES_SETNETENTINT 1"
+***************
+*** 3654,3662 ****
+  
+  
+  echo $ac_n "checking for int endnetent""... $ac_c" 1>&6
+! echo "configure:3658: checking for int endnetent" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3660 "configure"
+  #include "confdefs.h"
+  
+  #include <netdb.h>
+--- 3660,3668 ----
+  
+  
+  echo $ac_n "checking for int endnetent""... $ac_c" 1>&6
+! echo "configure:3664: checking for int endnetent" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3666 "configure"
+  #include "confdefs.h"
+  
+  #include <netdb.h>
+***************
+*** 3664,3670 ****
+  int i = endnetent(); return(0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3668: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+  	ISC_LWRES_ENDNETENTINT="#define ISC_LWRES_ENDNETENTINT 1"
+--- 3670,3676 ----
+  int i = endnetent(); return(0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3674: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+  	ISC_LWRES_ENDNETENTINT="#define ISC_LWRES_ENDNETENTINT 1"
+***************
+*** 3679,3687 ****
+  
+  
+  echo $ac_n "checking for gethostbyadd(const void *, size_t, ...)""... $ac_c" 1>&6
+! echo "configure:3683: checking for gethostbyadd(const void *, size_t, ...)" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3685 "configure"
+  #include "confdefs.h"
+  
+  #include <netdb.h>
+--- 3685,3693 ----
+  
+  
+  echo $ac_n "checking for gethostbyadd(const void *, size_t, ...)""... $ac_c" 1>&6
+! echo "configure:3689: checking for gethostbyadd(const void *, size_t, ...)" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3691 "configure"
+  #include "confdefs.h"
+  
+  #include <netdb.h>
+***************
+*** 3690,3696 ****
+  return(0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3694: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+  	ISC_LWRES_GETHOSTBYADDRVOID="#define ISC_LWRES_GETHOSTBYADDRVOID 1"
+--- 3696,3702 ----
+  return(0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3700: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+  	ISC_LWRES_GETHOSTBYADDRVOID="#define ISC_LWRES_GETHOSTBYADDRVOID 1"
+***************
+*** 3705,3713 ****
+  
+  
+  echo $ac_n "checking for h_errno in netdb.h""... $ac_c" 1>&6
+! echo "configure:3709: checking for h_errno in netdb.h" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3711 "configure"
+  #include "confdefs.h"
+  
+  #include <netdb.h>
+--- 3711,3719 ----
+  
+  
+  echo $ac_n "checking for h_errno in netdb.h""... $ac_c" 1>&6
+! echo "configure:3715: checking for h_errno in netdb.h" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3717 "configure"
+  #include "confdefs.h"
+  
+  #include <netdb.h>
+***************
+*** 3715,3721 ****
+  h_errno = 1; return(0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3719: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+  	ISC_LWRES_NEEDHERRNO="#undef ISC_LWRES_NEEDHERRNO"
+--- 3721,3727 ----
+  h_errno = 1; return(0);
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3725: \"$ac_compile\") 1>&5; (eval $ac_compile) 2>&5; }; then
+    rm -rf conftest*
+    echo "$ac_t""yes" 1>&6
+  	ISC_LWRES_NEEDHERRNO="#undef ISC_LWRES_NEEDHERRNO"
+***************
+*** 3730,3741 ****
+  
+  
+  echo $ac_n "checking for getipnodebyname""... $ac_c" 1>&6
+! echo "configure:3734: checking for getipnodebyname" >&5
+  if eval "test \"`echo '$''{'ac_cv_func_getipnodebyname'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 3739 "configure"
+  #include "confdefs.h"
+  /* System header to define __stub macros and hopefully few prototypes,
+      which can conflict with char getipnodebyname(); below.  */
+--- 3736,3747 ----
+  
+  
+  echo $ac_n "checking for getipnodebyname""... $ac_c" 1>&6
+! echo "configure:3740: checking for getipnodebyname" >&5
+  if eval "test \"`echo '$''{'ac_cv_func_getipnodebyname'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 3745 "configure"
+  #include "confdefs.h"
+  /* System header to define __stub macros and hopefully few prototypes,
+      which can conflict with char getipnodebyname(); below.  */
+***************
+*** 3758,3764 ****
+  
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3762: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_func_getipnodebyname=yes"
+  else
+--- 3764,3770 ----
+  
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3768: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_func_getipnodebyname=yes"
+  else
+***************
+*** 3779,3790 ****
+  fi
+  
+  echo $ac_n "checking for getnameinfo""... $ac_c" 1>&6
+! echo "configure:3783: checking for getnameinfo" >&5
+  if eval "test \"`echo '$''{'ac_cv_func_getnameinfo'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 3788 "configure"
+  #include "confdefs.h"
+  /* System header to define __stub macros and hopefully few prototypes,
+      which can conflict with char getnameinfo(); below.  */
+--- 3785,3796 ----
+  fi
+  
+  echo $ac_n "checking for getnameinfo""... $ac_c" 1>&6
+! echo "configure:3789: checking for getnameinfo" >&5
+  if eval "test \"`echo '$''{'ac_cv_func_getnameinfo'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 3794 "configure"
+  #include "confdefs.h"
+  /* System header to define __stub macros and hopefully few prototypes,
+      which can conflict with char getnameinfo(); below.  */
+***************
+*** 3807,3813 ****
+  
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3811: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_func_getnameinfo=yes"
+  else
+--- 3813,3819 ----
+  
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3817: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_func_getnameinfo=yes"
+  else
+***************
+*** 3828,3839 ****
+  fi
+  
+  echo $ac_n "checking for getaddrinfo""... $ac_c" 1>&6
+! echo "configure:3832: checking for getaddrinfo" >&5
+  if eval "test \"`echo '$''{'ac_cv_func_getaddrinfo'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 3837 "configure"
+  #include "confdefs.h"
+  /* System header to define __stub macros and hopefully few prototypes,
+      which can conflict with char getaddrinfo(); below.  */
+--- 3834,3845 ----
+  fi
+  
+  echo $ac_n "checking for getaddrinfo""... $ac_c" 1>&6
+! echo "configure:3838: checking for getaddrinfo" >&5
+  if eval "test \"`echo '$''{'ac_cv_func_getaddrinfo'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 3843 "configure"
+  #include "confdefs.h"
+  /* System header to define __stub macros and hopefully few prototypes,
+      which can conflict with char getaddrinfo(); below.  */
+***************
+*** 3856,3862 ****
+  
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3860: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_func_getaddrinfo=yes"
+  else
+--- 3862,3868 ----
+  
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3866: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_func_getaddrinfo=yes"
+  else
+***************
+*** 3888,3896 ****
+  # Look for a sysctl call to get the list of network interfaces.
+  #
+  echo $ac_n "checking for interface list sysctl""... $ac_c" 1>&6
+! echo "configure:3892: checking for interface list sysctl" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3894 "configure"
+  #include "confdefs.h"
+  
+  #include <sys/param.h>
+--- 3894,3902 ----
+  # Look for a sysctl call to get the list of network interfaces.
+  #
+  echo $ac_n "checking for interface list sysctl""... $ac_c" 1>&6
+! echo "configure:3898: checking for interface list sysctl" >&5
+  cat > conftest.$ac_ext <<EOF
+! #line 3900 "configure"
+  #include "confdefs.h"
+  
+  #include <sys/param.h>
+***************
+*** 3918,3929 ****
+  
+  # Check for some other useful functions that are not ever-present.
+  echo $ac_n "checking for strsep""... $ac_c" 1>&6
+! echo "configure:3922: checking for strsep" >&5
+  if eval "test \"`echo '$''{'ac_cv_func_strsep'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 3927 "configure"
+  #include "confdefs.h"
+  /* System header to define __stub macros and hopefully few prototypes,
+      which can conflict with char strsep(); below.  */
+--- 3924,3935 ----
+  
+  # Check for some other useful functions that are not ever-present.
+  echo $ac_n "checking for strsep""... $ac_c" 1>&6
+! echo "configure:3928: checking for strsep" >&5
+  if eval "test \"`echo '$''{'ac_cv_func_strsep'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 3933 "configure"
+  #include "confdefs.h"
+  /* System header to define __stub macros and hopefully few prototypes,
+      which can conflict with char strsep(); below.  */
+***************
+*** 3946,3952 ****
+  
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3950: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_func_strsep=yes"
+  else
+--- 3952,3958 ----
+  
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3956: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_func_strsep=yes"
+  else
+***************
+*** 3967,3978 ****
+  fi
+  
+  echo $ac_n "checking for vsnprintf""... $ac_c" 1>&6
+! echo "configure:3971: checking for vsnprintf" >&5
+  if eval "test \"`echo '$''{'ac_cv_func_vsnprintf'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 3976 "configure"
+  #include "confdefs.h"
+  /* System header to define __stub macros and hopefully few prototypes,
+      which can conflict with char vsnprintf(); below.  */
+--- 3973,3984 ----
+  fi
+  
+  echo $ac_n "checking for vsnprintf""... $ac_c" 1>&6
+! echo "configure:3977: checking for vsnprintf" >&5
+  if eval "test \"`echo '$''{'ac_cv_func_vsnprintf'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 3982 "configure"
+  #include "confdefs.h"
+  /* System header to define __stub macros and hopefully few prototypes,
+      which can conflict with char vsnprintf(); below.  */
+***************
+*** 3995,4001 ****
+  
+  ; return 0; }
+  EOF
+! if { (eval echo configure:3999: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_func_vsnprintf=yes"
+  else
+--- 4001,4007 ----
+  
+  ; return 0; }
+  EOF
+! if { (eval echo configure:4005: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_func_vsnprintf=yes"
+  else
+***************
+*** 4024,4040 ****
+  
+  
+  echo $ac_n "checking for sizeof(long long int) == sizeof(long int)""... $ac_c" 1>&6
+! echo "configure:4028: checking for sizeof(long long int) == sizeof(long int)" >&5
+  if test "$cross_compiling" = yes; then
+    echo "$ac_t""default yes" 1>&6
+  	ISC_PLATFORM_LONGLONGEQUALLONG="#define ISC_PLATFORM_LONGLONGEQUALLONG 1"
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 4034 "configure"
+  #include "confdefs.h"
+  main() { exit(!(sizeof(long long int) == sizeof(long int))); }
+  EOF
+! if { (eval echo configure:4038: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext} && (./conftest; exit) 2>/dev/null
+  then
+    echo "$ac_t""yes" 1>&6
+  	ISC_PLATFORM_LONGLONGEQUALLONG="#define ISC_PLATFORM_LONGLONGEQUALLONG 1"
+--- 4030,4046 ----
+  
+  
+  echo $ac_n "checking for sizeof(long long int) == sizeof(long int)""... $ac_c" 1>&6
+! echo "configure:4034: checking for sizeof(long long int) == sizeof(long int)" >&5
+  if test "$cross_compiling" = yes; then
+    echo "$ac_t""default yes" 1>&6
+  	ISC_PLATFORM_LONGLONGEQUALLONG="#define ISC_PLATFORM_LONGLONGEQUALLONG 1"
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 4040 "configure"
+  #include "confdefs.h"
+  main() { exit(!(sizeof(long long int) == sizeof(long int))); }
+  EOF
+! if { (eval echo configure:4044: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext} && (./conftest; exit) 2>/dev/null
+  then
+    echo "$ac_t""yes" 1>&6
+  	ISC_PLATFORM_LONGLONGEQUALLONG="#define ISC_PLATFORM_LONGLONGEQUALLONG 1"
+***************
+*** 4054,4065 ****
+  # Security Stuff
+  #
+  echo $ac_n "checking for chroot""... $ac_c" 1>&6
+! echo "configure:4058: checking for chroot" >&5
+  if eval "test \"`echo '$''{'ac_cv_func_chroot'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 4063 "configure"
+  #include "confdefs.h"
+  /* System header to define __stub macros and hopefully few prototypes,
+      which can conflict with char chroot(); below.  */
+--- 4060,4071 ----
+  # Security Stuff
+  #
+  echo $ac_n "checking for chroot""... $ac_c" 1>&6
+! echo "configure:4064: checking for chroot" >&5
+  if eval "test \"`echo '$''{'ac_cv_func_chroot'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 4069 "configure"
+  #include "confdefs.h"
+  /* System header to define __stub macros and hopefully few prototypes,
+      which can conflict with char chroot(); below.  */
+***************
+*** 4082,4088 ****
+  
+  ; return 0; }
+  EOF
+! if { (eval echo configure:4086: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_func_chroot=yes"
+  else
+--- 4088,4094 ----
+  
+  ; return 0; }
+  EOF
+! if { (eval echo configure:4092: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
+    rm -rf conftest*
+    eval "ac_cv_func_chroot=yes"
+  else
+***************
+*** 4108,4124 ****
+  do
+  ac_safe=`echo "$ac_hdr" | sed 'y%./+-%__p_%'`
+  echo $ac_n "checking for $ac_hdr""... $ac_c" 1>&6
+! echo "configure:4112: checking for $ac_hdr" >&5
+  if eval "test \"`echo '$''{'ac_cv_header_$ac_safe'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 4117 "configure"
+  #include "confdefs.h"
+  #include <$ac_hdr>
+  EOF
+  ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
+! { (eval echo configure:4122: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+  ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
+  if test -z "$ac_err"; then
+    rm -rf conftest*
+--- 4114,4130 ----
+  do
+  ac_safe=`echo "$ac_hdr" | sed 'y%./+-%__p_%'`
+  echo $ac_n "checking for $ac_hdr""... $ac_c" 1>&6
+! echo "configure:4118: checking for $ac_hdr" >&5
+  if eval "test \"`echo '$''{'ac_cv_header_$ac_safe'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 4123 "configure"
+  #include "confdefs.h"
+  #include <$ac_hdr>
+  EOF
+  ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
+! { (eval echo configure:4128: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+  ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
+  if test -z "$ac_err"; then
+    rm -rf conftest*
+***************
+*** 4148,4164 ****
+  do
+  ac_safe=`echo "$ac_hdr" | sed 'y%./+-%__p_%'`
+  echo $ac_n "checking for $ac_hdr""... $ac_c" 1>&6
+! echo "configure:4152: checking for $ac_hdr" >&5
+  if eval "test \"`echo '$''{'ac_cv_header_$ac_safe'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 4157 "configure"
+  #include "confdefs.h"
+  #include <$ac_hdr>
+  EOF
+  ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
+! { (eval echo configure:4162: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+  ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
+  if test -z "$ac_err"; then
+    rm -rf conftest*
+--- 4154,4170 ----
+  do
+  ac_safe=`echo "$ac_hdr" | sed 'y%./+-%__p_%'`
+  echo $ac_n "checking for $ac_hdr""... $ac_c" 1>&6
+! echo "configure:4158: checking for $ac_hdr" >&5
+  if eval "test \"`echo '$''{'ac_cv_header_$ac_safe'+set}'`\" = set"; then
+    echo $ac_n "(cached) $ac_c" 1>&6
+  else
+    cat > conftest.$ac_ext <<EOF
+! #line 4163 "configure"
+  #include "confdefs.h"
+  #include <$ac_hdr>
+  EOF
+  ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
+! { (eval echo configure:4168: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
+  ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
+  if test -z "$ac_err"; then
+    rm -rf conftest*
+***************
+*** 4252,4257 ****
+--- 4258,4422 ----
+  
+  		;;
+  esac
++ 
++ #
++ # MDN support
++ #
++ # Check whether --with-mdn or --without-mdn was given.
++ if test "${with_mdn+set}" = set; then
++   withval="$with_mdn"
++   use_mdn="$withval"
++ else
++   use_mdn="no"
++ fi
++ 
++ case "$use_mdn" in
++ yes)
++ 	mdn_path=/usr/local
++ 	;;
++ no)
++ 	;;
++ *)
++ 	mdn_path="$use_mdn"
++ 	;;
++ esac
++ 
++ # Check whether --with-iconv or --without-iconv was given.
++ if test "${with_iconv+set}" = set; then
++   withval="$with_iconv"
++   iconvlib="$withval"
++ else
++   iconvlib="no"
++ fi
++ 
++ case "$iconvlib" in
++ no)
++     iconvlib=
++     ;;
++ yes)
++     iconvlib=-liconv
++     ;;
++ esac
++ 
++ # Check whether --with-mdnlib or --without-mdnlib was given.
++ if test "${with_mdnlib+set}" = set; then
++   withval="$with_mdnlib"
++   mdnlib="$withval"
++ else
++   mdnlib="no"
++ fi
++ 
++ if test "$mdnlib" = yes; then
++ 	{ echo "configure: error: You must specify ARG for --with-mdnlib." 1>&2; exit 1; }
++ fi
++ 
++ if test "$use_mdn" != no; then
++ 	cat >> confdefs.h <<\EOF
++ #define WITH_MDN 1
++ EOF
++ 
++ 	STD_CINCLUDES="$STD_CINCLUDES -I$mdn_path/include"
++ 	if test "$mdnlib" != no; then
++ 		LIBS="$mdnlib $iconvlib $LIBS"
++ 	else
++ 		LIBS="-L$mdn_path/lib -lmdn $iconvlib $LIBS"
++ 	fi
++ fi
++ for ac_hdr in locale.h
++ do
++ ac_safe=`echo "$ac_hdr" | sed 'y%./+-%__p_%'`
++ echo $ac_n "checking for $ac_hdr""... $ac_c" 1>&6
++ echo "configure:4330: checking for $ac_hdr" >&5
++ if eval "test \"`echo '$''{'ac_cv_header_$ac_safe'+set}'`\" = set"; then
++   echo $ac_n "(cached) $ac_c" 1>&6
++ else
++   cat > conftest.$ac_ext <<EOF
++ #line 4335 "configure"
++ #include "confdefs.h"
++ #include <$ac_hdr>
++ EOF
++ ac_try="$ac_cpp conftest.$ac_ext >/dev/null 2>conftest.out"
++ { (eval echo configure:4340: \"$ac_try\") 1>&5; (eval $ac_try) 2>&5; }
++ ac_err=`grep -v '^ *+' conftest.out | grep -v "^conftest.${ac_ext}\$"`
++ if test -z "$ac_err"; then
++   rm -rf conftest*
++   eval "ac_cv_header_$ac_safe=yes"
++ else
++   echo "$ac_err" >&5
++   echo "configure: failed program was:" >&5
++   cat conftest.$ac_ext >&5
++   rm -rf conftest*
++   eval "ac_cv_header_$ac_safe=no"
++ fi
++ rm -f conftest*
++ fi
++ if eval "test \"`echo '$ac_cv_header_'$ac_safe`\" = yes"; then
++   echo "$ac_t""yes" 1>&6
++     ac_tr_hdr=HAVE_`echo $ac_hdr | sed 'y%abcdefghijklmnopqrstuvwxyz./-%ABCDEFGHIJKLMNOPQRSTUVWXYZ___%'`
++   cat >> confdefs.h <<EOF
++ #define $ac_tr_hdr 1
++ EOF
++  
++ else
++   echo "$ac_t""no" 1>&6
++ fi
++ done
++ 
++ for ac_func in setlocale
++ do
++ echo $ac_n "checking for $ac_func""... $ac_c" 1>&6
++ echo "configure:4369: checking for $ac_func" >&5
++ if eval "test \"`echo '$''{'ac_cv_func_$ac_func'+set}'`\" = set"; then
++   echo $ac_n "(cached) $ac_c" 1>&6
++ else
++   cat > conftest.$ac_ext <<EOF
++ #line 4374 "configure"
++ #include "confdefs.h"
++ /* System header to define __stub macros and hopefully few prototypes,
++     which can conflict with char $ac_func(); below.  */
++ #include <assert.h>
++ /* Override any gcc2 internal prototype to avoid an error.  */
++ /* We use char because int might match the return type of a gcc2
++     builtin and then its argument prototype would still apply.  */
++ char $ac_func();
++ 
++ int main() {
++ 
++ /* The GNU C library defines this for functions which it implements
++     to always fail with ENOSYS.  Some functions are actually named
++     something starting with __ and the normal name is an alias.  */
++ #if defined (__stub_$ac_func) || defined (__stub___$ac_func)
++ choke me
++ #else
++ $ac_func();
++ #endif
++ 
++ ; return 0; }
++ EOF
++ if { (eval echo configure:4397: \"$ac_link\") 1>&5; (eval $ac_link) 2>&5; } && test -s conftest${ac_exeext}; then
++   rm -rf conftest*
++   eval "ac_cv_func_$ac_func=yes"
++ else
++   echo "configure: failed program was:" >&5
++   cat conftest.$ac_ext >&5
++   rm -rf conftest*
++   eval "ac_cv_func_$ac_func=no"
++ fi
++ rm -f conftest*
++ fi
++ 
++ if eval "test \"`echo '$ac_cv_func_'$ac_func`\" = yes"; then
++   echo "$ac_t""yes" 1>&6
++     ac_tr_func=HAVE_`echo $ac_func | tr 'abcdefghijklmnopqrstuvwxyz' 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'`
++   cat >> confdefs.h <<EOF
++ #define $ac_tr_func 1
++ EOF
++  
++ else
++   echo "$ac_t""no" 1>&6
++ fi
++ done
++ 
+  
+  #
+  # Substitutions
+Index: configure.in
+diff -c mdn/othersrc/bind9/configure.in:1.1.1.2 mdn/othersrc/bind9/configure.in:1.5
+*** configure.in	Thu Aug 10 11:00:59 2000
+--- configure.in	Tue Sep 12 18:10:34 2000
+***************
+*** 957,962 ****
+--- 957,1010 ----
+  esac
+  
+  #
++ # MDN support
++ #
++ AC_ARG_WITH(mdn,
++ 	[  --with-mdn[=PREFIX]    enable MDN support using mDNkit [default prefix /usr/local]],
++ 	use_mdn="$withval", use_mdn="no")
++ case "$use_mdn" in
++ yes)
++ 	mdn_path=/usr/local
++ 	;;
++ no)
++ 	;;
++ *)
++ 	mdn_path="$use_mdn"
++ 	;;
++ esac
++ 
++ AC_ARG_WITH(iconv,
++ 	[  --with-iconv[=LIBSPEC]   specify iconv library [default -liconv]],
++ 	iconvlib="$withval", iconvlib="no")
++ case "$iconvlib" in
++ no)
++     iconvlib=
++     ;;
++ yes)
++     iconvlib=-liconv
++     ;;
++ esac
++ 
++ AC_ARG_WITH(mdnlib,
++ 	[  --with-mdnlib=ARG    specify libmdn],
++ 	mdnlib="$withval", mdnlib="no")
++ if test "$mdnlib" = yes; then
++ 	AC_MSG_ERROR([You must specify ARG for --with-mdnlib.])
++ fi
++ 
++ if test "$use_mdn" != no; then
++ 	AC_DEFINE(WITH_MDN)
++ 	STD_CINCLUDES="$STD_CINCLUDES -I$mdn_path/include"
++ 	if test "$mdnlib" != no; then
++ 		LIBS="$mdnlib $iconvlib $LIBS"
++ 	else
++ 		LIBS="-L$mdn_path/lib -lmdn $iconvlib $LIBS"
++ 	fi
++ fi
++ AC_CHECK_HEADERS(locale.h)
++ AC_CHECK_FUNCS(setlocale)
++ 
++ #
+  # Substitutions
+  #
+  AC_SUBST(BIND9_TOP_BUILDDIR)
+Index: bin/dig/dighost.c
+diff -c mdn/othersrc/bind9/bin/dig/dighost.c:1.1.1.3 mdn/othersrc/bind9/bin/dig/dighost.c:1.8
+*** bin/dig/dighost.c	Mon Sep 18 17:37:54 2000
+--- bin/dig/dighost.c	Mon Sep 18 18:34:02 2000
+***************
+*** 32,41 ****
+--- 32,51 ----
+  #include <netdb.h>
+  #include <string.h>
+  #include <limits.h>
++ #ifdef HAVE_LOCALE_H
++ #include <locale.h>
++ #endif
+  #if (!(defined(HAVE_ADDRINFO) && defined(HAVE_GETADDRINFO)))
+  extern int h_errno;
+  #endif
+  
++ #ifdef WITH_MDN
++ #include <mdn/result.h>
++ #include <mdn/log.h>
++ #include <mdn/resconf.h>
++ #include <mdn/res.h>
++ #endif
++ 
+  #include <dns/message.h>
+  #include <dns/name.h>
+  #include <dns/rdata.h>
+***************
+*** 107,113 ****
+--- 117,136 ----
+  extern isc_boolean_t isc_mem_debugging;
+  isc_boolean_t debugging = ISC_FALSE;
+  char *progname = NULL;
++ #ifdef WITH_MDN
++ mdn_resconf_t mdnconf;
++ 
++ static void		initialize_mdn(void);
++ static isc_result_t	output_filter(isc_buffer_t *buffer,
++ 				      unsigned int used_org,
++ 				      isc_boolean_t absolute);
++ static mdn_result_t	append_textname(char *name, const char *origin,
++ 					size_t namesize);
++ static void		mdn_check_result(mdn_result_t r, const char *msg);
+  
++ #define MAXDLEN		256
++ #endif
++ 
+  static isc_boolean_t
+  cancel_lookup(dig_lookup_t *lookup);
+  
+***************
+*** 472,477 ****
+--- 495,504 ----
+  	     l -> origin = ISC_LIST_HEAD(search_list);
+  	}
+  
++ #ifdef WITH_MDN
++ 	initialize_mdn();
++ #endif
++ 
+  	if (keysecret[0] != 0) {
+  		debug("keyring");
+  		result = dns_tsigkeyring_create(mctx, &keyring);
+***************
+*** 931,936 ****
+--- 958,967 ----
+  	isc_constregion_t tr;
+  	isc_buffer_t b;
+  	char store[MXNAME];
++ #ifdef WITH_MDN
++ 	mdn_result_t mr;
++ 	char ucs_name[MXNAME], ucs_tmp[MXNAME];
++ #endif
+  	
+  	REQUIRE(lookup != NULL);
+  
+***************
+*** 961,971 ****
+--- 992,1028 ----
+  	isc_buffer_init(&lookup->onamebuf, lookup->onamespace,
+  			sizeof(lookup->onamespace));
+  
++ #ifdef WITH_MDN
++ 	mr = mdn_res_localtoucs(mdnconf, lookup->textname, ucs_name,
++ 				sizeof(ucs_name));
++ 	mdn_check_result(mr, "local to UCS conversion");
++ 	if ((count_dots(ucs_name) >= ndots) || lookup->defname)
++ 		lookup->origin = NULL; /* Force root lookup */
++ #else
+  	if ((count_dots(lookup->textname) >= ndots) || lookup->defname)
+  		lookup->origin = NULL; /* Force root lookup */
++ #endif
+  	debug("lookup->origin = %p", lookup->origin);
+  	if (lookup->origin != NULL) {
+  		debug("trying origin %s", lookup->origin->origin);
++ #ifdef WITH_MDN
++ 		/*
++ 		 * We cannot convert name and origin separately and combine
++ 		 * them later, because some encoding scheme (such as UTF-5)
++ 		 * can be applied only to an entire domain name, not a
++ 		 * partial one.
++ 		 */
++ 		mr = append_textname(ucs_name, lookup->origin->origin,
++ 				     sizeof(ucs_name));
++ 		mdn_check_result(mr, "concatenation with origin");
++ 		mr = mdn_res_normalize(mdnconf, ucs_name, ucs_tmp,
++ 				       sizeof(ucs_tmp));
++ 		mdn_check_result(mr, "normalization");
++ 		mr = mdn_res_ucstodns(mdnconf, ucs_tmp, ucs_name,
++ 				      sizeof(ucs_name));
++ 		mdn_check_result(mr, "UCS to DNS encoding conversion");
++ 		goto no_origin;
++ #else
+  		result = dns_message_gettempname(lookup->sendmsg,
+  						 &lookup->oname);
+  		check_result(result, "dns_message_gettempname");
+***************
+*** 1003,1011 ****
+--- 1060,1087 ----
+  			      lookup->textname, dns_result_totext(result));
+  		}
+  		dns_message_puttempname(lookup->sendmsg, &lookup->oname);
++ #endif
+  	} else {
+  		debug("using root origin");
++ #ifdef WITH_MDN
++ 	no_origin:
++ #endif
+  		if (!lookup->trace_root) {
++ #ifdef WITH_MDN
++ 			mr = mdn_res_normalize(mdnconf, ucs_name, ucs_tmp,
++ 					       sizeof(ucs_tmp));
++ 			mdn_check_result(mr, "normalization");
++ 			mr = mdn_res_ucstodns(mdnconf, ucs_tmp, ucs_name,
++ 					      sizeof(ucs_name));
++ 			mdn_check_result(mr, "UCS to DNS encoding conversion");
++ 			len = strlen(ucs_name);
++ 			isc_buffer_init(&b, ucs_name, len);
++ 			isc_buffer_add(&b, len);
++ 			result = dns_name_fromtext(lookup->name, &b,
++ 						   dns_rootname,
++ 						   ISC_FALSE,
++ 						   &lookup->namebuf);
++ #else
+  			len = strlen(lookup->textname);
+  			isc_buffer_init(&b, lookup->textname, len);
+  			isc_buffer_add(&b, len);
+***************
+*** 1013,1018 ****
+--- 1089,1095 ----
+  						   dns_rootname,
+  						   ISC_FALSE,
+  						   &lookup->namebuf);
++ #endif
+  		} else {
+  			dns_name_clone(dns_rootname, lookup->name);
+  		}
+***************
+*** 2252,2254 ****
+--- 2329,2452 ----
+  		isc_mempool_destroy(&commctx);
+  	}
+  }
++ 
++ #ifdef WITH_MDN
++ static void
++ initialize_mdn(void) {
++ 	mdn_result_t r;
++ 	mdn_converter_t conv;
++ 
++ #ifdef HAVE_SETLOCALE
++ 	/* Set locale */
++ 	(void)setlocale(LC_ALL, "");
++ #endif
++ 
++ 	/* General initialization. */
++ 	r = mdn_resconf_initialize();
++ 	if (r != mdn_success)
++ 		fatal("mdn initialization failed: %s",
++ 		      mdn_result_tostring(r));
++ 
++ 	/* Create configuration context. */
++ 	r = mdn_resconf_create(&mdnconf);
++ 	if (r != mdn_success)
++ 		fatal("mdn resconf initialization failed: %s",
++ 		      mdn_result_tostring(r));
++ 
++ 
++ 	/* Load mdn configuration file. */
++ 	r = mdn_resconf_loadfile(mdnconf, NULL);
++ 	if (r != mdn_success)
++ 		fatal("mdn configuration loading failed: %s",
++ 		      mdn_result_tostring(r));
++ 
++ 	/* Allow utf-8 characters in domain names if necessary. */
++ 	if ((conv = mdn_resconf_serverconverter(mdnconf)) != NULL &&
++ 	    !mdn_converter_isasciicompatible(conv)) {
++ 		debug("allowing UTF-8 characters in domain names");
++ 		dns_name_allowutf8(ISC_TRUE);
++ 	}
++ 	/* Set domain name -> text post-conversion filter. */
++ 	dns_name_settotextfilter(output_filter);
++ }
++ 
++ static isc_result_t
++ output_filter(isc_buffer_t *buffer, unsigned int used_org,
++ 	      isc_boolean_t absolute)
++ {
++ 	char tmp1[MAXDLEN], tmp2[MAXDLEN];
++ 	size_t fromlen, tolen;
++ 	isc_boolean_t end_with_dot;
++ 
++ 	/*
++ 	 * Copy contents of 'buffer' to 'tmp1', supply trailing dot
++ 	 * if 'absolute' is true, and terminate with NUL.
++ 	 */
++ 	fromlen = isc_buffer_usedlength(buffer) - used_org;
++ 	if (fromlen >= MAXDLEN)
++ 		return (ISC_R_SUCCESS);
++ 	memcpy(tmp1, (char *)isc_buffer_base(buffer) + used_org, fromlen);
++ 	end_with_dot = (tmp1[fromlen - 1] == '.') ? ISC_TRUE : ISC_FALSE;
++ 	if (absolute && !end_with_dot) {
++ 		fromlen++;
++ 		if (fromlen >= MAXDLEN)
++ 			return (ISC_R_SUCCESS);
++ 		tmp1[fromlen - 1] = '.';
++ 	}
++ 	tmp1[fromlen] = '\0';
++ 
++ 	/*
++ 	 * Convert contents of 'tmp1' to local encoding.
++ 	 */
++ 	if (mdn_res_dnstoucs(mdnconf, tmp1, tmp2, MAXDLEN)
++ 	    != mdn_success ||
++ 	    mdn_res_ucstolocal(mdnconf, tmp2, tmp1, MAXDLEN)
++ 	    != mdn_success)
++ 		return (ISC_R_SUCCESS);
++ 
++ 	/*
++ 	 * Copy the converted contents in 'tmp1' back to 'buffer'.
++ 	 * If we have appended trailing dot, remove it.
++ 	 */
++ 	tolen = strlen(tmp1);
++ 	if (absolute && !end_with_dot && tmp1[tolen - 1] == '.')
++ 		tolen--;
++ 
++ 	if (isc_buffer_length(buffer) < used_org + tolen)
++ 		return (ISC_R_NOSPACE);
++ 
++ 	isc_buffer_subtract(buffer, isc_buffer_usedlength(buffer) - used_org);
++ 	memcpy(isc_buffer_used(buffer), tmp1, tolen);
++ 	isc_buffer_add(buffer, tolen);
++ 
++ 	return (ISC_R_SUCCESS);
++ }
++ 
++ static mdn_result_t
++ append_textname(char *name, const char *origin, size_t namesize) {
++ 	size_t namelen = strlen(name);
++ 	size_t originlen = strlen(origin);
++ 
++ 	/* Already absolute? */
++ 	if (namelen > 0 && name[namelen - 1] == '.')
++ 		return mdn_success;
++ 
++ 	/* Append dot and origin */
++ 
++ 	if (namelen + 1 + originlen >= namesize)
++ 		return mdn_buffer_overflow;
++ 
++ 	name[namelen++] = '.';
++ 	(void)strcpy(name + namelen, origin);
++ 	return mdn_success;
++ }
++ 
++ static void
++ mdn_check_result(mdn_result_t r, const char *msg) {
++ 	if (r != mdn_success) {
++ 		exitcode = 1;
++ 		fatal("%s: %s", msg, mdn_result_tostring(r));
++ 	}
++ }
++ 
++ #endif
+Index: bin/named/Makefile.in
+diff -c mdn/othersrc/bind9/bin/named/Makefile.in:1.1.1.1 mdn/othersrc/bind9/bin/named/Makefile.in:1.3
+*** bin/named/Makefile.in	Fri Jul 21 11:10:48 2000
+--- bin/named/Makefile.in	Thu Aug 17 16:41:45 2000
+***************
+*** 40,45 ****
+--- 40,47 ----
+  ISCDEPLIBS =	../../lib/isc/libisc.@A@
+  LWRESDEPLIBS =	../../lib/lwres/liblwres.@A@
+  
++ ICONVLIB =	@ICONVLIB@
++ 
+  DEPLIBS =	${LWRESDEPLIBS} ${OMAPIDEPLIBS} ${DNSDEPLIBS} ${ISCDEPLIBS}
+  
+  LIBS =		${LWRESLIBS} ${OMAPILIBS} ${DNSLIBS} ${ISCLIBS} @LIBS@
+***************
+*** 52,58 ****
+  		log.@O@ logconf.@O@ main.@O@ notify.@O@ omapi.@O@ \
+  		omapiconf.@O@ query.@O@ server.@O@ update.@O@ xfrout.@O@ \
+  		lwresd.@O@ lwdclient.@O@ lwderror.@O@ lwdgabn.@O@ \
+! 		lwdgnba.@O@ lwdnoop.@O@
+  
+  UOBJS =		unix/os.@O@
+  
+--- 54,60 ----
+  		log.@O@ logconf.@O@ main.@O@ notify.@O@ omapi.@O@ \
+  		omapiconf.@O@ query.@O@ server.@O@ update.@O@ xfrout.@O@ \
+  		lwresd.@O@ lwdclient.@O@ lwderror.@O@ lwdgabn.@O@ \
+! 		lwdgnba.@O@ lwdnoop.@O@ lwdmdn.@O@
+  
+  UOBJS =		unix/os.@O@
+  
+***************
+*** 60,66 ****
+  		log.c logconf.c main.c notify.c omapi.c \
+  		omapiconf.c query.c server.c update.c xfrout.c \
+  		lwresd.c lwdclient.c lwderror.c lwdgabn.c \
+! 		lwdgnba.c lwdnoop.c
+  
+  @BIND9_MAKE_RULES@
+  
+--- 62,68 ----
+  		log.c logconf.c main.c notify.c omapi.c \
+  		omapiconf.c query.c server.c update.c xfrout.c \
+  		lwresd.c lwdclient.c lwderror.c lwdgabn.c \
+! 		lwdgnba.c lwdnoop.c lwdmdn.c
+  
+  @BIND9_MAKE_RULES@
+  
+Index: bin/named/lwdgabn.c
+diff -c mdn/othersrc/bind9/bin/named/lwdgabn.c:1.1.1.1 mdn/othersrc/bind9/bin/named/lwdgabn.c:1.3
+*** bin/named/lwdgabn.c	Fri Jul 21 11:10:48 2000
+--- bin/named/lwdgabn.c	Mon Sep  4 13:51:06 2000
+***************
+*** 29,34 ****
+--- 29,37 ----
+  
+  #include <named/types.h>
+  #include <named/lwdclient.h>
++ #ifdef WITH_MDN
++ #include <named/lwdmdn.h>
++ #endif
+  
+  #define NEED_V4(c)	((((c)->find_wanted & LWRES_ADDRTYPE_V4) != 0) \
+  			 && ((c)->v4find == NULL))
+***************
+*** 213,228 ****
+--- 216,251 ----
+  	isc_buffer_t b;
+  	isc_result_t result;
+  	isc_uint16_t naliases;
++ #ifdef WITH_MDN
++ 	isc_buffer_t *tbufp;
++ #endif
+  
+  	b = client->recv_buffer;
+  
+  	/*
+  	 * Render the new name to the buffer.
+  	 */
++ #ifdef WITH_MDN
++ 	tbufp = NULL;
++ 	result = isc_buffer_allocate(client->clientmgr->mctx, &tbufp, 256);
++ 	if (result != ISC_R_SUCCESS)
++ 		return (result);
+  	result = dns_name_totext(dns_fixedname_name(&client->target_name),
++ 				 ISC_TRUE, tbufp);
++ 	if (result != ISC_R_SUCCESS) {
++ 		isc_buffer_free(&tbufp);
++ 		return (result);
++ 	}
++ 	result = ns_lwdmdn_converttoutf8(tbufp, &client->recv_buffer);
++ 	isc_buffer_free(&tbufp);
++ 	if (result != ISC_R_SUCCESS)
++ 		return (result);
++ #else
++ 	result = dns_name_totext(dns_fixedname_name(&client->target_name),
+  				 ISC_TRUE, &client->recv_buffer);
+  	if (result != ISC_R_SUCCESS)
+  		return (result);
++ #endif
+  
+  	/*
+  	 * Are there any open slots?
+***************
+*** 247,260 ****
+--- 270,301 ----
+  store_realname(ns_lwdclient_t *client) {
+  	isc_buffer_t b;
+  	isc_result_t result;
++ #ifdef WITH_MDN
++ 	isc_buffer_t *tbufp;
++ #endif
+  
+  	b = client->recv_buffer;
+  
+  	/*
+  	 * Render the new name to the buffer.
+  	 */
++ #ifdef WITH_MDN
++ 	tbufp = NULL;
++ 	result = isc_buffer_allocate(client->clientmgr->mctx, &tbufp, 256);
++ 	if (result != ISC_R_SUCCESS)
++ 		return (result);
+  	result = dns_name_totext(dns_fixedname_name(&client->target_name),
++ 				 ISC_TRUE, tbufp);
++ 	if (result != ISC_R_SUCCESS) {
++ 		isc_buffer_free(&tbufp);
++ 		return (result);
++ 	}
++ 	result = ns_lwdmdn_converttoutf8(tbufp, &client->recv_buffer);
++ 	isc_buffer_free(&tbufp);
++ #else
++ 	result = dns_name_totext(dns_fixedname_name(&client->target_name),
+  				 ISC_TRUE, &client->recv_buffer);
++ #endif
+  	if (result != ISC_R_SUCCESS)
+  		return (result);
+  
+***************
+*** 512,517 ****
+--- 553,561 ----
+  	isc_result_t result;
+  	lwres_gabnrequest_t *req;
+  	isc_buffer_t namebuf;
++ #ifdef WITH_MDN
++ 	isc_buffer_t *tnamebufp;
++ #endif
+  
+  	REQUIRE(NS_LWDCLIENT_ISRECVDONE(client));
+  
+***************
+*** 522,533 ****
+--- 566,605 ----
+  	if (result != LWRES_R_SUCCESS)
+  		goto out;
+  
++ #ifdef WITH_MDN
++ 	/*
++ 	 * XXX Assuming allocation size for req->name is larger than
++ 	 * req->namelen by at least one, which is true in the current
++ 	 * implementation.
++ 	 */
++ 	isc_buffer_init(&namebuf, req->name, req->namelen + 1);
++ 	isc_buffer_add(&namebuf, req->namelen);
++ 	tnamebufp = NULL;
++ 	result = isc_buffer_allocate(client->clientmgr->mctx, &tnamebufp, 256);
++ 	if (result != ISC_R_SUCCESS)
++ 		goto out;
++ 	/*
++ 	 * Convert UTF-8 string in namebuf into DNS protocol encoding.
++ 	 */
++ 	result = ns_lwdmdn_convertfromutf8(&namebuf, tnamebufp);
++ 	if (result != ISC_R_SUCCESS) {
++ 		isc_buffer_free(&tnamebufp);
++ 		goto out;
++ 	}
++ #else
+  	isc_buffer_init(&namebuf, req->name, req->namelen);
+  	isc_buffer_add(&namebuf, req->namelen);
++ #endif
+  
+  	dns_fixedname_init(&client->target_name);
++ #ifdef WITH_MDN
++ 	result = dns_name_fromtext(dns_fixedname_name(&client->target_name),
++ 				   tnamebufp, dns_rootname, ISC_FALSE, NULL);
++ 	isc_buffer_free(&tnamebufp);
++ #else
+  	result = dns_name_fromtext(dns_fixedname_name(&client->target_name),
+  				   &namebuf, dns_rootname, ISC_FALSE, NULL);
++ #endif
+  	if (result != ISC_R_SUCCESS)
+  		goto out;
+  
+Index: bin/named/lwdgnba.c
+diff -c mdn/othersrc/bind9/bin/named/lwdgnba.c:1.1.1.1 mdn/othersrc/bind9/bin/named/lwdgnba.c:1.2
+*** bin/named/lwdgnba.c	Fri Jul 21 11:10:48 2000
+--- bin/named/lwdgnba.c	Mon Aug 21 10:23:36 2000
+***************
+*** 29,34 ****
+--- 29,37 ----
+  
+  #include <named/types.h>
+  #include <named/lwdclient.h>
++ #ifdef WITH_MDN
++ #include <named/lwdmdn.h>
++ #endif
+  
+  static void start_byaddr(ns_lwdclient_t *);
+  
+***************
+*** 47,52 ****
+--- 50,58 ----
+  	lwres_gnbaresponse_t *gnba;
+  	isc_uint16_t naliases;
+  	isc_stdtime_t now;
++ #ifdef WITH_MDN
++ 	isc_buffer_t *tbufp;
++ #endif
+  
+  	UNUSED(task);
+  
+***************
+*** 109,117 ****
+--- 115,139 ----
+  	while (name != NULL) {
+  		b = client->recv_buffer;
+  
++ #ifdef WITH_MDN
++ 		tbufp = NULL;
++ 		result = isc_buffer_allocate(cm->mctx, &tbufp, 256);
++ 		if (result != ISC_R_SUCCESS)
++ 			goto out;
++ 		result = dns_name_totext(name, ISC_TRUE, tbufp);
++ 		if (result != ISC_R_SUCCESS) {
++ 			isc_buffer_free(&tbufp);
++ 			goto out;
++ 		}
++ 		result = ns_lwdmdn_converttoutf8(tbufp, &client->recv_buffer);
++ 		isc_buffer_free(&tbufp);
++ 		if (result != ISC_R_SUCCESS)
++ 			goto out;
++ #else
+  		result = dns_name_totext(name, ISC_TRUE, &client->recv_buffer);
+  		if (result != ISC_R_SUCCESS)
+  			goto out;
++ #endif
+  		ns_lwdclient_log(50, "found name '%.*s'",
+  				 client->recv_buffer.used - b.used,
+  				 (char *)(b.base) + b.used);
+Index: bin/named/lwdmdn.c
+diff -c /dev/null mdn/othersrc/bind9/bin/named/lwdmdn.c:1.6
+*** bin/named/lwdmdn.c	Thu Nov  2 10:10:37 2000
+--- bin/named/lwdmdn.c	Thu Sep  7 15:27:40 2000
+***************
+*** 0 ****
+--- 1,281 ----
++ /* $Id: bind-9.0.0-patch,v 1.1.1.1 2001/01/31 03:58:59 zarzycki Exp $ */
++ 
++ #include <config.h>
++ 
++ #include <stdlib.h>
++ #include <stdarg.h>
++ #include <string.h>
++ 
++ #ifdef WITH_MDN
++ #include <mdn/result.h>
++ #include <mdn/log.h>
++ #include <mdn/resconf.h>
++ #include <mdn/res.h>
++ #endif
++ 
++ #include <isc/result.h>
++ #include <isc/rwlock.h>
++ #include <isc/util.h>
++ 
++ #include <named/types.h>
++ #include <named/log.h>
++ #include <named/lwdmdn.h>
++ #include <named/lwdclient.h>
++ #include <named/globals.h>
++ 
++ #ifdef WITH_MDN
++ 
++ typedef enum {
++ 	convert_from_utf8,
++ 	convert_to_utf8
++ } convert_direction_t;
++ 
++ static isc_logmodule_t modules[] = {
++ 	{ "mdn",		0 },
++ 	{ NULL,			0 }
++ };
++ #define NS_LOGMODULE_MDN	(&modules[0])
++ 
++ static isc_rwlock_t	mdnconflock;
++ static mdn_resconf_t	mdnconf = NULL;
++ 
++ static isc_result_t	convert_buffer(isc_buffer_t *from_buffer,
++ 				       isc_buffer_t *to_buffer,
++ 				       convert_direction_t dir);
++ static isc_result_t	load_mdnconfiguration(const char *filename);
++ static isc_result_t	mdnresult_to_iscresult(mdn_result_t r);
++ static void		set_log_level(int level);
++ static void		logger(int level, const char *msg);
++ static void		logwrite(int level, const char *fmt, ...);
++ 
++ void
++ ns_lwdmdn_initialize(void) {
++ 	mdn_result_t r;
++ 	isc_result_t result;
++ 
++ 	logwrite(ISC_LOG_DEBUG(50), "initializing mdn");
++ 
++ 	/* Register MDN module for logging. */
++ 	isc_log_registermodules(ns_g_lctx, modules);
++ 
++ 	/* Set libmdn log hander. */
++ 	mdn_log_setproc(logger);
++ 
++ 	/* Set log level. */
++ 	set_log_level(ns_g_debuglevel);
++ 
++ 	/* General initialization. */
++ 	r = mdn_resconf_initialize();
++ 	RUNTIME_CHECK(r == mdn_success);
++ 
++ 	/* Create configuration context. */
++ 	r = mdn_resconf_create(&mdnconf);
++ 	RUNTIME_CHECK(r == mdn_success);
++ 
++ 	/* Initialize configuration lock variable. */
++ 	result = isc_rwlock_init(&mdnconflock, 1, 1);
++ 	RUNTIME_CHECK(result == ISC_R_SUCCESS);
++ 
++ 	/* Load configuration file. */
++ 	lwresd_g_mdnreloadwanted = 1;
++ 	(void)load_mdnconfiguration(lwresd_g_mdnconffile);
++ }
++ 
++ isc_result_t
++ ns_lwdmdn_convertfromutf8(isc_buffer_t *from_buffer, isc_buffer_t *to_buffer) {
++ 	return convert_buffer(from_buffer, to_buffer, convert_from_utf8);
++ }
++ 
++ isc_result_t
++ ns_lwdmdn_converttoutf8(isc_buffer_t *from_buffer, isc_buffer_t *to_buffer) {
++ 	return convert_buffer(from_buffer, to_buffer, convert_to_utf8);
++ }
++ 
++ static isc_result_t
++ convert_buffer(isc_buffer_t *from_buffer, isc_buffer_t *to_buffer,
++ 	       convert_direction_t dir)
++ {
++ 	isc_result_t result;
++ 	mdn_result_t r;
++ 	char *fromstr, *tostr;
++ 	char tmp[256];
++ 	size_t tolen;
++ 
++ 	/*
++ 	 * Reload MDN configuration file, if necessary.
++ 	 */
++ 	if (lwresd_g_mdnreloadwanted) {
++ 		result = load_mdnconfiguration(lwresd_g_mdnconffile);
++ 	}
++ 
++ 	/*
++ 	 * Since libmdn assumes all the strings are NUL-terminated,
++ 	 * teminate the input string.  If the buffer has some free space,
++ 	 * utilize it.  Otherwise, make a local copy.
++ 	 */
++ 	if (isc_buffer_remaininglength(from_buffer) > 0) {
++ 		fromstr = isc_buffer_used(from_buffer); /* temporary */
++ 		*fromstr = '\0';
++ 		fromstr = isc_buffer_base(from_buffer);
++ 	} else {
++ 		size_t fromlen = isc_buffer_usedlength(from_buffer);
++ 
++ 		if (fromlen >= sizeof(tmp))
++ 			fromlen = sizeof(tmp) - 1;
++ 		fromstr = tmp;
++ 		memcpy(fromstr, isc_buffer_base(from_buffer), fromlen);
++ 		fromstr[fromlen] = '\0';
++ 	}
++ 	tostr = isc_buffer_used(to_buffer);
++ 	tolen = isc_buffer_availablelength(to_buffer);
++ 
++ 	RWLOCK(&mdnconflock, isc_rwlocktype_read);
++ 
++ 	if (dir == convert_from_utf8)
++ 		r = mdn_res_ucstodns(mdnconf, fromstr, tostr, tolen);
++ 	else
++ 		r = mdn_res_dnstoucs(mdnconf, fromstr, tostr, tolen);
++ 
++ 	RWUNLOCK(&mdnconflock, isc_rwlocktype_read);
++ 
++ 	if (r != mdn_success)
++ 		return (mdnresult_to_iscresult(r));
++ 
++ 	isc_buffer_add(to_buffer, strlen(tostr));
++ 
++ 	return (ISC_R_SUCCESS);
++ }
++ 
++ static isc_result_t
++ load_mdnconfiguration(const char *filename) {
++ 	isc_result_t result = ISC_R_SUCCESS;
++ 	mdn_result_t r;
++ 	mdn_converter_t conv;
++ 	isc_boolean_t loaded = ISC_FALSE;
++ 	isc_boolean_t allow_utf8;
++ 
++ 	RWLOCK(&mdnconflock, isc_rwlocktype_write);
++ 
++ 	logwrite(ISC_LOG_DEBUG(50), "loading mdn configuration %s",
++ 		 filename == NULL ? mdn_resconf_defaultfile() : filename);
++ 
++ 	if (lwresd_g_mdnreloadwanted) {
++ 		r = mdn_resconf_loadfile(mdnconf, filename);
++ 		if (r == mdn_success)
++ 			loaded = ISC_TRUE;
++ 		else
++ 			result = mdnresult_to_iscresult(r);
++ 	}
++ 	lwresd_g_mdnreloadwanted = 0;
++ 	logwrite(ISC_LOG_DEBUG(100), "finish loading mdn configuration");
++ 
++ 	RWUNLOCK(&mdnconflock, isc_rwlocktype_write);
++ 
++ 	if (loaded) {
++ 		if ((conv = mdn_resconf_serverconverter(mdnconf)) != NULL &&
++ 		    !mdn_converter_isasciicompatible(conv)) {
++ 			logwrite(ISC_LOG_DEBUG(50),
++ 				 "allowing UTF-8 domain names");
++ 			allow_utf8 = ISC_TRUE;
++ 		} else {
++ 			allow_utf8 = ISC_FALSE;
++ 		}
++ 		dns_name_allowutf8(allow_utf8);
++ 	}
++ 
++ 	return (result);
++ }
++ 
++ static isc_result_t
++ mdnresult_to_iscresult(mdn_result_t r) {
++ 	switch (r) {
++ 	case mdn_success:
++ 		return (ISC_R_SUCCESS);
++         case mdn_notfound:
++         case mdn_noentry:
++         case mdn_invalid_name:
++ 		return (ISC_R_NOTFOUND);
++         case mdn_buffer_overflow:
++ 		return (ISC_R_NOSPACE);
++         case mdn_nomemory:
++ 		return (ISC_R_NOMEMORY);
++         case mdn_nofile:
++ 		return (ISC_R_FILENOTFOUND);
++ 	default:
++ 		return (ISC_R_FAILURE);
++ 	}
++ }
++ 
++ static void
++ set_log_level(int level) {
++ 	int loglevel;
++ 
++ 	if (level < ISC_LOG_ERROR) {
++ 		loglevel = mdn_log_level_fatal;
++ 	} else if (level < ISC_LOG_WARNING) {
++ 		loglevel = mdn_log_level_error;
++ 	} else if (level < ISC_LOG_INFO) {
++ 		loglevel = mdn_log_level_warning;
++ 	} else if (level < ISC_LOG_DEBUG(50)) {
++ 		loglevel = mdn_log_level_info;
++ 	} else if (level < ISC_LOG_DEBUG(100)) {
++ 		loglevel = mdn_log_level_trace;
++ 	} else {
++ 		loglevel = mdn_log_level_dump;
++ 	}
++ 	mdn_log_setlevel(loglevel);
++ }
++ 
++ static void
++ logger(int level, const char *msg) {
++ 	int loglevel;
++ 	int msglen;
++ 
++ 	/*
++ 	 * Convert libmdn's log level to bind's log level.
++ 	 */
++ 	switch (level) {
++ 	case mdn_log_level_fatal:
++ 		loglevel = ISC_LOG_CRITICAL;
++ 		break;
++ 	case mdn_log_level_error:
++ 		loglevel = ISC_LOG_ERROR;
++ 		break;
++ 	case mdn_log_level_warning:
++ 		loglevel = ISC_LOG_WARNING;
++ 		break;
++ 	case mdn_log_level_info:
++ 		loglevel = ISC_LOG_INFO;
++ 		break;
++ 	case mdn_log_level_trace:
++ 		loglevel = ISC_LOG_DEBUG(50);	/* XXX */
++ 		break;
++ 	case mdn_log_level_dump:
++ 	default:
++ 		loglevel = ISC_LOG_DEBUG(100);	/* XXX */
++ 		break;
++ 	}
++ 
++ 	/*
++ 	 * Since libmdn's messages are end with newline, we have to
++ 	 * remove it.
++ 	 */
++ 	msglen = strlen(msg);
++ 	if (msglen > 0 && msg[msglen - 1] == '\n')
++ 		msglen--;
++ 
++ 	isc_log_write(ns_g_lctx, NS_LOGCATEGORY_CLIENT, NS_LOGMODULE_MDN,
++ 		      loglevel, "%.*s", msglen, msg);
++ }
++ 
++ static void
++ logwrite(int level, const char *fmt, ...) {
++ 	va_list args;
++ 	
++ 	va_start(args, fmt);
++ 	isc_log_vwrite(ns_g_lctx, NS_LOGCATEGORY_CLIENT, NS_LOGMODULE_MDN,
++ 		       level, fmt, args);
++ 	va_end(args);
++ }
++ 
++ #endif /* WITH_MDN */
+Index: bin/named/lwresd.c
+diff -c mdn/othersrc/bind9/bin/named/lwresd.c:1.1.1.2 mdn/othersrc/bind9/bin/named/lwresd.c:1.3
+*** bin/named/lwresd.c	Thu Aug 10 11:02:25 2000
+--- bin/named/lwresd.c	Thu Sep 28 17:31:42 2000
+***************
+*** 52,57 ****
+--- 52,60 ----
+  #include <named/lwdclient.h>
+  #include <named/server.h>
+  #include <named/os.h>
++ #ifdef WITH_MDN
++ #include <named/lwdmdn.h>
++ #endif
+  
+  #define LWRESD_MAGIC		ISC_MAGIC('L', 'W', 'R', 'D')
+  #define VALID_LWRESD(l)		ISC_MAGIC_VALID(l, LWRESD_MAGIC)
+***************
+*** 335,340 ****
+--- 338,350 ----
+  		if (result != ISC_R_SUCCESS)
+  			fatal("failed to create default view", result);
+  	}
++ 
++ #ifdef WITH_MDN
++ 	/*
++ 	 * Initialize MDN stuff.
++ 	 */
++ 	ns_lwdmdn_initialize();
++ #endif
+  
+  	lwresd->task = NULL;
+  	result = isc_task_create(ns_g_taskmgr, 0, &lwresd->task);
+Index: bin/named/main.c
+diff -c mdn/othersrc/bind9/bin/named/main.c:1.1.1.1 mdn/othersrc/bind9/bin/named/main.c:1.2
+*** bin/named/main.c	Fri Jul 21 11:10:48 2000
+--- bin/named/main.c	Wed Aug 16 17:55:31 2000
+***************
+*** 191,199 ****
+--- 191,205 ----
+  	unsigned int port;
+  
+  	isc_commandline_errprint = ISC_FALSE;
++ #ifdef WITH_MDN
+  	while ((ch = isc_commandline_parse(argc, argv,
++ 					   "C:d:fgi:M:n:p:P:st:u:")) !=
++ 	       -1) {
++ #else
++ 	while ((ch = isc_commandline_parse(argc, argv,
+  					   "C:d:fgi:n:p:P:st:u:")) !=
+  	       -1) {
++ #endif
+  		switch (ch) {
+  		case 'C':
+  			lwresd_g_conffile = isc_commandline_argument;
+***************
+*** 211,216 ****
+--- 217,227 ----
+  		case 'i':
+  			lwresd_g_defaultpidfile = isc_commandline_argument;
+  			break;
++ #ifdef WITH_MDN
++ 		case 'M':
++ 			lwresd_g_mdnconffile = isc_commandline_argument;
++ 			break;
++ #endif
+  		case 'n':
+  			ns_g_cpus = atoi(isc_commandline_argument);
+  			if (ns_g_cpus == 0)
+Index: bin/named/include/named/globals.h
+diff -c mdn/othersrc/bind9/bin/named/include/named/globals.h:1.1.1.1 mdn/othersrc/bind9/bin/named/include/named/globals.h:1.2
+*** bin/named/include/named/globals.h	Fri Jul 21 11:10:49 2000
+--- bin/named/include/named/globals.h	Wed Aug 16 17:55:32 2000
+***************
+*** 92,97 ****
+--- 92,105 ----
+   */
+  EXTERN const char *		ns_g_cachefile		INIT(NULL);
+  
++ #ifdef WITH_MDN
++ /*
++  * MDN configuration.
++  */
++ EXTERN char *			lwresd_g_mdnconffile;
++ EXTERN isc_boolean_t		lwresd_g_mdnreloadwanted;
++ #endif
++ 
+  #undef EXTERN
+  #undef INIT
+  
+Index: bin/named/include/named/lwdmdn.h
+diff -c /dev/null mdn/othersrc/bind9/bin/named/include/named/lwdmdn.h:1.1
+*** bin/named/include/named/lwdmdn.h	Thu Nov  2 10:10:38 2000
+--- bin/named/include/named/lwdmdn.h	Wed Aug 16 17:55:32 2000
+***************
+*** 0 ****
+--- 1,23 ----
++ /* $Id: bind-9.0.0-patch,v 1.1.1.1 2001/01/31 03:58:59 zarzycki Exp $ */
++ 
++ #ifndef NAMED_LWDMDN_H
++ #define NAMED_LWDMDN_H
++ 
++ #include <isc/types.h>
++ #include <mdn/result.h>
++ 
++ ISC_LANG_BEGINDECLS
++ 
++ void
++ ns_lwdmdn_initialize(void);
++ 
++ isc_result_t
++ ns_lwdmdn_convertfromutf8(isc_buffer_t *from_buffer, isc_buffer_t *to_buffer);
++ 
++ isc_result_t
++ ns_lwdmdn_converttoutf8(isc_buffer_t *from_buffer, isc_buffer_t *to_buffer);
++ 
++ ISC_LANG_ENDDECLS
++ 
++ #endif /* NAMED_LWDMDN_H */
++ 
+Index: lib/dns/name.c
+diff -c mdn/othersrc/bind9/lib/dns/name.c:1.1.1.1 mdn/othersrc/bind9/lib/dns/name.c:1.4
+*** lib/dns/name.c	Fri Jul 21 11:10:24 2000
+--- lib/dns/name.c	Thu Sep  7 10:00:29 2000
+***************
+*** 31,36 ****
+--- 31,40 ----
+  #include <dns/name.h>
+  #include <dns/compress.h>
+  
++ #ifdef WITH_MDN
++ #include <mdn/utf8.h>
++ #endif
++ 
+  #define VALID_NAME(n)	ISC_MAGIC_VALID(n, DNS_NAME_MAGIC)
+  
+  typedef enum {
+***************
+*** 205,210 ****
+--- 209,227 ----
+  /* XXXDCL make const? */
+  dns_name_t *dns_wildcardname = &wild.name;
+  
++ #ifdef WITH_MDN
++ /*
++  * If this flag is true, dns_name_totext() copies UTF-8 characters
++  * as is (ie not backslash-escaped form).
++  */
++ static isc_boolean_t allow_utf8 = ISC_FALSE;
++ 
++ /*
++  * dns_name_t to text post-conversion procedure.
++  */
++ static dns_name_totextfilter_t totext_filter_proc = NULL;
++ #endif
++ 
+  static void
+  set_offsets(const dns_name_t *name, unsigned char *offsets,
+  	    dns_name_t *set_name);
+***************
+*** 1702,1707 ****
+--- 1719,1728 ----
+  	unsigned int labels;
+  	isc_boolean_t saw_root = ISC_FALSE;
+  	char num[4];
++ #ifdef WITH_MDN
++ 	unsigned int oused = target->used;
++ 	int u8len;
++ #endif
+  
+  	/*
+  	 * This function assumes the name is in proper uncompressed
+***************
+*** 1768,1773 ****
+--- 1789,1808 ----
+  						ndata++;
+  						trem--;
+  						nlen--;
++ #ifdef WITH_MDN
++ 					} else if (c >= 0x80 &&
++ 						   allow_utf8 &&
++ 						   (u8len =
++ 						   mdn_utf8_isvalidchar(ndata))
++ 						   > 0 &&
++ 						   u8len <= trem) {
++ 						memcpy(tdata, ndata, u8len);
++ 						ndata += u8len;
++ 						tdata += u8len;
++ 						trem -= u8len;
++ 						nlen -= u8len;
++ 						count -= u8len - 1;
++ #endif
+  					} else {
+  						if (trem < 4)
+  							return (ISC_R_NOSPACE);
+***************
+*** 1849,1854 ****
+--- 1884,1893 ----
+  
+  	isc_buffer_add(target, tlen - trem);
+  
++ #ifdef WITH_MDN
++ 	if (totext_filter_proc != NULL)
++ 		return ((*totext_filter_proc)(target, oused, saw_root));
++ #endif
+  	return (ISC_R_SUCCESS);
+  }
+  
+***************
+*** 3101,3103 ****
+--- 3140,3153 ----
+  		snprintf(cp, size, "<unknown>");
+  }
+  
++ #ifdef WITH_MDN
++ void
++ dns_name_allowutf8(isc_boolean_t allowutf8) {
++ 	allow_utf8 = allowutf8;
++ }
++ 
++ void
++ dns_name_settotextfilter(dns_name_totextfilter_t proc) {
++ 	totext_filter_proc = proc;
++ }
++ #endif
+Index: lib/dns/config/confctx.c
+diff -c mdn/othersrc/bind9/lib/dns/config/confctx.c:1.1.1.3 mdn/othersrc/bind9/lib/dns/config/confctx.c:1.3
+*** lib/dns/config/confctx.c	Mon Sep 18 17:37:23 2000
+--- lib/dns/config/confctx.c	Mon Sep 18 18:34:03 2000
+***************
+*** 985,990 ****
+--- 985,993 ----
+  	PRINT_AS_BOOLEAN(request_ixfr, "request-ixfr");
+  	PRINT_AS_BOOLEAN(provide_ixfr, "provide-ixfr");
+  	PRINT_AS_BOOLEAN(treat_cr_as_space, "treat-cr-as-space");
++ #ifdef WITH_MDN
++ 	PRINT_AS_BOOLEAN(allow_utf8, "allow-utf8");
++ #endif
+  
+  	if (options->transfer_format != NULL) {
+  		dns_c_printtabs(fp, indent + 1);
+***************
+*** 1500,1505 ****
+--- 1503,1511 ----
+  	opts->request_ixfr = NULL;
+  	opts->provide_ixfr = NULL;
+  	opts->treat_cr_as_space = NULL;
++ #ifdef WITH_MDN
++ 	opts->allow_utf8 = NULL;
++ #endif
+  
+  	opts->transfer_source = NULL;
+  	opts->transfer_source_v6 = NULL;
+***************
+*** 1606,1611 ****
+--- 1612,1620 ----
+  	FREEFIELD(request_ixfr);
+  	FREEFIELD(provide_ixfr);
+  	FREEFIELD(treat_cr_as_space);
++ #ifdef WITH_MDN
++ 	FREEFIELD(allow_utf8);
++ #endif
+  
+  	
+  	FREEFIELD(port);
+***************
+*** 1971,1976 ****
+--- 1980,1992 ----
+  GETBOOL(treatcrasspace, treat_cr_as_space)
+  SETBOOL(treatcrasspace, treat_cr_as_space)
+  UNSETBOOL(treatcrasspace, treat_cr_as_space)
++ 
++ 
++ #ifdef WITH_MDN
++ GETBOOL(allowutf8, allow_utf8)
++ SETBOOL(allowutf8, allow_utf8)
++ UNSETBOOL(allowutf8, allow_utf8)
++ #endif
+  
+  
+  GETSOCKADDR(transfersource, transfer_source)
+Index: lib/dns/config/confparser.y
+diff -c mdn/othersrc/bind9/lib/dns/config/confparser.y:1.1.1.3 mdn/othersrc/bind9/lib/dns/config/confparser.y:1.4
+*** lib/dns/config/confparser.y	Mon Sep 18 17:37:25 2000
+--- lib/dns/config/confparser.y	Mon Oct 30 09:53:55 2000
+***************
+*** 245,250 ****
+--- 245,251 ----
+  %token		L_ALLOW_TRANSFER
+  %token		L_ALLOW_UPDATE
+  %token		L_ALLOW_UPDATE_FORWARDING
++ %token		L_ALLOW_UTF8
+  %token		L_ALSO_NOTIFY
+  %token		L_AUTH_NXDOMAIN
+  %token		L_BANG
+***************
+*** 1461,1466 ****
+--- 1462,1482 ----
+  			YYABORT;
+  		}
+  	}
++ 	| L_ALLOW_UTF8 yea_or_nay
++ 	{
++ #ifdef WITH_MDN
++ 		tmpres = dns_c_ctx_setallowutf8(currcfg, $2);
++ 		if (tmpres == ISC_R_EXISTS) {
++ 			parser_error(ISC_FALSE,
++ 				     "cannot redefine allow-utf8");
++ 			YYABORT;
++ 		}
++ #else
++ 		parser_error(ISC_FALSE, "must be configured with MDN"
++ 			     "to use allow-utf8");
++ 		YYABORT;
++ #endif
++ 	}
+  	;
+  
+  
+***************
+*** 5146,5151 ****
+--- 5162,5170 ----
+  	{ "allow-recursion",		L_ALLOW_RECURSION },
+  	{ "allow-update",		L_ALLOW_UPDATE },
+  	{ "allow-update-forwarding",	L_ALLOW_UPDATE_FORWARDING },
++ #ifdef WITH_MDN
++ 	{ "allow-utf8",			L_ALLOW_UTF8 },
++ #endif
+  	{ "also-notify",		L_ALSO_NOTIFY },
+  	{ "auth-nxdomain",		L_AUTH_NXDOMAIN },
+  	{ "blackhole",			L_BLACKHOLE },
+Index: lib/dns/include/dns/confctx.h
+diff -c mdn/othersrc/bind9/lib/dns/include/dns/confctx.h:1.1.1.1 mdn/othersrc/bind9/lib/dns/include/dns/confctx.h:1.2
+*** lib/dns/include/dns/confctx.h	Fri Jul 21 11:10:30 2000
+--- lib/dns/include/dns/confctx.h	Wed Aug 16 17:54:38 2000
+***************
+*** 168,173 ****
+--- 168,176 ----
+  	isc_boolean_t	       *request_ixfr;
+  	isc_boolean_t	       *provide_ixfr;
+  	isc_boolean_t	       *treat_cr_as_space;
++ #ifdef WITH_MDN
++ 	isc_boolean_t	       *allow_utf8;
++ #endif
+  	
+  	isc_sockaddr_t	       *transfer_source;
+  	isc_sockaddr_t	       *transfer_source_v6;
+***************
+*** 583,588 ****
+--- 586,598 ----
+  					 isc_boolean_t newval);
+  isc_result_t dns_c_ctx_gettreatcrasspace(dns_c_ctx_t *cfg,
+  					 isc_boolean_t *retval);
++ #ifdef WITH_MDN
++ isc_result_t dns_c_ctx_setallowutf8(dns_c_ctx_t *cfg,
++ 				    isc_boolean_t newval);
++ isc_result_t dns_c_ctx_getallowutf8(dns_c_ctx_t *cfg,
++ 				    isc_boolean_t *retval);
++ isc_result_t dns_c_ctx_unsetallowutf8(dns_c_ctx_t *cfg);
++ #endif
+  
+  
+  isc_result_t dns_c_ctx_unsettreatcrasspace(dns_c_ctx_t *cfg);
+Index: lib/dns/include/dns/name.h
+diff -c mdn/othersrc/bind9/lib/dns/include/dns/name.h:1.1.1.1 mdn/othersrc/bind9/lib/dns/include/dns/name.h:1.3
+*** lib/dns/include/dns/name.h	Fri Jul 21 11:10:31 2000
+--- lib/dns/include/dns/name.h	Mon Aug 21 13:40:58 2000
+***************
+*** 214,219 ****
+--- 214,230 ----
+  extern dns_name_t *dns_rootname;
+  extern dns_name_t *dns_wildcardname;
+  
++ #ifdef WITH_MDN
++ /*
++  * Text output filter procedure.
++  * 'target' is the buffer to be converted.  The region to be converted
++  * is from 'buffer'->base + 'used_org' to the end of the used region.
++  */
++ typedef isc_result_t (*dns_name_totextfilter_t)(isc_buffer_t *target,
++ 						unsigned int used_org,
++ 						isc_boolean_t absolute);
++ #endif
++ 
+  /***
+   *** Initialization
+   ***/
+***************
+*** 1163,1168 ****
+--- 1174,1199 ----
+   *	'size' > 0.
+   *
+   */
++ 
++ #ifdef WITH_MDN
++ void
++ dns_name_allowutf8(isc_boolean_t allowutf8);
++ /*
++  * If 'allowutf8' is true, UTF-8 characters are not translated into
++  * backslash escape format (\DDD) by dns_name_totext().
++  *
++  * XXX:
++  *	Setting this modifies the global state.  Maybe there should be
++  *	a way to set this for each name.
++  */
++ 
++ void
++ dns_name_settotextfilter(dns_name_totextfilter_t proc);
++ /*
++  * Call 'proc' at the end of dns_name_totext.
++  */
++ 
++ #endif /* WITH_MDN */
+  
+  ISC_LANG_ENDDECLS
+  
+Index: lib/lwres/getaddrinfo.c
+diff -c mdn/othersrc/bind9/lib/lwres/getaddrinfo.c:1.1.1.2 mdn/othersrc/bind9/lib/lwres/getaddrinfo.c:1.2
+*** lib/lwres/getaddrinfo.c	Thu Aug 10 11:01:57 2000
+--- lib/lwres/getaddrinfo.c	Thu Aug 24 17:14:41 2000
+***************
+*** 54,65 ****
+--- 54,74 ----
+  static int get_local(const char *name, int socktype, struct addrinfo **res);
+  #endif
+  
++ #ifdef WITH_MDN
+  static int add_ipv4(const char *hostname, int flags, struct addrinfo **aip,
++     int socktype, int port, int encodeflg);
++ static int add_ipv6(const char *hostname, int flags, struct addrinfo **aip,
++     int socktype, int port, int encodeflg);
++ static void set_order(int, int (**)(const char *, int, struct addrinfo **,
++          int, int, int));
++ #else
++ static int add_ipv4(const char *hostname, int flags, struct addrinfo **aip,
+      int socktype, int port);
+  static int add_ipv6(const char *hostname, int flags, struct addrinfo **aip,
+      int socktype, int port);
+  static void set_order(int, int (**)(const char *, int, struct addrinfo **,
+           int, int));
++ #endif /* WITH_MDN */
+  
+  #define FOUND_IPV4	0x1
+  #define FOUND_IPV6	0x2
+***************
+*** 67,83 ****
+--- 76,111 ----
+  
+  #define ISC_AI_MASK (AI_PASSIVE|AI_CANONNAME|AI_NUMERICHOST)
+  
++ #ifdef WITH_MDN
++ int
++ lwres_getaddrinfo(const char *hostname, const char *servname,
++ 		  const struct addrinfo *hints, struct addrinfo **res)
++ {
++ 	/* The last parameter is a encoding type. Default is local encoding. */
++ 	return (lwres_getaddrinfo_enc(hostname, servname, hints, res, 0));
++ }
++ #endif /* WITH_MDN */
+  int
++ #ifdef WITH_MDN
++ lwres_getaddrinfo_enc(const char *hostname, const char *servname,
++ 	const struct addrinfo *hints, struct addrinfo **res, int encodeflg)
++ #else
+  lwres_getaddrinfo(const char *hostname, const char *servname,
+  	const struct addrinfo *hints, struct addrinfo **res)
++ #endif /* WITH_MDN */
+  {
+  	struct servent *sp;
+  	const char *proto;
+  	int family, socktype, flags, protocol;
+  	struct addrinfo *ai, *ai_list;
+  	int port, err, i;
++ #ifdef WITH_MDN
++ 	int (*net_order[FOUND_MAX+1])(const char *, int, struct addrinfo **,
++ 		 int, int, int);
++ #else
+  	int (*net_order[FOUND_MAX+1])(const char *, int, struct addrinfo **,
+  		 int, int);
++ #endif /* WITH_MDN */
+  
+  	if (hostname == NULL && servname == NULL)
+  		return (EAI_NONAME);
+***************
+*** 332,339 ****
+--- 360,372 ----
+  	for (i = 0; i < FOUND_MAX; i++) {
+  		if (net_order[i] == NULL)
+  			break;
++ #ifdef WITH_MDN
++ 		if ((err = (net_order[i])(hostname, flags, &ai_list,
++ 		    socktype, port, encodeflg)) != 0)
++ #else
+  		if ((err = (net_order[i])(hostname, flags, &ai_list,
+  		    socktype, port)) != 0)
++ #endif /* WITH_MDN */
+  			return(err);
+  	}
+  
+***************
+*** 369,376 ****
+--- 402,414 ----
+  }
+  
+  static void
++ #ifdef WITH_MDN
+  set_order(int family, int (**net_order)(const char *, int, struct addrinfo **,
++ 					int, int, int))
++ #else
++ set_order(int family, int (**net_order)(const char *, int, struct addrinfo **,
+  					int, int))
++ #endif /* WITH_MDN */
+  {
+  	char *order, *tok;
+  	int found;
+***************
+*** 428,435 ****
+--- 466,478 ----
+  	} while (0)
+  
+  static int
++ #ifdef WITH_MDN
++ add_ipv4(const char *hostname, int flags, struct addrinfo **aip,
++ 	int socktype, int port, int encodeflg)
++ #else
+  add_ipv4(const char *hostname, int flags, struct addrinfo **aip,
+  	int socktype, int port)
++ #endif /* WITH_MDN */
+  {
+  	struct addrinfo *ai;
+  	lwres_context_t *lwrctx = NULL;
+***************
+*** 452,459 ****
+--- 495,508 ----
+  		ai->ai_socktype = socktype;
+  		SIN(ai->ai_addr)->sin_port = port;
+  		memcpy(&SIN(ai->ai_addr)->sin_addr, v4_loop, 4);
++ #ifdef WITH_MDN
++ 	} else if (lwres_getaddrsbyname_enc(lwrctx, hostname,
++ 					    LWRES_ADDRTYPE_V4,
++ 					    &by, encodeflg) == 0) {
++ #else
+  	} else if (lwres_getaddrsbyname(lwrctx, hostname,
+  					LWRES_ADDRTYPE_V4, &by) == 0) {
++ #endif /* WITH_MDN */
+  		addr = LWRES_LIST_HEAD(by->addrs);
+  		while (addr != NULL) {
+  			ai = ai_clone(*aip, AF_INET);
+***************
+*** 487,494 ****
+--- 536,548 ----
+  static char v6_loop[16] = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1 };
+  
+  static int
++ #ifdef WITH_MDN
++ add_ipv6(const char *hostname, int flags, struct addrinfo **aip,
++ 	 int socktype, int port, int encodeflg)
++ #else
+  add_ipv6(const char *hostname, int flags, struct addrinfo **aip,
+  	 int socktype, int port)
++ #endif /* WITH_MDN */
+  {
+  	struct addrinfo *ai;
+  	lwres_context_t *lwrctx = NULL;
+***************
+*** 512,519 ****
+--- 566,579 ----
+  		ai->ai_socktype = socktype;
+  		SIN6(ai->ai_addr)->sin6_port = port;
+  		memcpy(&SIN6(ai->ai_addr)->sin6_addr, v6_loop, 16);
++ #ifdef WITH_MDN
++ 	} else if (lwres_getaddrsbyname_enc(lwrctx, hostname,
++ 					    LWRES_ADDRTYPE_V6,
++ 					    &by, encodeflg) == 0) {
++ #else
+  	} else if (lwres_getaddrsbyname(lwrctx, hostname,
+  					LWRES_ADDRTYPE_V6, &by) == 0) {
++ #endif /* WITH_MDN */
+  		addr = LWRES_LIST_HEAD(by->addrs);
+  		while (addr != NULL) {
+  			if ((ai = ai_clone(*aip, AF_INET6)) == NULL) {
+Index: lib/lwres/gethost.c
+diff -c mdn/othersrc/bind9/lib/lwres/gethost.c:1.1.1.3 mdn/othersrc/bind9/lib/lwres/gethost.c:1.5
+*** lib/lwres/gethost.c	Mon Sep 18 17:37:36 2000
+--- lib/lwres/gethost.c	Thu Sep 28 17:29:01 2000
+***************
+*** 25,30 ****
+--- 25,33 ----
+  #include <errno.h>
+  #include <string.h>
+  
++ #ifdef WITH_MDN
++ #include <lwres/lwres.h>
++ #endif /* WITH_MDN */
+  #include <lwres/netdb.h>
+  
+  #include "assert_p.h"
+***************
+*** 36,67 ****
+--- 39,118 ----
+  static struct hostent *he = NULL;
+  static int copytobuf(struct hostent *, struct hostent *, char *, int);
+  
++ #ifdef WITH_MDN
+  struct hostent *
+  lwres_gethostbyname(const char *name) {
++ 	/* The last parameter is a encoding type. Default is local encoding. */
++ 	return (lwres_gethostbyname_enc(name, LWRES_ENCODING_LOCAL));
++ }
++ #endif /* WITH_MDN */
++ struct hostent *
++ #ifdef WITH_MDN
++ lwres_gethostbyname_enc(const char *name, int encodeflg) {
++ #else
++ lwres_gethostbyname(const char *name) {
++ #endif /* WITH_MDN */
+  
+  	if (he != NULL)
+  		lwres_freehostent(he);
+  
++ #ifdef WITH_MDN
++ 	he = lwres_getipnodebyname_enc(name, AF_INET, 0, &lwres_h_errno,
++ 				       encodeflg);
++ #else
+  	he = lwres_getipnodebyname(name, AF_INET, 0, &lwres_h_errno);
++ #endif /* WITH_MDN */
+  	return (he);
+  }
+  
++ #ifdef WITH_MDN
++ struct hostent *
++ lwres_gethostbyname2(const char *name, int af) {
++ 	/* The last parameter is a encoding type. Default is local encoding. */
++ 	return (lwres_gethostbyname2_enc(name, af, LWRES_ENCODING_LOCAL));
++ }
++ #endif /* WITH_MDN */
+  struct hostent *
++ #ifdef WITH_MDN
++ lwres_gethostbyname2_enc(const char *name, int af, int encodeflg) {
++ #else
+  lwres_gethostbyname2(const char *name, int af) {
++ #endif /* WITH_MDN */
+  	if (he != NULL)
+  		lwres_freehostent(he);
+  
++ #ifdef WITH_MDN
++ 	he = lwres_getipnodebyname_enc(name, af, 0, &lwres_h_errno, encodeflg);
++ #else
+  	he = lwres_getipnodebyname(name, af, 0, &lwres_h_errno);
++ #endif /* WITH_MDN */
+  	return (he);
+  }
+  
++ #ifdef WITH_MDN
+  struct hostent *
+  lwres_gethostbyaddr(const char *addr, int len, int type) {
++ 	/* The last parameter is a encoding type. Default is local encoding. */
++ 	return (lwres_gethostbyaddr_enc(addr, len, type,
++ 					LWRES_ENCODING_LOCAL));
++ }
++ #endif /* WITH_MDN */
++ struct hostent *
++ #ifdef WITH_MDN
++ lwres_gethostbyaddr_enc(const char *addr, int len, int type, int encodeflg) {
++ #else
++ lwres_gethostbyaddr(const char *addr, int len, int type) {
++ #endif /* WITH_MDN */
+  
+  	if (he != NULL) 
+  		lwres_freehostent(he);
+  
++ #ifdef WITH_MDN
++ 	he = lwres_getipnodebyaddr_enc(addr, len, type, &lwres_h_errno,
++ 				       encodeflg);
++ #else
+  	he = lwres_getipnodebyaddr(addr, len, type, &lwres_h_errno);
++ #endif /* WITH_MDN */
+  	return (he);
+  }
+  
+***************
+*** 87,100 ****
+--- 138,170 ----
+  	 */
+  }
+  
++ #ifdef WITH_MDN
++ struct hostent *
++ lwres_gethostbyname_r(const char *name, struct hostent *resbuf,
++ 		char *buf, int buflen, int *error)
++ {
++ 	/* The last parameter is a encoding type. Default is local encoding. */
++ 	return (lwres_gethostbyname_r_enc(name, resbuf, buf, buflen, error,
++ 					  LWRES_ENCODING_LOCAL));
++ }
++ #endif /* WITH_MDN */
+  struct hostent *
++ #ifdef WITH_MDN
++ lwres_gethostbyname_r_enc(const char *name, struct hostent *resbuf,
++ 		char *buf, int buflen, int *error, int encodeflg)
++ #else
+  lwres_gethostbyname_r(const char *name, struct hostent *resbuf,
+  		char *buf, int buflen, int *error)
++ #endif /* WITH_MDN */
+  {
+  	struct hostent *he;
+  	int res;
+  
++ #ifdef WITH_MDN
++ 	he = lwres_getipnodebyname_enc(name, AF_INET, 0, error, encodeflg);
++ #else
+  	he = lwres_getipnodebyname(name, AF_INET, 0, error);
++ #endif /* WITH_MDN */
+  	if (he == NULL)
+  		return (NULL);
+  	res = copytobuf(he, resbuf, buf, buflen);
+***************
+*** 107,121 ****
+--- 177,212 ----
+  	return (resbuf);
+  }
+  
++ #ifdef WITH_MDN
++ struct hostent  *
++ lwres_gethostbyaddr_r(const char *addr, int len, int type,
++ 		      struct hostent *resbuf, char *buf, int buflen,
++ 		      int *error)
++ {
++ 	/* The last parameter is a encoding type. Default is local encoding. */
++ 	return (lwres_gethostbyaddr_r_enc(addr, len, type, resbuf, buf, buflen,
++ 					  error, LWRES_ENCODING_LOCAL));
++ }
++ #endif /* WITH_MDN */
+  struct hostent  *
++ #ifdef WITH_MDN
++ lwres_gethostbyaddr_r_enc(const char *addr, int len, int type,
++ 			  struct hostent *resbuf, char *buf, int buflen,
++ 			  int *error, int encodeflg)
++ #else
+  lwres_gethostbyaddr_r(const char *addr, int len, int type,
+  		      struct hostent *resbuf, char *buf, int buflen,
+  		      int *error)
++ #endif /* WITH_MDN */
+  {
+  	struct hostent *he;
+  	int res;
+  
++ #ifdef WITH_MDN
++ 	he = lwres_getipnodebyaddr_enc(addr, len, type, error, encodeflg);
++ #else
+  	he = lwres_getipnodebyaddr(addr, len, type, error);
++ #endif /* WITH_MDN */
+  	if (he == NULL)
+  		return (NULL);
+  	res = copytobuf(he, resbuf, buf, buflen);
+Index: lib/lwres/getipnode.c
+diff -c mdn/othersrc/bind9/lib/lwres/getipnode.c:1.1.1.1 mdn/othersrc/bind9/lib/lwres/getipnode.c:1.4
+*** lib/lwres/getipnode.c	Fri Jul 21 11:10:35 2000
+--- lib/lwres/getipnode.c	Thu Sep 28 17:29:01 2000
+***************
+*** 98,105 ****
+--- 98,120 ----
+   *	type active.
+   */
+  
++ #ifdef WITH_MDN
+  struct hostent *
++ lwres_getipnodebyname(const char *name, int af, int flags, int *error_num)
++ {
++ 	/* The last parameter is a encoding type. Default is local encoding. */
++ 	return (lwres_getipnodebyname_enc(name, af, flags, error_num,
++ 					  LWRES_ENCODING_LOCAL));
++ }
++ #endif /* WITH_MDN */
++ struct hostent *
++ #ifdef WITH_MDN
++ lwres_getipnodebyname_enc(const char *name, int af, int flags, int *error_num,
++ 			  int encodeflg)
++ {
++ #else
+  lwres_getipnodebyname(const char *name, int af, int flags, int *error_num) {
++ #endif /* WITH_MDN */
+  	int have_v4 = 1, have_v6 = 1;
+  	struct in_addr in4;
+  	struct in6_addr in6;
+***************
+*** 169,176 ****
+  	(void) lwres_conf_parse(lwrctx, "/etc/resolv.conf");
+  	tmp_err = NO_RECOVERY;
+  	if (have_v6 && af == AF_INET6) {
+! 		
+  		n = lwres_getaddrsbyname(lwrctx, name, LWRES_ADDRTYPE_V6, &by);
+  		if (n == 0) {
+  			he1 = hostfromname(by, AF_INET6);
+  			lwres_gabnresponse_free(lwrctx, &by);
+--- 184,196 ----
+  	(void) lwres_conf_parse(lwrctx, "/etc/resolv.conf");
+  	tmp_err = NO_RECOVERY;
+  	if (have_v6 && af == AF_INET6) {
+! 
+! #ifdef WITH_MDN		
+! 		n = lwres_getaddrsbyname_enc(lwrctx, name, LWRES_ADDRTYPE_V6,
+! 					     &by, encodeflg);
+! #else
+  		n = lwres_getaddrsbyname(lwrctx, name, LWRES_ADDRTYPE_V6, &by);
++ #endif /* WITH_MDN */
+  		if (n == 0) {
+  			he1 = hostfromname(by, AF_INET6);
+  			lwres_gabnresponse_free(lwrctx, &by);
+***************
+*** 187,193 ****
+--- 207,218 ----
+  	    ((af == AF_INET) ||
+  	     (af == AF_INET6 && (flags & AI_V4MAPPED) != 0 &&
+  	      (he1 == NULL || (flags & AI_ALL) != 0)))) {
++ #ifdef WITH_MDN
++ 		n = lwres_getaddrsbyname_enc(lwrctx, name, LWRES_ADDRTYPE_V4,
++ 					     &by, encodeflg);
++ #else
+  		n = lwres_getaddrsbyname(lwrctx, name, LWRES_ADDRTYPE_V4, &by);
++ #endif /* WITH_MDN */
+  		if (n == 0) {
+  			he2 = hostfromname(by, AF_INET);
+  			lwres_gabnresponse_free(lwrctx, &by);
+***************
+*** 219,226 ****
+--- 244,265 ----
+  	return (he3);
+  }
+  
++ #ifdef WITH_MDN
++ struct hostent *
++ lwres_getipnodebyaddr(const void *src, size_t len, int af, int *error_num) {
++ 	/* The last parameter is a encoding type. Default is local encoding. */
++ 	return (lwres_getipnodebyaddr_enc(src, len, af, error_num,
++ 					  LWRES_ENCODING_LOCAL));
++ }
++ #endif /* WITH_MDN */
+  struct hostent *
++ #ifdef WITH_MDN
++ lwres_getipnodebyaddr_enc(const void *src, size_t len, int af, int *error_num,
++ 			  int encodeflg)
++ {
++ #else
+  lwres_getipnodebyaddr(const void *src, size_t len, int af, int *error_num) {
++ #endif /* WITH_MDN */
+  	struct hostent *he1, *he2;
+  	lwres_context_t *lwrctx = NULL;
+  	lwres_gnbaresponse_t *by = NULL;
+***************
+*** 281,288 ****
+--- 320,333 ----
+  		if (n == LWRES_R_SUCCESS)
+  			(void) lwres_conf_parse(lwrctx, "/etc/resolv.conf");
+  		if (n == LWRES_R_SUCCESS)
++ #ifdef WITH_MDN
++ 			n = lwres_getnamebyaddr_enc(lwrctx, LWRES_ADDRTYPE_V4,
++ 						    INADDRSZ, cp, &by,
++ 						    encodeflg);
++ #else
+  			n = lwres_getnamebyaddr(lwrctx, LWRES_ADDRTYPE_V4,
+  						INADDRSZ, cp, &by);
++ #endif /* WITH_MDN */
+  		if (n != LWRES_R_SUCCESS) {
+  			lwres_conf_clear(lwrctx);
+  			lwres_context_destroy(&lwrctx);
+***************
+*** 325,332 ****
+--- 370,382 ----
+  	if (n == LWRES_R_SUCCESS)
+  		(void) lwres_conf_parse(lwrctx, "/etc/resolv.conf");
+  	if (n == LWRES_R_SUCCESS)
++ #ifdef WITH_MDN
++ 		n = lwres_getnamebyaddr_enc(lwrctx, LWRES_ADDRTYPE_V6,
++ 					    IN6ADDRSZ, src, &by, encodeflg);
++ #else
+  		n = lwres_getnamebyaddr(lwrctx, LWRES_ADDRTYPE_V6, IN6ADDRSZ,
+  					src, &by);
++ #endif /* WITH_MDN */
+  	if (n != 0) {
+  		*error_num = HOST_NOT_FOUND;
+  		return (NULL);
+Index: lib/lwres/getnameinfo.c
+diff -c mdn/othersrc/bind9/lib/lwres/getnameinfo.c:1.1.1.1 mdn/othersrc/bind9/lib/lwres/getnameinfo.c:1.3
+*** lib/lwres/getnameinfo.c	Fri Jul 21 11:10:35 2000
+--- lib/lwres/getnameinfo.c	Thu Sep 28 17:29:01 2000
+***************
+*** 105,114 ****
+--- 105,130 ----
+  		if (result != 0) goto cleanup;	\
+  	} while (0)
+  
++ #ifdef WITH_MDN
+  int
+  lwres_getnameinfo(const struct sockaddr *sa, size_t salen, char *host,
+  		  size_t hostlen, char *serv, size_t servlen, int flags)
+  {
++ 	/* The last parameter is a encoding type. Default is local encoding. */
++ 	return (lwres_getnameinfo_enc(sa, salen, host, hostlen, serv, servlen,
++ 				      flags, LWRES_ENCODING_LOCAL));
++ }
++ #endif /* WITH_MDN */
++ int
++ #ifdef WITH_MDN
++ lwres_getnameinfo_enc(const struct sockaddr *sa, size_t salen, char *host,
++ 		      size_t hostlen, char *serv, size_t servlen, int flags,
++ 		      int encodeflg)
++ #else
++ lwres_getnameinfo(const struct sockaddr *sa, size_t salen, char *host,
++ 		  size_t hostlen, char *serv, size_t servlen, int flags)
++ #endif /* WITH_MDN */
++ {
+  	struct afd *afd;
+  	struct servent *sp;
+  	unsigned short port;
+***************
+*** 258,265 ****
+--- 274,287 ----
+  			(void) lwres_conf_parse(lwrctx, "/etc/resolv.conf");
+  
+  		if (n == 0)
++ #ifdef WITH_MDN
++ 			n = lwres_getnamebyaddr_enc(lwrctx, lwf,
++ 						    afd->a_addrlen, addr, &by,
++ 						    encodeflg);
++ #else
+  			n = lwres_getnamebyaddr(lwrctx, lwf, afd->a_addrlen,
+  						addr, &by);
++ #endif /* WITH_MDN */
+  		if (n == 0) {
+  			if (flags & NI_NOFQDN) {
+  				p = strchr(by->realname, '.');
+Index: lib/lwres/lwconfig.c
+diff -c mdn/othersrc/bind9/lib/lwres/lwconfig.c:1.1.1.1 mdn/othersrc/bind9/lib/lwres/lwconfig.c:1.3
+*** lib/lwres/lwconfig.c	Fri Jul 21 11:10:35 2000
+--- lib/lwres/lwconfig.c	Wed Oct  4 15:47:38 2000
+***************
+*** 55,60 ****
+--- 55,63 ----
+  #include <lwres/lwres.h>
+  #include <lwres/net.h>
+  #include <lwres/result.h>
++ #ifdef WITH_MDN
++ #include <mdn/result.h>
++ #endif /* WITH_MDN */
+  
+  #include "assert_p.h"
+  #include "context_p.h"
+***************
+*** 236,241 ****
+--- 239,253 ----
+  		lwres_resetaddr(&confdata->sortlist[i].addr);
+  		lwres_resetaddr(&confdata->sortlist[i].mask);
+  	}
++ #ifdef WITH_MDN
++ 	/*
++ 	 * Initialize the context for MDN.
++ 	 */
++ 	confdata->mdnctx = NULL;
++ 	if (mdn_resconf_initialize() == mdn_success) {
++ 		(void)mdn_resconf_create(&confdata->mdnctx);
++ 	}
++ #endif /* WITH_MDN */
+  }
+  
+  void
+***************
+*** 574,579 ****
+--- 586,596 ----
+  
+  	fclose(fp);
+  
++ #ifdef WITH_MDN
++ 	/* Read mdn configuration file. */
++ 	if (confdata->mdnctx != NULL)
++ 		(void)mdn_resconf_loadfile(confdata->mdnctx, NULL);
++ #endif
+  	return (ret);
+  }
+  
+Index: lib/lwres/lwres_gabn.c
+diff -c mdn/othersrc/bind9/lib/lwres/lwres_gabn.c:1.1.1.1 mdn/othersrc/bind9/lib/lwres/lwres_gabn.c:1.6
+*** lib/lwres/lwres_gabn.c	Fri Jul 21 11:10:35 2000
+--- lib/lwres/lwres_gabn.c	Wed Oct  4 15:47:38 2000
+***************
+*** 27,32 ****
+--- 27,35 ----
+  #include <lwres/lwpacket.h>
+  #include <lwres/lwres.h>
+  #include <lwres/result.h>
++ #ifdef WITH_MDN
++ #include <mdn/res.h>
++ #endif /* WITH_MDN */
+  
+  #include "context_p.h"
+  #include "assert_p.h"
+***************
+*** 309,316 ****
+--- 312,325 ----
+  }
+  
+  lwres_result_t
++ #ifdef WITH_MDN
+  lwres_gabnresponse_parse(lwres_context_t *ctx, lwres_buffer_t *b,
++ 			 lwres_lwpacket_t *pkt, lwres_gabnresponse_t **structp,
++ 			 int encodeflg)
++ #else
++ lwres_gabnresponse_parse(lwres_context_t *ctx, lwres_buffer_t *b,
+  			lwres_lwpacket_t *pkt, lwres_gabnresponse_t **structp)
++ #endif /* WITH_MDN */
+  {
+  	lwres_result_t ret;
+  	unsigned int x;
+***************
+*** 320,325 ****
+--- 329,339 ----
+  	lwres_gabnresponse_t *gabn;
+  	lwres_addrlist_t addrlist;
+  	lwres_addr_t *addr;
++ #ifdef WITH_MDN
++ 	char *tmp_realname;
++ 	char *tmp_aliases;
++ 	mdn_result_t r;
++ #endif /* WITH_MDN */
+  
+  	REQUIRE(ctx != NULL);
+  	REQUIRE(pkt != NULL);
+***************
+*** 383,388 ****
+--- 397,424 ----
+  	ret = lwres_string_parse(b, &gabn->realname, &gabn->realnamelen);
+  	if (ret != LWRES_R_SUCCESS)
+  		goto out;
++ #ifdef WITH_MDN
++ 	/*
++ 	 * Convert from UCS to local encoding if needed.
++ 	 */
++ 	tmp_realname = (char *)malloc(1024);
++ 	switch (encodeflg) {
++ 	case LWRES_ENCODING_LOCAL:	/* from UCS to local encoding */
++ 		r = mdn_res_ucstolocal(ctx->confdata.mdnctx, gabn->realname,
++ 				       tmp_realname, 1024);
++ 		if (r != mdn_success) {
++ 			free(tmp_realname);
++ 			tmp_realname = NULL;
++ 			ret = lwres_result_frommdn(r);
++ 			goto out;
++ 		}
++ 		break;
++ 	default:
++ 		strcpy(tmp_realname, gabn->realname);
++ 		break;
++ 	}
++ 	gabn->realname = tmp_realname;
++ #endif /* WITH_MDN */
+  
+  	/*
+  	 * Parse off the aliases.
+***************
+*** 392,397 ****
+--- 428,456 ----
+  					 &gabn->aliaslen[x]);
+  		if (ret != LWRES_R_SUCCESS)
+  			goto out;
++ #ifdef WITH_MDN
++ 		/*
++ 		 * Convert from UCS to local encoding.
++ 		 */
++ 		tmp_aliases = (char *)malloc(1024);
++ 		switch (encodeflg) {
++ 		case LWRES_ENCODING_LOCAL:     /* from UCS to local encoding */
++ 			r = mdn_res_ucstolocal(ctx->confdata.mdnctx,
++ 					       gabn->aliases[x],
++ 					       tmp_aliases, 1024);
++ 			if (r != mdn_success) {
++ 				free(tmp_aliases);
++ 				tmp_aliases = NULL;
++ 				ret = lwres_result_frommdn(r);
++ 				goto out;
++ 			}
++ 			break;
++ 		default:	/* When encoding on DNS protocol */
++ 			strcpy(tmp_aliases, gabn->aliases[x]);
++ 			break;
++ 		}
++ 		gabn->aliases[x] = tmp_aliases;
++ #endif /* WITH_MDN */
+  	}
+  
+  	/*
+***************
+*** 459,464 ****
+--- 518,526 ----
+  {
+  	lwres_gabnresponse_t *gabn;
+  	lwres_addr_t *addr;
++ #ifdef WITH_MDN
++ 	unsigned int x;
++ #endif /* WITH_MDN */
+  
+  	REQUIRE(ctx != NULL);
+  	REQUIRE(structp != NULL && *structp != NULL);
+***************
+*** 466,471 ****
+--- 528,541 ----
+  	gabn = *structp;
+  	*structp = NULL;
+  
++ #ifdef WITH_MDN
++ 	free(gabn->realname);
++ 	gabn->realname = NULL;
++ 	for (x = 0 ; x < gabn->naliases ; x++) {
++ 		free(gabn->aliases[x]);
++ 		gabn->aliases[x] = NULL;
++ 	}
++ #endif /* WITH_MDN */
+  	if (gabn->naliases > 0) {
+  		CTXFREE(gabn->aliases, sizeof(char *) * gabn->naliases);
+  		CTXFREE(gabn->aliaslen,
+Index: lib/lwres/lwres_gnba.c
+diff -c mdn/othersrc/bind9/lib/lwres/lwres_gnba.c:1.1.1.1 mdn/othersrc/bind9/lib/lwres/lwres_gnba.c:1.4
+*** lib/lwres/lwres_gnba.c	Fri Jul 21 11:10:36 2000
+--- lib/lwres/lwres_gnba.c	Wed Oct  4 15:47:38 2000
+***************
+*** 27,32 ****
+--- 27,35 ----
+  #include <lwres/lwpacket.h>
+  #include <lwres/lwres.h>
+  #include <lwres/result.h>
++ #ifdef WITH_MDN
++ #include <mdn/res.h>
++ #endif /* WITH_MDN */
+  
+  #include "context_p.h"
+  #include "assert_p.h"
+***************
+*** 203,216 ****
+--- 206,230 ----
+  }
+  
+  lwres_result_t
++ #ifdef WITH_MDN
+  lwres_gnbaresponse_parse(lwres_context_t *ctx, lwres_buffer_t *b,
++ 			 lwres_lwpacket_t *pkt, lwres_gnbaresponse_t **structp,
++ 			 int encodeflg)
++ #else
++ lwres_gnbaresponse_parse(lwres_context_t *ctx, lwres_buffer_t *b,
+  			 lwres_lwpacket_t *pkt, lwres_gnbaresponse_t **structp)
++ #endif /* WITH_MDN */
+  {
+  	int ret;
+  	unsigned int x;
+  	lwres_uint32_t flags;
+  	lwres_uint16_t naliases;
+  	lwres_gnbaresponse_t *gnba;
++ #ifdef WITH_MDN
++ 	char *tmp_realname;
++ 	char *tmp_aliases;
++ 	mdn_result_t r;
++ #endif /* WITH_MDN */
+  
+  	REQUIRE(ctx != NULL);
+  	REQUIRE(pkt != NULL);
+***************
+*** 260,265 ****
+--- 274,301 ----
+  	ret = lwres_string_parse(b, &gnba->realname, &gnba->realnamelen);
+  	if (ret != LWRES_R_SUCCESS)
+  		goto out;
++ #ifdef WITH_MDN
++ 	/*
++ 	 * Convert from UCS to local encoding if needed.
++ 	 */
++ 	tmp_realname = (char *)malloc(1024);
++ 	switch (encodeflg) {
++ 	case LWRES_ENCODING_LOCAL:	/* from UCS to local encoding */
++ 		r = mdn_res_ucstolocal(ctx->confdata.mdnctx, gnba->realname,
++ 				       tmp_realname, 1024);
++ 		if (r != mdn_success) {
++ 			free(tmp_realname);
++ 			tmp_realname = NULL;
++ 			ret = lwres_result_frommdn(r);
++ 			goto out;
++ 		}
++ 		break;
++ 	default:
++ 		strcpy(tmp_realname, gnba->realname);
++ 		break;
++ 	}
++ 	gnba->realname = tmp_realname;
++ #endif /* WITH_MDN */
+  
+  	/*
+  	 * Parse off the aliases.
+***************
+*** 269,274 ****
+--- 305,333 ----
+  					 &gnba->aliaslen[x]);
+  		if (ret != LWRES_R_SUCCESS)
+  			goto out;
++ #ifdef WITH_MDN
++ 		/*
++ 		 * Convert from UCS to local encoding.
++ 		 */
++ 		tmp_aliases = (char *)malloc(1024);
++ 		switch (encodeflg) {
++ 		case LWRES_ENCODING_LOCAL:     /* from UCS to local encoding */
++ 			r = mdn_res_ucstolocal(ctx->confdata.mdnctx,
++ 					       gnba->aliases[x],
++ 					       tmp_aliases, 1024);
++ 			if (r != mdn_success) {
++ 				free(tmp_aliases);
++ 				tmp_aliases = NULL;
++ 				ret = lwres_result_frommdn(r);
++ 				goto out;
++ 			}
++ 			break;
++ 		default:	/* When encoding on DNS protocol */
++ 			strcpy(tmp_aliases, gnba->aliases[x]);
++ 			break;
++ 		}
++ 		gnba->aliases[x] = tmp_aliases;
++ #endif /* WITH_MDN */
+  	}
+  
+  	if (LWRES_BUFFER_REMAINING(b) != 0) {
+***************
+*** 310,315 ****
+--- 369,377 ----
+  lwres_gnbaresponse_free(lwres_context_t *ctx, lwres_gnbaresponse_t **structp)
+  {
+  	lwres_gnbaresponse_t *gnba;
++ #ifdef WITH_MDN
++ 	unsigned int x;
++ #endif /* WITH_MDN */
+  
+  	REQUIRE(ctx != NULL);
+  	REQUIRE(structp != NULL && *structp != NULL);
+***************
+*** 317,322 ****
+--- 379,392 ----
+  	gnba = *structp;
+  	*structp = NULL;
+  
++ #ifdef WITH_MDN
++ 	free(gnba->realname);
++ 	gnba->realname = NULL;
++ 	for (x = 0 ; x < gnba->naliases ; x++) {
++ 		free(gnba->aliases[x]);
++ 		gnba->aliases[x] = NULL;
++ 	}
++ #endif /* WITH_MDN */
+  	if (gnba->naliases > 0) {
+  		CTXFREE(gnba->aliases, sizeof(char *) * gnba->naliases);
+  		CTXFREE(gnba->aliaslen,
+Index: lib/lwres/lwresutil.c
+diff -c mdn/othersrc/bind9/lib/lwres/lwresutil.c:1.1.1.1 mdn/othersrc/bind9/lib/lwres/lwresutil.c:1.7
+*** lib/lwres/lwresutil.c	Fri Jul 21 11:10:36 2000
+--- lib/lwres/lwresutil.c	Wed Oct  4 15:47:38 2000
+***************
+*** 32,37 ****
+--- 32,40 ----
+  #include <lwres/lwbuffer.h>
+  #include <lwres/lwres.h>
+  #include <lwres/result.h>
++ #ifdef WITH_MDN
++ #include <mdn/res.h>
++ #endif /* WITH_MDN */
+  
+  #include "assert_p.h"
+  #include "context_p.h"
+***************
+*** 131,140 ****
+--- 134,158 ----
+  	}
+  }
+  
++ #ifdef WITH_MDN
+  lwres_result_t
+  lwres_getaddrsbyname(lwres_context_t *ctx, const char *name,
+  		     lwres_uint32_t addrtypes, lwres_gabnresponse_t **structp)
+  {
++ 	/* The last parameter is a encoding type. Default is local encoding. */
++ 	return (lwres_getaddrsbyname_enc(ctx, name, addrtypes, structp, 0));
++ }
++ #endif /* WITH_MDN */
++ lwres_result_t
++ #ifdef WITH_MDN
++ lwres_getaddrsbyname_enc(lwres_context_t *ctx, const char *name,
++ 		     lwres_uint32_t addrtypes, lwres_gabnresponse_t **structp,
++ 		     int encodeflg)
++ #else
++ lwres_getaddrsbyname(lwres_context_t *ctx, const char *name,
++ 		     lwres_uint32_t addrtypes, lwres_gabnresponse_t **structp)
++ #endif /* WITH_MDN */
++ {
+  	lwres_gabnrequest_t request;
+  	lwres_gabnresponse_t *response;
+  	int ret;
+***************
+*** 151,156 ****
+--- 169,178 ----
+  	unsigned int target_length;
+  	unsigned int tried_exact;
+  	unsigned int tried_search;
++ #ifdef WITH_MDN
++ 	mdn_result_t r;
++ 	char request_name[1024];
++ #endif /* WITH_MDN */
+  
+  	REQUIRE(ctx != NULL);
+  	REQUIRE(name != NULL);
+***************
+*** 227,234 ****
+--- 249,285 ----
+  	 * Set up our request and render it to a buffer.
+  	 */
+  	request.addrtypes = addrtypes;
++ #ifdef WITH_MDN
++ 	/*
++ 	 * Convert from local encoding to UCS, then perform normalization.
++ 	 */
++ 	switch (encodeflg) {
++ 	case LWRES_ENCODING_LOCAL:	/* from local encoding */
++ 		r = mdn_res_localtoucs(ctx->confdata.mdnctx, target_name,
++ 				       request_name, sizeof(request_name));
++ 		if (r == mdn_success) {
++ 			r = mdn_res_normalize(ctx->confdata.mdnctx,
++ 					      request_name,
++ 					      target_name,
++ 					      sizeof(target_name));
++ 		}
++ 		request.name = target_name;
++ 		break;
++ 	default:
++ 		r = mdn_res_normalize(ctx->confdata.mdnctx, target_name,
++ 				      request_name, sizeof(request_name));
++ 		request.name = request_name;
++ 		break;
++ 	}
++ 	if (r != mdn_success) {
++ 		ret = lwres_result_frommdn(r);
++ 		goto out;
++ 	}
++ 	request.namelen = strlen(request.name);
++ #else
+  	request.name = target_name;
+  	request.namelen = target_length;
++ #endif /* WITH_MDN */
+  	pkt.pktflags = 0;
+  	pkt.serial = serial;
+  	pkt.result = 0;
+***************
+*** 280,286 ****
+--- 331,341 ----
+  	/*
+  	 * Parse the response.
+  	 */
++ #ifdef WITH_MDN
++ 	ret = lwres_gabnresponse_parse(ctx, &b_in, &pkt, &response, encodeflg);
++ #else
+  	ret = lwres_gabnresponse_parse(ctx, &b_in, &pkt, &response);
++ #endif /* WITH_MDN */
+  	if (ret != LWRES_R_SUCCESS)
+  		goto out;
+  	response->base = buffer;
+***************
+*** 302,311 ****
+--- 357,383 ----
+  }
+  
+  
++ #ifdef WITH_MDN
++ lwres_result_t
++ lwres_getnamebyaddr(lwres_context_t *ctx, lwres_uint32_t addrtype,
++ 		    lwres_uint16_t addrlen, const unsigned char *addr,
++ 		    lwres_gnbaresponse_t **structp)
++ {
++ 	/* The last parameter is a encoding type. Default is local encoding. */
++ 	return (lwres_getnamebyaddr_enc(ctx, addrtype, addrlen, addr, structp,
++ 					LWRES_ENCODING_LOCAL));
++ }
++ #endif /* WITH_MDN */
+  lwres_result_t
++ #ifdef WITH_MDN
++ lwres_getnamebyaddr_enc(lwres_context_t *ctx, lwres_uint32_t addrtype,
++ 			lwres_uint16_t addrlen, const unsigned char *addr,
++ 			lwres_gnbaresponse_t **structp, int encodeflg)
++ #else
+  lwres_getnamebyaddr(lwres_context_t *ctx, lwres_uint32_t addrtype,
+  		    lwres_uint16_t addrlen, const unsigned char *addr,
+  		    lwres_gnbaresponse_t **structp)
++ #endif /* WITH_MDN */
+  {
+  	lwres_gnbarequest_t request;
+  	lwres_gnbaresponse_t *response;
+***************
+*** 388,394 ****
+--- 460,470 ----
+  	/*
+  	 * Parse the response.
+  	 */
++ #ifdef WITH_MDN
++ 	ret = lwres_gnbaresponse_parse(ctx, &b_in, &pkt, &response, encodeflg);
++ #else
+  	ret = lwres_gnbaresponse_parse(ctx, &b_in, &pkt, &response);
++ #endif /* WITH_MDN */
+  	if (ret != LWRES_R_SUCCESS)
+  		goto out;
+  	response->base = buffer;
+***************
+*** 408,410 ****
+--- 484,503 ----
+  
+  	return (ret);
+  }
++ 
++ #ifdef WITH_MDN
++ lwres_result_t
++ lwres_result_frommdn(mdn_result_t r) {
++ 	/*
++ 	 * Convert mDNkit's result code to lwres's one.
++ 	 */
++ 	switch (r) {
++ 	case mdn_success:
++ 		return (LWRES_R_SUCCESS);
++ 	case mdn_nomemory:
++ 		return (LWRES_R_NOMEMORY);
++ 	default:
++ 		return (LWRES_R_FAILURE);
++ 	}
++ }
++ #endif
+Index: lib/lwres/include/lwres/lwres.h
+diff -c mdn/othersrc/bind9/lib/lwres/include/lwres/lwres.h:1.1.1.1 mdn/othersrc/bind9/lib/lwres/include/lwres/lwres.h:1.5
+*** lib/lwres/include/lwres/lwres.h	Fri Jul 21 11:10:36 2000
+--- lib/lwres/include/lwres/lwres.h	Wed Oct  4 15:47:39 2000
+***************
+*** 26,31 ****
+--- 26,34 ----
+  #include <lwres/lang.h>
+  #include <lwres/list.h>
+  #include <lwres/lwpacket.h>
++ #ifdef WITH_MDN
++ #include <mdn/resconf.h>
++ #endif /* WITH_MDN */
+  
+  /*
+   * Design notes:
+***************
+*** 217,222 ****
+--- 220,228 ----
+  	lwres_uint8_t	resdebug;      /* non-zero if 'options debug' set */
+  	lwres_uint8_t	ndots;	       /* set to n in 'options ndots:n' */
+  	lwres_uint8_t	no_tld_query;  /* non-zero if 'options no_tld_query' */
++ #ifdef WITH_MDN
++ 	mdn_resconf_t	mdnctx;		/* structure for mdn configuration */
++ #endif /* WITH_MDN */
+  } lwres_conf_t;
+  	
+  #define LWRES_ADDRTYPE_V4		0x00000001U	/* ipv4 */
+***************
+*** 225,230 ****
+--- 231,242 ----
+  #define LWRES_MAX_ALIASES		16		/* max # of aliases */
+  #define LWRES_MAX_ADDRS			64		/* max # of addrs */
+  
++ #ifdef WITH_MDN
++ /* These are used for specifying encoding of the domain names */
++ #define LWRES_ENCODING_LOCAL		0	/* local encoding */
++ #define LWRES_ENCODING_UCS		1	/* UTF-8 encoding */
++ #endif /* WITH_MDN */
++ 
+  LWRES_LANG_BEGINDECLS
+  
+  /*
+***************
+*** 232,237 ****
+--- 244,275 ----
+   */
+  extern lwres_uint16_t lwres_udp_port;
+  
++ #ifdef WITH_MDN
++ /*
++  * Forward declarations
++  */
++ struct addrinfo;
++ struct sockaddr;
++ 
++ int		lwres_getaddrinfo_enc(const char *, const char *,
++ 				      const struct addrinfo *,
++ 				      struct addrinfo **,
++ 				      int encodeflg);
++ int		lwres_getnameinfo_enc(const struct sockaddr *, size_t, char *,
++ 				      size_t, char *, size_t, int, int);
++ struct hostent	*lwres_gethostbyaddr_enc(const char *, int, int, int);
++ struct hostent	*lwres_gethostbyname_enc(const char *, int);
++ struct hostent	*lwres_gethostbyname2_enc(const char *, int, int);
++ struct hostent	*lwres_getipnodebyname_enc(const char *, int, int, int *, int);
++ struct hostent	*lwres_getipnodebyaddr_enc(const void *, size_t, int, int *,
++ 					   int);
++ struct hostent	*lwres_gethostbyaddr_r_enc(const char *, int, int,
++ 					   struct hostent *, char *, int,
++ 					   int *, int);
++ struct hostent	*lwres_gethostbyname_r_enc(const char *, struct hostent *,
++ 					   char *, int, int *, int);
++ #endif /* WITH_MDN */
++ 
+  lwres_result_t
+  lwres_gabnrequest_render(lwres_context_t *ctx, lwres_gabnrequest_t *req,
+  			 lwres_lwpacket_t *pkt, lwres_buffer_t *b);
+***************
+*** 245,253 ****
+--- 283,297 ----
+  			lwres_lwpacket_t *pkt, lwres_gabnrequest_t **structp);
+  
+  lwres_result_t
++ #ifdef WITH_MDN
++ lwres_gabnresponse_parse(lwres_context_t *ctx, lwres_buffer_t *b,
++ 			 lwres_lwpacket_t *pkt,
++ 			 lwres_gabnresponse_t **structp, int encodeflg);
++ #else
+  lwres_gabnresponse_parse(lwres_context_t *ctx, lwres_buffer_t *b,
+  			 lwres_lwpacket_t *pkt,
+  			 lwres_gabnresponse_t **structp);
++ #endif /* WITH_MDN */
+  
+  void
+  lwres_gabnrequest_free(lwres_context_t *ctx, lwres_gabnrequest_t **structp);
+***************
+*** 300,309 ****
+--- 344,360 ----
+  lwres_gnbarequest_parse(lwres_context_t *ctx, lwres_buffer_t *b,
+  			lwres_lwpacket_t *pkt, lwres_gnbarequest_t **structp);
+  
++ #ifdef WITH_MDN
+  lwres_result_t
+  lwres_gnbaresponse_parse(lwres_context_t *ctx, lwres_buffer_t *b,
+  			 lwres_lwpacket_t *pkt,
++ 			 lwres_gnbaresponse_t **structp, int encodeflg);
++ #else
++ lwres_result_t
++ lwres_gnbaresponse_parse(lwres_context_t *ctx, lwres_buffer_t *b,
++ 			 lwres_lwpacket_t *pkt,
+  			 lwres_gnbaresponse_t **structp);
++ #endif /* WITH_MDN */
+  
+  void
+  lwres_gnbarequest_free(lwres_context_t *ctx, lwres_gnbarequest_t **structp);
+***************
+*** 480,490 ****
+--- 531,558 ----
+  lwres_result_t
+  lwres_getaddrsbyname(lwres_context_t *ctx, const char *name,
+  		     lwres_uint32_t addrtypes, lwres_gabnresponse_t **structp);
++ #ifdef WITH_MDN
++ lwres_result_t
++ lwres_getaddrsbyname_enc(lwres_context_t *ctx, const char *name,
++ 			 lwres_uint32_t addrtypes,
++ 			 lwres_gabnresponse_t **structp, int encodeflg);
++ #endif /* WITH_MDN */
+  
+  lwres_result_t
+  lwres_getnamebyaddr(lwres_context_t *ctx, lwres_uint32_t addrtype,
+  		    lwres_uint16_t addrlen, const unsigned char *addr,
+  		    lwres_gnbaresponse_t **structp);
++ #ifdef WITH_MDN
++ lwres_result_t
++ lwres_getnamebyaddr_enc(lwres_context_t *ctx, lwres_uint32_t addrtype,
++ 			lwres_uint16_t addrlen, const unsigned char *addr,
++ 			lwres_gnbaresponse_t **structp, int encodeflg);
++ #endif /* WITH_MDN */
++ 
++ #ifdef WITH_MDN
++ lwres_result_t
++ lwres_result_frommdn(mdn_result_t r);
++ #endif
+  
+  LWRES_LANG_ENDDECLS
+  

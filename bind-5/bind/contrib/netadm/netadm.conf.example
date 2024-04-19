@@ -1,0 +1,247 @@
+#
+#	$Id: netadm.conf.example,v 1.1.1.1 2001/01/31 03:59:06 zarzycki Exp $
+#
+#	(c) 2000 by ron@simcb.ru
+#
+#---------------------------------------------------------------
+# Define Include Configfile
+#---------------------------------------------------------------
+#.Include <file>
+#
+#---------------------------------------------------------------
+# Define Named parameters
+#---------------------------------------------------------------
+#.Named	[<directory>]
+# .Option [<text>]
+#	<text>
+# .Config [<text>]
+#	<text>
+# .Forwarders	<domain> ...
+# .Cache	<src_file>
+#.End
+#
+#---------------------------------------------------------------
+# Define Root Zone
+#---------------------------------------------------------------
+#.Root
+# .Option [<text>]
+#	<text>
+# .Bind <bind_host> [<bind_master>]
+# .Time <refresh> <retry> <expire> <ttl>
+# .NameServer   <domain> ...
+#.End
+#
+#---------------------------------------------------------------
+# Define Primary Networks
+#---------------------------------------------------------------
+#.Primary [<directory>]
+# .Option [<text>]
+#	<text>
+# .Bind <bind_host> [<bind_master>]
+# .Time <refresh> <retry> <expire> <ttl>
+# .NameServer <domain> ...
+# <network> ...
+#.End
+#
+#---------------------------------------------------------------
+# Define Secondary Networks
+#---------------------------------------------------------------
+#.Secondary [<directory>]
+# .Option [<text>]
+#	<text>
+# .NameServer	<domain> ...
+# <network> ...
+#.End
+#
+#---------------------------------------------------------------
+# Define Stub Networks
+#---------------------------------------------------------------
+#.Stub [<directory>]
+# .Option [<text>]
+#	<text>
+# .NameServer	<domain> ...
+# <network> ...
+#.End
+#
+#---------------------------------------------------------------
+# Define Mail Servers
+#---------------------------------------------------------------
+#.MailServer <domain> [<priority>]
+# <domain> [<priority>]
+#.End
+#
+#---------------------------------------------------------------
+# Define Vlans
+#---------------------------------------------------------------
+#.Vlan <vlan> [<network> ...]
+# <network> ...
+#.End
+#
+#---------------------------------------------------------------
+# Define Default Domain
+#---------------------------------------------------------------
+#.Domain [<domain>]
+#
+#---------------------------------------------------------------
+# Define Host Records
+#---------------------------------------------------------------
+#<domain>[/<port>] [<line> [<vlan>]] [<ip> ...]
+#<domain> * [<domain>]
+#
+#---------------------------------------------------------------
+# Define Result Html Tables
+#---------------------------------------------------------------
+#.Html [<directory]
+# .Line	<html_file>
+# .Host	<html_file>
+# .Net	<html_file>
+#.End
+#
+#---------------------------------------------------------------
+
+#
+# Named Definition
+#
+.Named DNS
+ #.Forwarders	nameserver.my.provider
+ #.Forwarders	nameserver.my-friend.my.domain
+ #.Cache		root.cache
+ .Option
+	named-xfer "/usr/local/sbin/named-xfer";
+	query-source address * port 53;
+	listen-on { any; };
+	pid-file "/usr/local/bind/var/run/named.pid";
+ .End
+ .Config
+	logging {
+		channel the_channel {
+			file "/usr/local/bind/var/log/named.log";
+			severity notice;
+		};
+		category default { the_channel; };
+		category security { the_channel; };
+		category xfer-in { the_channel; };
+		category xfer-out { the_channel; };
+		category lame-servers { null; };
+	};
+
+	acl internal {
+		127.0.0.1;
+	};
+ .End
+.End
+#
+# Vlans
+#
+.Vlan My_net	1.2.3.0
+.Vlan Test	192.168.0.0/16
+#
+# Result Html Tables
+#
+.Html DNS
+ .Line Line.html
+ .Host Host.html
+ .Net  Net.html
+.End
+#
+# External servers
+#
+nameserver.my.provider		111.111.111.111
+nameserver.my-friend.my.domain	222.222.222.222
+nameserver.other.provider       121.212.121.212
+relay.my.provider		102.102.102.102
+
+#
+# Root Zone
+#
+.Root
+ .Bind		nameserver.my.domain
+ .Option	allow-update { none };
+ .Time	86400 3600 2592000 86400
+.End
+
+#
+# Primary Networks
+#
+.Primary primary
+ .Bind		nameserver.my.domain
+ .NameServer	nameserver.my.domain
+ .NameServer	nameserver.my.provider
+ .Option	allow-update { none };
+ .Time	86400 3600 2592000 86400
+	1.0.0.0/8
+	1.2.4.0
+	192.168.0.0/16
+	my.domain
+	cool.my.domain.
+	very.very.very.cool.my.domain.
+.End
+#
+# Secondary Networks
+#
+.Secondary secondary
+ .NameServer	nameserver.my.domain
+ .NameServer	nameserver.my-friend.my.domain
+ .NameServer    nameserver.other.provider
+	1.128.0.0/16
+	my-friend.my.domain
+.End
+#
+# Stub Networks
+#
+.Stub stub
+ .NameServer	nameserver.my-friend.my.domain
+ .NameServer    nameserver.other.provider
+	other.provider
+.End
+#
+# List of Hosts
+#
+.Domain		my.domain
+#
+nameserver	L1	1.2.3.4
+my.domain.		1.2.3.4
+www		L2	1.5.6.7 1.2.4.8
+tt		L3	1.5.6.8 1.2.5.8
+hole		L8	1.2.3.8
+mail-only	*
+big.hole	L7	1.2.4.9
+hole.cool	L6	1.2.4.6
+test		1.253.254.255
+mail.cool	1.2.3.4
+mail		1.2.3.4
+a1	L	192.168.1.1
+a192	LL Test	192.168.192.168
+#
+# CNAMEs
+#
+news.cool	*	hole
+www.cool	*	www
+news		*	hole
+
+#
+# List of Lan equipment
+#
+#.Domain
+hub/1	L1	My_net
+hub/2	L2	My_another_net
+hub/3	L3
+hub/4	L4
+hub/5	L5
+hub/6	L6
+hub/7	L7
+hub/8	L8
+#
+# Mail Servers
+#
+.Domain		my.domain
+.MailServer	mail	10
+	*
+	mail.cool	5
+.End
+#
+.Domain
+.MailServer	relay.my.provider	100
+	mail.my.domain
+	mail.cool.my.domain
+.End

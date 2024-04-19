@@ -1,0 +1,27 @@
+YADDAS
+======
+
+Yet another DNS database awk script.
+
+Welcome. These simple script convert a /etc/hosts like file format
+to handle A and CNAME records. Find description of the fileformat 
+in hosts.example.
+
+To convert it to DNS db-files execute
+	
+		host2dns -z "somewhere.net" -a "10" -d "somewhere.net" hosts.example
+
+Try also the other way converting existing A and CNAME records into a
+the hosts like format. Execute
+
+		dns2host db.test
+
+The scripts are released for free without any warranty under GNU public 
+license. Feel free to send patches to <jk@digitalanswers.de>. 
+The latest version is available at http://www.digitalanswers.org/yaddas/
+
+Jan Kr"uger
+
+jk@digitalanswers.de  | digitalanswers communications consulting gmbh
+www.digitalanswers.de | Matthaeikirchstr. 33  30519 Hannover  Germany
+					  | Fon +49 511 87007680  Fax +49 511 87007681

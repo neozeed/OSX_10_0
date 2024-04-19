@@ -1,0 +1,5 @@
+# Microsoft Developer Studio Generated Dependency File, included by bindevt.mak
+
+.\bindevt.rc : \
+	".\MSG00409.bin"\
+	

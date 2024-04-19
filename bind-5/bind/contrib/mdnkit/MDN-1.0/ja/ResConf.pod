@@ -1,0 +1,226 @@
+# $Id: ResConf.pod,v 1.1.1.1 2001/01/31 03:58:54 zarzycki Exp $
+#
+# Copyright (c) 2000 Japan Network Information Center.  All rights reserved.
+#  
+# By using this file, you agree to the terms and conditions set forth bellow.
+# 
+#                      LICENSE TERMS AND CONDITIONS 
+# 
+# The following License Terms and Conditions apply, unless a different
+# license is obtained from Japan Network Information Center ("JPNIC"),
+# a Japanese association, Fuundo Bldg., 1-2 Kanda Ogawamachi, Chiyoda-ku,
+# Tokyo, Japan.
+# 
+# 1. Use, Modification and Redistribution (including distribution of any
+#    modified or derived work) in source and/or binary forms is permitted
+#    under this License Terms and Conditions.
+# 
+# 2. Redistribution of source code must retain the copyright notices as they
+#    appear in each source code file, this License Terms and Conditions.
+# 
+# 3. Redistribution in binary form must reproduce the Copyright Notice,
+#    this License Terms and Conditions, in the documentation and/or other
+#    materials provided with the distribution.  For the purposes of binary
+#    distribution the "Copyright Notice" refers to the following language:
+#    "Copyright (c) Japan Network Information Center.  All rights reserved."
+# 
+# 4. Neither the name of JPNIC may be used to endorse or promote products
+#    derived from this Software without specific prior written approval of
+#    JPNIC.
+# 
+# 5. Disclaimer/Limitation of Liability: THIS SOFTWARE IS PROVIDED BY JPNIC
+#    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+#    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+#    PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL JPNIC BE LIABLE
+#    FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+#    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+#    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+#    BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#    WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#    OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#    ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+# 
+# 6. Indemnification by Licensee
+#    Any person or entities using and/or redistributing this Software under
+#    this License Terms and Conditions shall defend indemnify and hold
+#    harmless JPNIC from and against any and all judgements damages,
+#    expenses, settlement liabilities, cost and other liabilities of any
+#    kind as a result of use and redistribution of this Software or any
+#    claim, suite, action, litigation or proceeding by any third party
+#    arising out of or relates to this License Terms and Conditions.
+# 
+# 7. Governing Law, Jurisdiction and Venue
+#    This License Terms and Conditions shall be governed by and and
+#    construed in accordance with the law of Japan. Any person or entities
+#    using and/or redistributing this Software under this License Terms and
+#    Conditions hereby agrees and consent to the personal and exclusive
+#    jurisdiction and venue of Tokyo District Court of Japan.
+#
+
+__END__
+
+=head1 NAME
+
+MDN::ResConf - libmdn の res, resconf モジュール用の Perl の拡張
+
+=head1 SYNOPSIS
+
+  use MDN::ResConf;
+  $res = MDN::ResConf->resconf('/usr/local/etc/mdnres.conf');
+
+  $ucs_domain_name = $res->localtoucs($local_domain_name);
+  $normalized_name = $res->normalize($ucs_domain_name);
+  $dns_domain_name = $res->ucstodns($normalized_name);
+
+=head1 DESCRIPTION
+
+C<MDN::ResConf> は、mDNkit に入っている MDN ライブラリ (多言語ドメイン
+を扱うための C のライブラリ) の中のリゾルバモジュール (res モジュール)
+およびリゾルバ設定ファイルモジュール (resconf モジュール) に対して、
+Perl のオブジェクトインターフェースを提供します。
+
+このモジュールは、MDN ライブラリに対する高レベルのインターフェースを提
+供するもので、アプリケーションが MDN の機能を簡単に使いたい場合に適し
+ています。
+
+=head1 コンストラクタ
+
+=over 4
+
+=item new([$filename])
+
+オブジェクトを生成します。
+C<$filename> には、読み込む設定ファイル名を指定します。
+C<$filename> が省略されたときは、あらかじめ決められた設定ファイル (例
+えば C</usr/local/etc/mdnres.conf>) が読み込まれます。
+設定ファイルが正常に読み込めなかったときは C<undef> が返ります。
+
+=back
+
+=head1 メソッド
+
+=over 4
+
+=item localtoucs($domain_name)
+
+文字列 C<$domain_name> をローカルエンコーディング (これは現在のロケー
+ルおよび環境変数から決定されます) から UTF-8 へ変換し、その結果を返し
+ます。
+
+C<$domain_name> がローカルエンコーディングとして正しくない文字列のとき
+は  C<undef> を返します。
+
+=item ucstolocal($domain_name)
+
+C<$domain_name> を UTF-8 からローカルエンコーディングへ変換し、その結
+果を返します。
+このメソッドは C<localtoucs()> とは逆の働きをします。
+
+C<$domain_name> が UTF-8 として正しくない文字列のときは C<undef> を返
+します。
+
+=item normalize($domain_name)
+
+設定ファイルで指定された正規化手順に従って C<$domain_name> を正規化し、
+その結果を返します。
+C<$domain_name> は正しく UTF-8 でエンコードされた文字列でなくてはなり
+ません。
+
+C<$domain_name> が UTF-8 として正しくない文字列のときは C<undef> を返
+します。
+
+=item dnstoucs($domain_name)
+
+文字列 C<$domain_name> を DNS プロトコルで使用されるエンコーディング
+(これは設定ファイルの C<server-encoding> エントリによって決定されます)
+から UTF-8 に変換し、その結果を返します。
+
+C<$domain_name> が不正なバイト列のときは C<undef> を返します。
+
+=item ucstodns($domain_name)
+
+文字列 C<$domain_name> を UTF-8 から DNS プロトコルで使用されるエンコー
+ディングに変換し、その結果を返します。
+このメソッドは C<dnstoucs()> とは逆の働きをします。
+
+C<$domain_name> が UTF-8 として正しくない文字列のときは C<undef> を返
+します。
+
+=item localtodns($domain_name)
+
+文字列 C<$domain_name> をローカルエンコーディングから DNS プロトコルで
+使用されるエンコーディングに変換します。
+さらに、正規化も行われます。
+
+これは簡便性のために設けられたメソッドで、次の処理とほぼ同じです。
+
+    $conf->ucstodns($conf->normalize($conf->localtoucs($domain_name)))
+
+=item dnstolocal($domain_name)
+
+文字列 C<$domain_name> を DNS プロトコルで使用されるエンコーディングか
+らローカルエンコーディングに変換します。
+ただし C<localtodns()> とは異なり、正規化は B<行われません>。
+
+これは簡便性のために設けられたメソッドで、次の処理とほぼ同じです。
+
+    $conf->ucstolocal($conf->dnstoucs($domain_name))
+
+=item localconverter(), serverconverter(), alternateconverter()
+
+ローカルエンコーディング、サーバエンコーディング、代理エンコーディング
+の変換オブジェクトを返します。
+これらの変換オブジェクトは、ドメイン名を UTF-8 とローカルエンコーディ
+ング、サーバエンコーディング、代理エンコーディングとの間で変換すること
+ができます。
+(代理エンコーディングは、設定ファイル C<alternate-encoding> エントリか
+ら決定されます。)
+
+これらのメソッドが返すコンバータは、C<MDN::ResConf::Converter> 型のオ
+ブジェクトで、C<MDN::ResConf::Converter> は L<MDN::Converter> のサブク
+ラスになっています。
+C<MDN::ResConf::Converter> は L<MDN::Converter> からコンストラクタ、メ
+ソッド、クラスメソッドをすべて継承しています。
+
+対応するエントリが設定ファイル内で指定されていない場合、
+C<serverconverter()> および C<alternateconverter()> は C<undef> を返し
+ます。
+
+=item normalizer()
+
+ドメイン名の正規化オブジェクトを返します。
+このメソッドが返す正規化オブジェクトは、C<MDN::ResConf::Normalizer> 型
+のオブジェクトで、C<MDN::ResConf::Normalizer> は L<MDN::Normalizer> の
+サブクラスになっています。
+L<MDN::Normalizer> が提供しているコンストラクタ、メソッド、クラスメソッ
+ドはすべて C<MDN::ResConf::Normalizer> でも使えます。
+
+変換オブジェクトは、設定ファイル内で指定された C<normalize> エントリに
+従って正規化を行うことができます。
+
+=item zld()
+
+設定ファイルの C<server-zld> エントリで指定されているゼロレベルドメイ
+ン名 (zero-level-domain name) を返します。
+ゼロレベルドメインが設定されていないときは、C<undef> を返します。
+
+=back
+
+=head1 クラスメソッド
+
+=over 4
+
+=item lasterror()
+
+このモジュール内で一番最後に発生したエラーのエラーメッセージ文字列を
+返します。
+
+=back
+
+=head1 SEE ALSO
+
+L<MDN::Converter>, L<MDN::Normalizer>, L<mdnres.conf(5)>
+
+MDN ライブラリ仕様書
+
+=cut

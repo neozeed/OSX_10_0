@@ -1,0 +1,41 @@
+#
+#  Simple Makefile for resparse library 
+
+LDFLAGS = @LDFLAGS@
+LIBS = @LIBS@
+
+AR = @AR@
+CC = @CC@
+CFLAGS = @CFLAGS@
+
+RANLIB = @RANLIB@
+
+#DESTDIR = /usr/local/lib
+DESTDIR = .
+
+SRCS = res_copy.c res_free.c res_info.c res_parse.c res_print.c
+OBJS = res_copy.o res_free.o res_info.o res_parse.o res_print.o
+
+libresparse.a:	$(OBJS)
+	$(AR) rc libresparse.a $(OBJS)
+	$(RANLIB) libresparse.a
+
+install: libresparse.a 
+	cp libresparse.a $(DESTDIR)
+
+
+testres: libresparse.a
+	$(CC) $(CFLAGS) -o testres testres.c $(LIBS)
+
+
+clean:
+	-/bin/rm -f *.o core
+	-/bin/rm -f libresparse.a testres
+
+clobber: clean
+
+distclean: clean
+
+testres: testres.c
+
+all:	libresparse.a install testres

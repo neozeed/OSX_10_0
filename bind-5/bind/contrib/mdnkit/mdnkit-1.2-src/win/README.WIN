@@ -1,0 +1,19 @@
+
+You can build 'dnsproxy' on Windows.
+
+    You can run 'dnsproxy' as service on WinNT.
+    'dnsproxy' itself runs on Win95/98, but cannot
+    run it as service on Win95/98.
+
+To build Windows version, you need 'libiconv' library for it.
+
+Here's Windows version of 'libiconv', build from LGPL implementation,
+
+    http://clisp.cons.org/~haible/packages-libiconv.html
+
+You can build Windows binary with
+
+    nmake -f Makefile.msvc
+
+It build DLL version of 'libiconv'.  Install DLL, header, and
+import library to here.

@@ -1,0 +1,22 @@
+# Microsoft Developer Studio Generated Dependency File, included by BINDCtrl.mak
+
+.\BINDCtrl.cpp : \
+	".\BINDCtrl.h"\
+	".\BINDCtrlDlg.h"\
+	".\StdAfx.h"\
+	
+
+.\BINDCtrl.rc : \
+	".\res\BINDCtrl.ico"\
+	".\res\BINDCtrl.rc2"\
+	
+
+.\BINDCtrlDlg.cpp : \
+	".\BINDCtrl.h"\
+	".\BINDCtrlDlg.h"\
+	".\StdAfx.h"\
+	
+
+.\StdAfx.cpp : \
+	".\StdAfx.h"\
+	

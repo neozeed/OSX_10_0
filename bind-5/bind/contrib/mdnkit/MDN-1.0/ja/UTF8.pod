@@ -1,0 +1,137 @@
+# $Id: UTF8.pod,v 1.1.1.1 2001/01/31 03:58:54 zarzycki Exp $
+#
+# Copyright (c) 2000 Japan Network Information Center.  All rights reserved.
+#  
+# By using this file, you agree to the terms and conditions set forth bellow.
+# 
+#                      LICENSE TERMS AND CONDITIONS 
+# 
+# The following License Terms and Conditions apply, unless a different
+# license is obtained from Japan Network Information Center ("JPNIC"),
+# a Japanese association, Fuundo Bldg., 1-2 Kanda Ogawamachi, Chiyoda-ku,
+# Tokyo, Japan.
+# 
+# 1. Use, Modification and Redistribution (including distribution of any
+#    modified or derived work) in source and/or binary forms is permitted
+#    under this License Terms and Conditions.
+# 
+# 2. Redistribution of source code must retain the copyright notices as they
+#    appear in each source code file, this License Terms and Conditions.
+# 
+# 3. Redistribution in binary form must reproduce the Copyright Notice,
+#    this License Terms and Conditions, in the documentation and/or other
+#    materials provided with the distribution.  For the purposes of binary
+#    distribution the "Copyright Notice" refers to the following language:
+#    "Copyright (c) Japan Network Information Center.  All rights reserved."
+# 
+# 4. Neither the name of JPNIC may be used to endorse or promote products
+#    derived from this Software without specific prior written approval of
+#    JPNIC.
+# 
+# 5. Disclaimer/Limitation of Liability: THIS SOFTWARE IS PROVIDED BY JPNIC
+#    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+#    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+#    PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL JPNIC BE LIABLE
+#    FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+#    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+#    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+#    BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#    WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+#    OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
+#    ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+# 
+# 6. Indemnification by Licensee
+#    Any person or entities using and/or redistributing this Software under
+#    this License Terms and Conditions shall defend indemnify and hold
+#    harmless JPNIC from and against any and all judgements damages,
+#    expenses, settlement liabilities, cost and other liabilities of any
+#    kind as a result of use and redistribution of this Software or any
+#    claim, suite, action, litigation or proceeding by any third party
+#    arising out of or relates to this License Terms and Conditions.
+# 
+# 7. Governing Law, Jurisdiction and Venue
+#    This License Terms and Conditions shall be governed by and and
+#    construed in accordance with the law of Japan. Any person or entities
+#    using and/or redistributing this Software under this License Terms and
+#    Conditions hereby agrees and consent to the personal and exclusive
+#    jurisdiction and venue of Tokyo District Court of Japan.
+#
+
+__END__
+
+=head1 NAME
+
+MDN::UTF8 - libmdn の utf8 モジュール用の Perl の拡張
+
+=head1 SYNOPSIS
+
+  use MDN::UTF8;
+  $length = MDN::UTF8->mblen($utf8_string);
+  @ucs4_characters = MDN::UTF8->unpack($utf8_string);
+  $utf8_string = MDN::UTF8->pack(@ucs4_characters);
+  die if (!MDN::UTF8->isvalid($utf8_string));
+
+=head1 DESCRIPTION
+
+C<MDN::UTF8> は、mDNkit に入っている MDN ライブラリ (多言語ドメインを
+扱うための C のライブラリ) の中の UTF-8 操作モジュール (utf8 モジュー
+ル) に対して、Perl のインターフェースを提供します。
+
+=head1 クラスメソッド
+
+このモジュールはオブジェクトインターフェースを提供するわけでありません
+が、C<MDN::> の他のモジュールとの一貫性を考慮して、関数はすべてクラス
+メソッドとして呼び出すようになっています。
+
+	MDN::UTF8->mblen($string);	# 正しい
+	MDN::UTF8::mblen($string);	# 誤り
+
+=over 4
+
+=item mblen($utf8_string)
+
+UTF-8 の文字列 C<$utf8_string> の先頭の文字の長さ (単位はバイト) を返
+します。
+先頭の文字が UTF-8 の文字として正しくないときは、0 を返します。
+
+=item getwc($utf8_string)
+
+UTF-8 の文字列 C<$utf8_string> の先頭の文字を調べ、結果を 2 つの要素か
+らなるリストにして返します。
+リストの 1 番目の要素には、その文字を UCS-4 で表現したときの文字コード
+を整数値で表したものが入り、2 番目の要素にはその文字を UTF-8 で表現し
+たときの長さ (単位はバイト) が入ります。
+
+	($wc, $length) = MDN::UTF8->getwc($string);
+
+2 番目の要素の値は、C<mblen()> で返される値と同じです。
+先頭の文字が UTF-8 の文字として正しくないときは、空のリストを返します。
+空の文字列に対しても空のリストが返りますので、ご注意下さい。
+
+=item unpack($utf8_string)
+
+UTF-8 の文字列 C<$utf8_string> を UCS-4 文字のリストに分解して、各文字
+の文字コードを整数値で表現したリストを返します。
+C<$utf8_string> に不正な文字が含まれているか C<$utf8_string> が空の場
+合は、空のリストが返ります。
+
+=item pack(@ucs4_characters)
+
+UCS-4 で表現された文字のリストを束ねて文字列にし、その文字列を返します。
+これは上記の C<unpack()> メソッドとは逆になります。
+C<@ucs4_characters> が UCS-4 として不正な文字を含んでいたときは、
+C<undef> を返します。
+
+=item isvalid($utf8_string)
+
+C<$utf8_string> が UTF-8 でエンコードされた文字列として正しいかどうか
+を確認します。
+正しければ 1 を、正しくなければ 0 を返します。
+
+=back
+
+=head1 SEE ALSO
+
+MDN ライブラリ仕様書
+
+=cut

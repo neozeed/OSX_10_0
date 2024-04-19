@@ -1,0 +1,195 @@
+Replied: Mon, 08 Nov 1999 15:01:37 -0800
+Replied: "ziegast@vix.com (Eric Ziegast) "
+Return-Path: ziegast@vix.com
+Delivery-Date: Sun Nov  7 10:41:20 1999
+Received: from sh.lh.vix.com (sh.lh.vix.com [204.152.188.26]) 
+	by bb.rc.vix.com (8.9.1/8.9.1) via ESMTP id KAA28941
+	for <vixie@bb.rc.vix.com>; Sun, 7 Nov 1999 10:41:19 -0800 (PST)
+	env-from (ziegast@vix.com)
+Received: from sh.lh.vix.com (sh.lh.vix.com [204.152.188.26]) 
+	by sh.lh.vix.com (8.9.1/8.9.1) via ESMTP id KAA06086
+	for <paul@vix.com>; Sun, 7 Nov 1999 10:41:19 -0800 (PST)
+	env-from (ziegast@vix.com)
+Message-Id: <199911071841.KAA06086@sh.lh.vix.com>
+To: vixie@mibh.net
+Subject: ISC BIND people might want this
+From: ziegast@vix.com (Eric Ziegast)
+Date: Sun, 07 Nov 1999 10:41:19 -0800
+Sender: ziegast@vix.com
+
+I made a script that automatically optimizes /etc/resolv.conf around 
+dead resolvers.  If you or ISC would like to have it, great.
+--
+Eric Ziegast
+
+When it runs normally and is designed to run from root cron:
+
+  # dnsck
+  # echo $?
+  0
+
+Two dead resolvers, nothing you can do, so /etc/resolv.conf stays the
+same:
+
+  # cat /etc/resolv.conf
+  nameserver  192.102.249.4
+  nameserver  192.102.249.5
+
+  # dnsck
+  *** Can't find server name for address 192.102.249.4: No response from server
+  *** Can't find server name for address 192.102.249.5: No response from server
+  *** Default servers are not available
+  Script /usr/sbin/dnsck cannot find a valid resolver!
+
+One bad resolver (first) and a couple good ones after it:
+
+  # cat /etc/resolv.conf
+  nameserver  192.102.249.4
+  nameserver  192.102.249.3
+  nameserver  198.6.1.3
+
+  # dnsck
+  *** Can't find server name for address 192.102.249.4: No response from server
+  Resolver 192.102.249.4 not responding.
+  Resolver 192.102.249.3 moved to top of the list.
+
+  # cat /etc/resolv.conf
+  nameserver 192.102.249.3
+  nameserver  192.102.249.4
+  nameserver  198.6.1.3
+
+  Note: Notice that the good server is now first.  Order in the file
+        is otherwise retained.
+
+A poorly configured /etc/resolv.conf:
+
+  # cat /etc/resolv.conf
+  nameserver  192.102.249.4
+   nameserver  192.102.249.3
+  naeserver  198.6.1.3
+
+  # dnsck
+  *** Can't find server name for address 192.102.249.4: No response from server
+  *** Default servers are not available
+  Script /usr/sbin/dnsck cannot find a valid resolver!
+
+A poorly configured nameserver:
+
+  # cat /etc/resolv.conf
+  nameserver 127.0.0.1
+
+  # dnsck
+
+  # grep 127 /etc/named.conf
+  zone "0.0.127.in-addr.arpa" { type master; file "named.local"; };
+
+  # mv /var/named/named.local /var/named/named.local2
+
+  $ /usr/sbin/ndc restart
+  new pid is 3260
+
+  # dig @127.0.0.1 A.ROOT-SERVERS.NET a | egrep ^A.ROOT-SERVERS.NET
+  A.ROOT-SERVERS.NET.	6d23h54m1s IN A  198.41.0.4
+  A.ROOT-SERVERS.NET.	6d23h54m1s IN A  198.41.0.4
+
+  # nslookup A.ROOT-SERVERS.NET
+  *** Can't find server name for address 127.0.0.1: Non-existent host/domain
+  *** Default servers are not available
+
+  # dnsck
+  *** Can't find server name for address 127.0.0.1: Non-existent host/domain
+  *** Default servers are not available
+  Script /usr/sbin/dnsck cannot find a valid resolver!
+
+  # mv /var/named/named.local2 /var/named/named.local
+  # /usr/sbin/ndc restart
+  new pid is 3383
+
+  # dnsck
+
+  Note: If I had a good resolver, if would have placed it ahead of
+        127.0.0.1.
+
+
+#!/bin/sh
+
+# dnsck - nameserver check
+# The script will check to make sure it has a good resolver
+# at the top of /etc/resolv.conf is working by checking that
+# a well-known host (like a root server) returns an address.
+# If the first one doesn't, some server in the nameserver
+# list will respond and be moved to the front of the list.
+
+WELL_KNOWN_HOST=F.ROOT-SERVERS.NET
+
+umask 022
+tmp=/etc/resolv.conf.tmp$$
+trap "/bin/rm -f $tmp; true" 0 1 2 3 14 15
+
+
+# The default timeouts for nslookup suck for a quick check.
+# The options -timeout=1 and -retry=3 imply the following actions
+# for each server listed in /etc/resolv.conf:
+# 	lookup name,
+#	if no response, try again in one second
+#	if no response, try again in two seconds
+#	if no response, try again in four seconds (exponential backoff)
+#	if no response, repeat this step with the next server
+# A good resolver really should return after the first or
+# second try against the first server, but we try four times just
+# in case of a temporary glitch.  Use "-retry=1" if your tolerance
+# for DNS downtime is strict (eg: highly loaded web or mail server
+# that resolves names).
+
+nslookup -q=a -timeout=1 -retry=3 $WELL_KNOWN_HOST > $tmp
+
+
+# At this point, we've timed out any bad servers and should
+# have gotten an answer from the first working server.  If
+# there was no address, we're doomed (keep more than two
+# servers listed in your /etc/resolv.conf to help avoid this).
+
+tail +3 $tmp | egrep -q '^Address'
+if [ $? != 0 ]; then
+	#
+	# Exiting with a non-zero status will make cron unhappy
+	# and send mail to root.  Make sure your mail for user root
+	# goes to only the local host or at least to a mail server
+	# listed in /etc/hosts (no DNS lookup).  It would help
+	# if your mailerserver also doesn't depend on the same
+	# nameservers.
+	#
+	echo Script $0 cannot find a valid resolver\! 1>&2
+	exit 1		# Send mail to root
+fi
+
+respondingserver=`awk 'NR > 3 {exit} /Address/ {print $2}' $tmp`
+if [ -z "$respondingserver" ]; then
+	#
+	# Make sure /etc/resolv.conf contains well-behaved
+	# resolvers that can lookup their own names.  Otherwise
+	# this script is useless.  A common problem is that
+	# people who implement resolvers on localhost don't
+	# provide forward(A)/reverse(PTR) rescords for
+	# localhost/127.0.0.1.
+	#
+	echo Responding resolver for `hostname` is poorly configured\! 2>&1
+	exit 2		# Send mail to root
+fi
+
+nameserver=`awk '/^nameserver/ {print $2; exit}' /etc/resolv.conf`
+if [ "$nameserver" != "$respondingserver" ]; then
+	#
+	# We need to juggle the nameserver list so that our good
+	# resolver is at the top of the list, then move it into place.
+	#
+	echo nameserver $respondingserver > $tmp
+	egrep -v $respondingserver /etc/resolv.conf >> $tmp
+	mv $tmp /etc/resolv.conf
+	echo Resolver $nameserver not responding. 1>&2
+	echo Resolver $respondingserver moved to top of the list. 1>&2
+	exit 3		# Send mail to root
+fi
+
+# $tmp is removed by signal 0 caught by trap
+exit 0

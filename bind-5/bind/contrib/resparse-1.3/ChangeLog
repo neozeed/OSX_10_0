@@ -1,0 +1,30 @@
+v 1.1	res_info.c	added missing RFC 1183 types
+			re-ordered string<->type routines
+
+v 1.2	res_copy.c	fixed string copying
+			added missing function return
+				Christian Zahl <zahl@fokus.gmd.de>
+	resparse.3	Corrected man page
+				Christian Zahl <zahl@fokus.gmd.de>
+	res_parse.c	fixed incorrect calls to free_response
+				Clayton Kirkwood <kirkwood@strider.fm.intel.com>
+	testres.c	Cleaned up command line parsing
+			Added options to test copy/free routines
+
+v 1.3	res_print.c	Protected non-standard 'pr' header flag for
+			  systems that don't support this
+				Michael Fuhr <mfuhr@dimensional.com>
+	res_info.[ch]	Renamed 'res_error' function due to name clash
+				Michael Fuhr <mfuhr@dimensional.com>
+	res_copy.c	Combined 'res_copy' and 'copy_response' routines,
+			  thus legitimising the NULL return values
+				Danny Gatton <gatton@electriciti.com>
+	res_parse.c	Handled Host/Network ordering when initially
+			  parsing the raw response header.
+			  ('ntohs' therefore unneeded elsewhere)
+				Michael Fuhr <mfuhr@dimensional.com>
+	res_free.c	Fixed incorrect WKS and ISDN resource types
+			Added missing release of question structure memory
+				Henning Schulzrinne <hgs@cs.columbia.edu>
+	res_parse.c	Allocate basic response structure dynamically
+	resparse.3	Document the above change

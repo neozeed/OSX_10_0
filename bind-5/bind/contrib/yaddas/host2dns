@@ -1,0 +1,218 @@
+#!/bin/sh
+
+#
+# Copyright (c) 2000, Jan Kr"uger <jk@digitalanswers.de>
+# Released under Gnu Public License
+# 
+# This script converts the special hosts file format into DNS zone files.
+# Files for name resolution are listed in ZONES. Files for IP-resolution
+# are listed in ARPAS.
+# The db.-files are initialized using templates (templ.-files). 
+# This templates should contain all other records like MX and NS.
+# The string INSERTSERIAL is substituted with a calculated serial number.
+#
+# The script terminates with an error if it finds an entry in the
+# hosts file, without matching zone-file definition.
+#
+# Refer to the file hosts.example to understand the file format.
+# 
+USAGE="host2dns [-z zones][-a arpas][-A ignorearpas][-d defaultdomain] hostsfile ..."
+
+##
+## adjust the following variables to your own needs or specify the
+## values in command line:
+##
+
+# ZONES="space separated list of zones you want to generate data files for"
+ZONES=""
+
+# ARPAS="space separated list of subnets you want to generate data files
+#        (PTR) for"
+ARPAS=""
+# the following like ARPAS but no output files are generated
+# these definition can be usefull if you need only name resolution
+ARPASIGNORE="" 
+
+# DEFAULTDOMAIN="domain to add to unqualified names before processing"
+# all processed names must be qualified to decide which zonefile
+# is used for the output.
+DEFAULTDOMAIN=""
+
+#
+# evaluate command line parameters
+#
+
+while getopts d:a:z:A: c
+do
+	case $c in
+		d) DEFAULTDOMAIN=$OPTARG;;
+		a) ARPAS=$OPTARG;;
+		A) ARPASIGNORE=$OPTARG;;
+		z) ZONES=$OPTARG;;
+		\?) echo $USAGE; exit 1;;
+	esac
+done
+shift `expr $OPTIND - 1`
+
+# delete existing zone files
+for f in $ZONES $ARPAS $ARPASIGNORE
+do
+	/bin/rm -f db.$f
+done
+
+# calculate serial number as seconds until 01.01.2000
+# 3600 * 24 = 86400 (one day)
+# 3600 * 24 * 366 = 31622400 (one year)
+# 2^32 = 4294967296 (should work for about 135 years)
+SERIAL=`/bin/date +'%Y %j %H %M %S' | nawk '{ print (($1 - 2000) * 31622400) + ($2 * 86400) + ($3 * 3600) + ($4 * 60) + $5}'`
+
+for f in $ZONES $ARPAS
+do
+	if [ -r templ.$f ]
+	then
+		sed -e "s/INSERTSERIAL/$SERIAL/" templ.$f > db.$f
+	else
+		echo "templ.$f unreadable. Ignoring." 1>&2
+	fi
+done
+
+# generate new zone files
+nawk -v ZONES="$ZONES" -v ARPAS="$ARPAS" -v ARPASIGNORE="$ARPASIGNORE" -v DEFAULTDOM="$DEFAULTDOMAIN" '
+BEGIN {
+	n = split(ZONES, v)
+	for( ; n > 0; n--)
+		dnsdb[v[n]] = "db." v[n]
+
+	n = split(ARPAS, v)
+	for( ; n > 0; n--)
+		arpadb[v[n]] = "db." v[n]
+
+	n = split(ARPASIGNORE, v)
+	for( ; n > 0; n--)
+		arpadb[v[n]] = "/dev/null"
+
+	defaultdomain = DEFAULTDOM
+}
+
+function error(str) {
+	print "*** ERROR:" FILENAME ":" FNR ":" str | "cat 1>&2"
+	print "abort due to error..." | "cat 1>&2"
+	exit(1)
+}
+
+function qualify(name) {
+	if(name ~ /\.$/)
+		return name 
+	return name "." defaultdomain "."
+}
+
+# turnaroundip(ip)
+# return: IP octets vice versa
+function turnaroundip(ip, 		n, ret) {
+	n = split(ip, v, ".")
+	for(;;) {
+		ret = ret v[n--] 
+		if(n == 0)
+			return ret
+		ret = ret "."
+	}
+}
+
+# findarpadb(ip)
+# return: filename of the ptr-database to write the record in
+# sideffect: error/exit, if no apropriate database available
+function findarpadb(ip		,ts, i) {
+	split(ip, v, ".")
+	i = 1
+	do {
+		ts = ts v[i++]
+		if(ts in arpadb)
+			return arpadb[ts]
+		ts = ts "."
+	} while(i < 5)
+	error("cant find arpadb for " ip)
+}
+
+# finddnsdb(name)
+# return: file of the database-file for CNAME and A records
+# sideneffect: error/exit, if no apropriate database file available
+function finddnsdb(name		,ts, n) {
+	n = split(name, v, ".")
+	n-- 
+	do {
+		ts = v[n--] ts
+		if(ts in dnsdb)
+			return dnsdb[ts]
+		ts = "." ts
+	} while(n > 0)
+	error("cant find dnsdb for " name)
+}
+
+function add_a_record(address, name)
+{
+#		print "add_a_record", address, name
+		name = qualify(name)
+		fname = finddnsdb(name)
+		print name, "9999999 IN A", address >> fname
+}
+
+function add_c_name(name, cname)
+{
+#		print "add_c_name ", name, cname
+		name = qualify(name)
+		fname = finddnsdb(name)
+		print name, "9999999 IN CNAME", cname >> fname
+}
+
+function add_ptr_record(address, name)
+{
+#		print "add_ptr_record", address, name
+		fname = findarpadb(address)
+		print turnaroundip(address), "9999999 IN PTR", qualify(name) >> fname 
+}
+
+NF > 0 {
+#	print NF, $0
+	if($0 ~ /^#/) {
+	# kommentar
+		next
+	} 
+	contin = 0;	
+	if($0 ~ /^[ 	]/) {
+	# fortsetzungszeile 
+		fieldstart = 1
+		contin = 1;
+	} else if($1 ~ /[0-9]+\.[0-9]+\.[0-9]+\.[0-9]/) {
+	# IP Eintrag 
+		ip = $1
+		fieldstart = 2
+		entry = "A";
+	} else if(tolower($1) == "cname") {
+	# dynamischer Eintrag 
+		ip = "dynamic"
+		entry = "C";
+		fieldstart = 2
+	}
+	if(!contin) {
+		if(tolower($fieldstart) == "cname") {
+			error("illegal hostname cname")
+		}
+		keyname = $fieldstart
+		fieldstart++
+		if(entry == "A") {
+			add_a_record(ip, keyname)
+			add_ptr_record(ip, keyname)
+		}
+	}
+	for(i = fieldstart; i <= NF; i++) {
+		if(tolower($i) == "cname") {
+			entry = "C"
+			continue
+		}
+		if(entry == "A")
+			add_a_record(ip, $i)
+		else if(entry == "C") 
+			add_c_name($i, keyname)
+	}
+}
+' $*

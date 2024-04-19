@@ -1,0 +1,5 @@
+# Microsoft Developer Studio Generated Dependency File, included by nsupdate.mak
+
+..\..\..\bin\nsupdate\nsupdate.c : \
+	"..\..\..\bin\named\db_defs.h"\
+	

@@ -1,0 +1,5 @@
+TYPEMAP
+const char *		T_PV
+MDN::Converter		T_PTROBJ
+MDN::Normalizer		T_PTROBJ
+MDN::ResConf		T_PTROBJ

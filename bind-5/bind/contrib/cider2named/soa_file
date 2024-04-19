@@ -1,0 +1,7 @@
+@\tIN SOA  %s. %s. (
+\tSERIALNUM  ; Serial
+\t10800   ; Refresh after 3 hours
+\t3600    ; Retry after 1 hour
+\t60480 ; Expire after 1 week
+\t86400 ) ; Minimum TTL of 1 day
+;

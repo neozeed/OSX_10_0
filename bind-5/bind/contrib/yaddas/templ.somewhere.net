@@ -1,0 +1,11 @@
+$ORIGIN                 somewhere.net.
+@               9999999 IN  SOA rs5.somewhere.net. root.rs5.somewhere.net. (
+                    INSERTSERIAL ; Serial
+                    3600    ; Refresh
+                    300     ; Retry
+                    3600000 ; Expire
+                    86400 ) ; Minimum
+                9999999 IN  NS  ns1
+                9999999 IN  NS  ns2
+;------------- end of header -------------------------------------------------
+somewhere.net.			9999999 IN	MX	10	mailgate

@@ -1,0 +1,29 @@
+.\" $Id: bindv8conf_lister.1,v 1.1.1.1 2001/01/31 03:59:16 zarzycki Exp $
+.TH BINDV8CONF_LISTER 1 $Date: 2001/01/31 03:59:16 $
+.UC 4
+.SH NAME
+bindv8conf_lister \- parse BIND V8 named.conf files
+.SH SYNOPSIS
+.B bindv8conf_lister
+.SH DESCRIPTION
+.PP
+.B bindv8conf_lister
+is a utility to list domain information for zones in an easily parsed
+format. It reads a named.conf file and produces a single line for each DNS
+zone it finds. It attempts to process any "include" directives.
+.PP
+Each line looks like the following template:
+.PP
+<domain_name> <type> <filename> <masters>
+.PP
+The <domain_name> is the name of the domain. The <type> is the type of
+domain (one of "master", "slave", or "stub").  The <filename> is the name of the
+local file in which the domain information is stored.  The <masters> is a
+semicolon separated list of the IP addresses of the authoritative servers
+for the domain when it is a "slave" or "stub" domain.
+.PP
+The program is intended to be used as an input filter for other programs.
+.SH
+See also
+.PP
+.B domain_list(1) named.conf(5)

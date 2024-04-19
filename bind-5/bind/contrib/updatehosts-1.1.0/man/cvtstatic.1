@@ -1,0 +1,80 @@
+.\" $Id: cvtstatic.1,v 1.1.1.1 2001/01/31 03:59:16 zarzycki Exp $
+.TH CVTSTATIC 1 $Date: 2001/01/31 03:59:16 $
+.UC 4
+.SH NAME
+cvtstatic \- convert an /etc/hosts file to updatehosts database format
+.SH SYNOPSIS
+.B cvtstatic
+[
+.B -a
+]
+[
+-c
+.B -d default_domain
+[
+.B -h
+]
+[
+.B -i ip_address_prefix
+]
+.B -o output_directory
+.SH DESCRIPTION
+.PP
+.B cvtstatic
+is a utility to convert an existing /etc/hosts file to
+.B updatehosts
+format.
+The hosts file is read from stdin.
+The output is a set of
+.B updatehosts
+relations located in the directory specified by the -d option.
+.PP
+The -a will append output to an already existing set of relations.
+.PP
+The -c option will add comments from the zone file.
+The comments are placed in the same location they are found in the zone
+file.
+.PP
+The -d option is required and specifies the default domain name for this
+set of input records.
+.PP
+The -h option outputs a short command synopsis.
+.PP
+The -i option specifies an option IP address prefix for the IP addresses
+found in A records.
+.PP
+The -o option which is required specifies a directory where the
+.B updatehosts relations are found.
+.SH
+Readinfo Record Generation
+.PP
+.B cvtstatic
+generates
+.B readinfo
+records using the default domain and the IP address prefix to
+generate a correct #FIELDS line which allows domain names and IP addresses
+to be written in a shorthand manner.
+All domains are shortened by chopping off the default domain name suffix.
+Those domain names which are in a different domain are written fully
+qualified with a trailing period.
+.PP
+If the -i option is present all IP addresses which start with the IP prefix
+have it removed.
+All other IP address will be written as a standard dotted decimal IP
+address with a leading period (".").
+The leading period denotes that the default IP prefix is not prepended to
+the address.
+Without the -i option all IP addresses are written in standard
+dotted-decimal notation and there is no default prefix for IP addresses.
+.PP
+Each invocation of
+.B cvtstatic
+generates a new
+.B readinfo
+#FIELDS line.
+This is convenient when converting multiple hosts files where the default
+domain or the default IP prefix have different values.
+.SH
+See also
+.PP
+.B updatehosts(1), gendns(1), readinfo(1)

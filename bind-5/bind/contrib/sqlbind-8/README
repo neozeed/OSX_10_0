@@ -1,0 +1,43 @@
+* README for SQLBind8 v0.9.0 7/6/99
+
+Description:
+   SQLBind8 is now a daemon that constantly (at a definable interval) queries a sql database server (currently MySQL) and updates a running bind dns server.  Remember, this is beta software, use it at your own risk.  I make no warenties about this software.
+
+Requirements:
+   MySQL    http://www.mysql.com  (tested using 3.22.21)
+   Bind v8  http://www.isc.org/bind.html (tested using bind 8.2.1)
+
+   You will need to have the source to bind installed so a minor patch can be applied to add some tracking to a record type used heavily in SQLBind8.
+
+Instalation:
+   There are a few parts to SQLBind8 that can be used in different ways.  First there are the patches to named (dns server in the bind package) it's self to make it load zones on start up from the db server. Next there is the patch that is used it add a key and update time to the ns_updrec structure in bind.  Last, there is the source to the daemon that does the dynamic updates.
+
+   If you just want to load records from the db server on startup, you can use the patches in /patches and apply them directly to named.  See the README in the patches dir for information on this.
+
+   To compile sqlbind (the daemon), follow the next few steps:
+   1: cd bind-src/include/arpa
+   2: patch < sqlbind-8/src/bind-patch.diff (there should be no errors patching)
+   3: compile bind following the instructions with the source code
+      named will still function exactly the same as it always has
+      and can be used without sqlbind if you so desire.
+   4: cd sqlbind-8/src
+   5: ./configure --with-mysql --with-bind=/path/to/bind/src/dir
+      if your mysql is in a nonstandard place, you can also add a 
+      path to where it is installed.  The configure script can not
+      automatically detect where bind's source is located so you
+      will have to give it a path.
+   6: make clean && make (compile the executable)
+   7: make install (copy sqlbind into /usr/sbin and sqlbind.conf into /etc)
+   8: read the USAGE file in this directory for how to setup the 
+      database and how to start up sqlbind with options other than
+      the default setting.
+
+Info:
+   If you have any problems, you can look on http://bind.linuxos.net for troubles that might have been posted and hopefully get what your looking for.  You can join the sqlbind8 mailing list by sending the text 'subscribe' in the body of a email to sqlbind8-request@linuxos.net.  Currently there are a few people that are working on console/web programs to load current zone files into the db and to administer the database.
+
+Todo:
+   Currently the daemon assumes it is supposed to load all records on it's own so it doesn't know what to do with records that already exist.  sqlbind needs to query the running name server to find what records are already loaded and work around them.
+   A way to delete records from named's cache when they are removed from the db tables.  I'm thinking maybe add a status field to the table to have a off/on and use that to add/remove records.
+   Add a means of specifying what table to load the records from to allow for reusing a template table for zones that are very similar.
+   Add more error checking and logging.
+

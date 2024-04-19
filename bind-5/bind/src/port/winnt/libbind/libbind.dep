@@ -1,0 +1,5055 @@
+# Microsoft Developer Studio Generated Dependency File, included by libbind.mak
+
+..\..\..\lib\bsd\gettimeofday.c : \
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\bsd\putenv.c : \
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\bsd\readv.c : \
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	"..\include\sys\uio.h"\
+	
+
+..\..\..\lib\bsd\setenv.c : \
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\bsd\setitimer.c : \
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\bsd\strcasecmp.c : \
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\bsd\strdup.c : \
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\bsd\strpbrk.c : \
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\bsd\strsep.c : \
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\bsd\strtoul.c : \
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\bsd\utimes.c : \
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\bsd\writev.c : \
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	"..\include\sys\uio.h"\
+	
+
+..\..\..\lib\isc\assertions.c : \
+	"..\..\..\include\isc\assertions.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\isc\base64.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\resolv.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\isc\bitncmp.c : \
+	"..\..\..\include\isc\misc.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\isc\ctl_clnt.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\isc\assertions.h"\
+	"..\..\..\include\isc\ctl.h"\
+	"..\..\..\include\isc\eventlib.h"\
+	"..\..\..\include\isc\list.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\lib\isc\ctl_p.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\file.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	"..\include\sys\uio.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\isc\ctl_p.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\isc\assertions.h"\
+	"..\..\..\include\isc\ctl.h"\
+	"..\..\..\include\isc\eventlib.h"\
+	"..\..\..\include\isc\logging.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\lib\isc\ctl_p.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\file.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	"..\include\sys\uio.h"\
+	"..\include\sys\un.h"\
+	
+
+..\..\..\lib\isc\ctl_srvr.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\isc\assertions.h"\
+	"..\..\..\include\isc\ctl.h"\
+	"..\..\..\include\isc\eventlib.h"\
+	"..\..\..\include\isc\list.h"\
+	"..\..\..\include\isc\logging.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\lib\isc\ctl_p.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\file.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	"..\include\sys\uio.h"\
+	"..\include\sys\un.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\isc\ev_connects.c : \
+	"..\..\..\include\fd_setsize.h"\
+	"..\..\..\include\isc\assertions.h"\
+	"..\..\..\include\isc\eventlib.h"\
+	"..\..\..\include\isc\heap.h"\
+	"..\..\..\include\isc\list.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\lib\isc\eventlib_p.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	"..\include\sys\uio.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\isc\ev_files.c : \
+	"..\..\..\include\fd_setsize.h"\
+	"..\..\..\include\isc\eventlib.h"\
+	"..\..\..\include\isc\heap.h"\
+	"..\..\..\include\isc\list.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\lib\isc\eventlib_p.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	"..\include\sys\uio.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\isc\ev_streams.c : \
+	"..\..\..\include\fd_setsize.h"\
+	"..\..\..\include\isc\assertions.h"\
+	"..\..\..\include\isc\eventlib.h"\
+	"..\..\..\include\isc\heap.h"\
+	"..\..\..\include\isc\list.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\lib\isc\eventlib_p.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	"..\include\sys\uio.h"\
+	
+
+..\..\..\lib\isc\ev_timers.c : \
+	"..\..\..\include\fd_setsize.h"\
+	"..\..\..\include\isc\eventlib.h"\
+	"..\..\..\include\isc\heap.h"\
+	"..\..\..\include\isc\list.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\lib\isc\eventlib_p.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	"..\include\sys\uio.h"\
+	
+
+..\..\..\lib\isc\ev_waits.c : \
+	"..\..\..\include\fd_setsize.h"\
+	"..\..\..\include\isc\assertions.h"\
+	"..\..\..\include\isc\eventlib.h"\
+	"..\..\..\include\isc\heap.h"\
+	"..\..\..\include\isc\list.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\lib\isc\eventlib_p.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	"..\include\sys\uio.h"\
+	
+
+..\..\..\lib\isc\eventlib.c : \
+	"..\..\..\include\fd_setsize.h"\
+	"..\..\..\include\isc\assertions.h"\
+	"..\..\..\include\isc\eventlib.h"\
+	"..\..\..\include\isc\heap.h"\
+	"..\..\..\include\isc\list.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\lib\isc\eventlib_p.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	"..\include\sys\uio.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\isc\heap.c : \
+	"..\..\..\include\isc\heap.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\isc\logging.c : \
+	"..\..\..\include\isc\assertions.h"\
+	"..\..\..\include\isc\logging.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\lib\isc\logging_p.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\time.h"\
+	"..\include\syslog.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\isc\memcluster.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\isc\assertions.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	"..\include\sys\uio.h"\
+	
+
+..\..\..\lib\isc\tree.c : \
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\isc\tree.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\dns.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\hesiod.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\dns_p.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\dns_gr.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\hesiod.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\dns_p.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\irs\dns_ho.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\dns_p.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\dns_nw.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\dns_p.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\dns_pr.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\hesiod.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\dns_p.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\dns_pw.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\hesiod.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\dns_p.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\dns_sv.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\hesiod.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\dns_p.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\gai_strerror.c : \
+	"..\..\..\include\netdb.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\gen.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\assertions.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\gen_p.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\gen_gr.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\assertions.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\gen_p.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\gen_ho.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\gen_p.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\gen_ng.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\gen_p.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\gen_nw.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\gen_p.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\gen_pr.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\gen_p.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\gen_pw.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\gen_p.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\gen_sv.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\gen_p.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\getaddrinfo.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	"..\include\sys\un.h"\
+	
+
+..\..\..\lib\irs\getgrent.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irs_data.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\getgrent_r.c : \
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\gethostent.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irs_data.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\gethostent_r.c : \
+	"..\..\..\include\netdb.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\getnameinfo.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\getnetent.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irs_data.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\getnetent_r.c : \
+	"..\..\..\include\netdb.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\getnetgrent.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irs_data.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\getnetgrent_r.c : \
+	"..\..\..\include\netdb.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\getprotoent.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irs_data.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\getprotoent_r.c : \
+	"..\..\..\include\netdb.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\getpwent.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irs_data.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\getpwent_r.c : \
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\getservent.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irs_data.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\getservent_r.c : \
+	"..\..\..\include\netdb.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\hesiod.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\hesiod.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\hesiod_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\irp.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irp.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irp_p.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	"..\include\sys\un.h"\
+	"..\include\syslog.h"\
+	
+
+..\..\..\lib\irs\irp_gr.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irp.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\irpmarshall.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irp_p.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\lcl_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	"..\include\syslog.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\irs\irp_ho.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irp.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\irpmarshall.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\dns_p.h"\
+	"..\..\..\lib\irs\irp_p.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	"..\include\syslog.h"\
+	
+
+..\..\..\lib\irs\irp_ng.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irp.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\irpmarshall.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irp_p.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	"..\include\syslog.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\irs\irp_nw.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irp.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\irpmarshall.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\isc\misc.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irp_p.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\lcl_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	"..\include\syslog.h"\
+	
+
+..\..\..\lib\irs\irp_pr.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irp.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\irpmarshall.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irp_p.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\lcl_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	"..\include\syslog.h"\
+	
+
+..\..\..\lib\irs\irp_pw.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irp.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\irpmarshall.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irp_p.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	"..\include\syslog.h"\
+	"..\include\unistd.h"\
+	"..\include\utmp.h"\
+	
+
+..\..\..\lib\irs\irp_sv.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irp.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\irpmarshall.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irp_p.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\lcl_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	"..\include\syslog.h"\
+	
+
+..\..\..\lib\irs\irpmarshall.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\irpmarshall.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	"..\include\syslog.h"\
+	"..\include\unistd.h"\
+	"..\include\utmp.h"\
+	
+
+..\..\..\lib\irs\irs_data.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irs_data.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\lcl.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\lcl_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\lcl_gr.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irp_p.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\lcl_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\irs\lcl_ho.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\dns_p.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\lcl_ng.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\irs\lcl_nw.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\isc\misc.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\lcl_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\lcl_pr.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\lcl_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\lcl_pw.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\lcl_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	"..\include\syslog.h"\
+	"..\include\unistd.h"\
+	"..\include\utmp.h"\
+	
+
+..\..\..\lib\irs\lcl_sv.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\lcl_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\nis.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\hesiod.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\nis_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\nis_gr.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\nis_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\irs\nis_ho.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\nis_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\nis_ng.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\assertions.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\nis_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\nis_nw.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\nis_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\nis_pr.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\nis_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\nis_pw.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\nis_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\irs\nis_sv.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\nis_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\nul_ng.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\hesiod.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\dns_p.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\irs\util.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\irs\irs_p.h"\
+	"..\..\..\lib\irs\pathnames.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\resolv\herror.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\irs.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\include\bindwsock.h"\
+	"..\include\grp.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\pwd.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	"..\include\sys\uio.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\resolv\res_comp.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\resolv.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\resolv\res_data.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\resolv\res_debug.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\resolv\res_findprimary.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\resolv\res_init.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\resolv.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\resolv\res_mkquery.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\resolv\res_mkupdate.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\resolv\res_query.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\resolv\res_send.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\fd_setsize.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\resolv\res_debug.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	"..\include\sys\uio.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\resolv\res_sendsigned.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\fd_setsize.h"\
+	"..\..\..\include\isc\dst.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\resolv\res_sendupdate.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\resolv\res_update.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\resolv\res_debug.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\nameser\ns_date.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\nameser\ns_name.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\resolv.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\nameser\ns_netint.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\nameser\ns_parse.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\resolv.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\nameser\ns_print.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\isc\assertions.h"\
+	"..\..\..\include\resolv.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\nameser\ns_sign.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\fd_setsize.h"\
+	"..\..\..\include\isc\dst.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\nameser\ns_ttl.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\nameser\ns_verify.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\fd_setsize.h"\
+	"..\..\..\include\isc\dst.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\inet\inet_addr.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\inet\inet_cidr_ntop.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\inet\inet_cidr_pton.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\isc\assertions.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\inet\inet_lnaof.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\inet\inet_makeaddr.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\inet\inet_net_ntop.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\inet\inet_net_pton.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\isc\assertions.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\inet\inet_neta.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\inet\inet_netof.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\inet\inet_network.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\inet\inet_ntoa.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\inet\inet_ntop.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\inet\inet_pton.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\inet\nsap_addr.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\resolv.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\cylink\bits.c : \
+	"..\..\..\lib\cylink\bn.h"\
+	"..\..\..\lib\cylink\ctk_endian.h"\
+	"..\..\..\lib\cylink\cylink.h"\
+	"..\..\..\lib\cylink\lbn.h"\
+	"..\include\bindwsock.h"\
+	"..\include\config.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\cylink\bn.c : \
+	"..\..\..\lib\cylink\bn.h"\
+	
+
+..\..\..\lib\cylink\bn32.c : \
+	"..\..\..\lib\cylink\bn.h"\
+	"..\..\..\lib\cylink\bn32.h"\
+	"..\..\..\lib\cylink\kludge.h"\
+	"..\..\..\lib\cylink\lbn.h"\
+	"..\..\..\lib\cylink\lbn32.h"\
+	"..\..\..\lib\cylink\lbnmem.h"\
+	"..\include\config.h"\
+	
+
+..\..\..\lib\cylink\bninit32.c : \
+	"..\..\..\lib\cylink\bn.h"\
+	"..\..\..\lib\cylink\bn32.h"\
+	
+
+..\..\..\lib\cylink\ctk_prime.c : \
+	"..\..\..\lib\cylink\cencrint.h"\
+	"..\..\..\lib\cylink\ctk_endian.h"\
+	"..\..\..\lib\cylink\cylink.h"\
+	"..\..\..\lib\cylink\lbn.h"\
+	"..\..\..\lib\cylink\toolkit.h"\
+	"..\include\bindwsock.h"\
+	"..\include\config.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\cylink\dss.c : \
+	"..\..\..\lib\cylink\cencrint.h"\
+	"..\..\..\lib\cylink\ctk_endian.h"\
+	"..\..\..\lib\cylink\cylink.h"\
+	"..\..\..\lib\cylink\dssnum.h"\
+	"..\..\..\lib\cylink\lbn.h"\
+	"..\..\..\lib\cylink\sha.h"\
+	"..\..\..\lib\cylink\toolkit.h"\
+	"..\include\bindwsock.h"\
+	"..\include\config.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\cylink\lbn32.c : \
+	"..\..\..\lib\cylink\kludge.h"\
+	"..\..\..\lib\cylink\lbn.h"\
+	"..\..\..\lib\cylink\lbn32.h"\
+	"..\..\..\lib\cylink\lbnmem.h"\
+	"..\..\..\lib\cylink\legal.h"\
+	"..\include\config.h"\
+	
+
+..\..\..\lib\cylink\lbnmem.c : \
+	"..\..\..\lib\cylink\kludge.h"\
+	"..\..\..\lib\cylink\lbn.h"\
+	"..\..\..\lib\cylink\lbnmem.h"\
+	"..\include\config.h"\
+	
+
+..\..\..\lib\cylink\lbnppc.c : \
+	"..\..\..\lib\cylink\lbnppc.h"\
+	"..\..\..\lib\cylink\ppcasm.h"\
+	
+
+..\..\..\lib\cylink\legal.c : \
+	"..\..\..\lib\cylink\legal.h"\
+	
+
+..\..\..\lib\cylink\math.c : \
+	"..\..\..\lib\cylink\bn.h"\
+	"..\..\..\lib\cylink\ctk_endian.h"\
+	"..\..\..\lib\cylink\cylink.h"\
+	"..\..\..\lib\cylink\lbn.h"\
+	"..\..\..\lib\cylink\toolkit.h"\
+	"..\include\bindwsock.h"\
+	"..\include\config.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\cylink\rand.c : \
+	"..\..\..\lib\cylink\cencrint.h"\
+	"..\..\..\lib\cylink\ctk_endian.h"\
+	"..\..\..\lib\cylink\cylink.h"\
+	"..\..\..\lib\cylink\lbn.h"\
+	"..\..\..\lib\cylink\sha.h"\
+	"..\..\..\lib\cylink\toolkit.h"\
+	"..\include\bindwsock.h"\
+	"..\include\config.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\cylink\sha.c : \
+	"..\..\..\lib\cylink\cencrint.h"\
+	"..\..\..\lib\cylink\ctk_endian.h"\
+	"..\..\..\lib\cylink\cylink.h"\
+	"..\..\..\lib\cylink\lbn.h"\
+	"..\..\..\lib\cylink\sha.h"\
+	"..\..\..\lib\cylink\toolkit.h"\
+	"..\include\bindwsock.h"\
+	"..\include\config.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\cylink\swap.c : \
+	"..\..\..\lib\cylink\ctk_endian.h"\
+	"..\..\..\lib\cylink\cylink.h"\
+	"..\..\..\lib\cylink\lbn.h"\
+	"..\include\bindwsock.h"\
+	"..\include\config.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dst\bsafe_link.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\isc\dst.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dst\dst_internal.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\dst\cylink_link.c : \
+	"..\..\..\include\isc\dst.h"\
+	"..\..\..\lib\dst\dst_internal.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\dst\dst_api.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\isc\dst.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\dst\dst_internal.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\dst\eay_dss_link.c : \
+	"..\..\..\include\isc\dst.h"\
+	"..\..\..\lib\dst\dst_internal.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\dst\hmac_link.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\isc\dst.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\dst\dst_internal.h"\
+	"..\..\..\lib\dst\md5.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\dst\md5_dgst.c : \
+	"..\..\..\lib\dst\md5.h"\
+	"..\..\..\lib\dst\md5_locl.h"\
+	
+
+..\..\..\lib\dst\prandom.c : \
+	"..\..\..\include\isc\dst.h"\
+	"..\..\..\lib\dst\dst_internal.h"\
+	"..\include\bindwsock.h"\
+	"..\include\dirent.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\prand_conf.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\dst\rsaref_link.c : \
+	"..\..\..\include\isc\dst.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dst\dst_internal.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\dst\support.c : \
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\isc\dst.h"\
+	"..\..\..\include\resolv.h"\
+	"..\..\..\lib\dst\dst_internal.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	"..\include\unistd.h"\
+	
+
+.\dirent.c : \
+	"..\include\dirent.h"\
+	"..\include\sys\bitypes.h"\
+	
+
+.\DLLMain.c : \
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	
+
+.\getopt.c : \
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\time.h"\
+	
+
+.\interface.c : \
+	"..\include\bindwsock.h"\
+	"..\include\net\if.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\time.h"\
+	
+
+.\ioctl_if.c : \
+	"..\include\bindwsock.h"\
+	"..\include\net\if.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	"..\include\syslog.h"\
+	
+
+.\movefile.c : \
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\time.h"\
+	
+
+.\signal.c : \
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\isc\dst.h"\
+	"..\..\..\include\isc\eventlib.h"\
+	"..\..\..\include\isc\list.h"\
+	"..\..\..\include\isc\logging.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	"..\include\sys\uio.h"\
+	"..\include\sys\wait.h"\
+	"..\include\syslog.h"\
+	
+
+.\snmpmib.c : \
+	"..\include\bindwsock.h"\
+	"..\include\net\if.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\oids.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	"..\include\syslog.h"\
+	
+
+.\socket.c : \
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	
+
+.\syslog.c : \
+	"..\..\..\include\isc\logging.h"\
+	"..\include\bindevt.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\time.h"\
+	"..\include\syslog.h"\
+	
+
+.\unistd.c : \
+	"..\include\bindwsock.h"\
+	"..\include\net\if.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	"..\include\syslog.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\lib\dnssafe\ahcbcpad.c : \
+	"..\..\..\lib\dnssafe\ahcbcpad.h"\
+	"..\..\..\lib\dnssafe\ahchencr.h"\
+	"..\..\..\lib\dnssafe\ahencryp.h"\
+	"..\..\..\lib\dnssafe\algchoic.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\ahchdig.c : \
+	"..\..\..\lib\dnssafe\ahchdig.h"\
+	"..\..\..\lib\dnssafe\ahdigest.h"\
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\algchoic.h"\
+	"..\..\..\lib\dnssafe\amdigest.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\balgmeth.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\ahchencr.c : \
+	"..\..\..\lib\dnssafe\ahchencr.h"\
+	"..\..\..\lib\dnssafe\ahencryp.h"\
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\algchoic.h"\
+	"..\..\..\lib\dnssafe\amencdec.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\balgmeth.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\ahchgen.c : \
+	"..\..\..\lib\dnssafe\ahchgen.h"\
+	"..\..\..\lib\dnssafe\ahgen.h"\
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\algchoic.h"\
+	"..\..\..\lib\dnssafe\amgen.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\balgmeth.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\ahchrand.c : \
+	"..\..\..\lib\dnssafe\ahchrand.h"\
+	"..\..\..\lib\dnssafe\ahrandom.h"\
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\algchoic.h"\
+	"..\..\..\lib\dnssafe\amrandom.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\balgmeth.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\ahdigest.c : \
+	"..\..\..\lib\dnssafe\ahdigest.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\ahencryp.c : \
+	"..\..\..\lib\dnssafe\ahencryp.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\ahgen.c : \
+	"..\..\..\lib\dnssafe\ahgen.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\ahrandom.c : \
+	"..\..\..\lib\dnssafe\ahrandom.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\ahrsaenc.c : \
+	"..\..\..\lib\dnssafe\ahchencr.h"\
+	"..\..\..\lib\dnssafe\ahencryp.h"\
+	"..\..\..\lib\dnssafe\ahrsaenc.h"\
+	"..\..\..\lib\dnssafe\algchoic.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\ahrsaepr.c : \
+	"..\..\..\lib\dnssafe\ahchencr.h"\
+	"..\..\..\lib\dnssafe\ahencryp.h"\
+	"..\..\..\lib\dnssafe\ahrsaenc.h"\
+	"..\..\..\lib\dnssafe\ahrsaepr.h"\
+	"..\..\..\lib\dnssafe\algchoic.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\ahrsaepu.c : \
+	"..\..\..\lib\dnssafe\ahchencr.h"\
+	"..\..\..\lib\dnssafe\ahencryp.h"\
+	"..\..\..\lib\dnssafe\ahrsaenc.h"\
+	"..\..\..\lib\dnssafe\ahrsaepu.h"\
+	"..\..\..\lib\dnssafe\algchoic.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\aichdig.c : \
+	"..\..\..\lib\dnssafe\ahchdig.h"\
+	"..\..\..\lib\dnssafe\ahdigest.h"\
+	"..\..\..\lib\dnssafe\aichdig.h"\
+	"..\..\..\lib\dnssafe\ainfotyp.h"\
+	"..\..\..\lib\dnssafe\ainull.h"\
+	"..\..\..\lib\dnssafe\algchoic.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\aichenc8.c : \
+	"..\..\..\lib\dnssafe\aichenc8.h"\
+	"..\..\..\lib\dnssafe\aichencr.h"\
+	"..\..\..\lib\dnssafe\ainfotyp.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\aichencn.c : \
+	"..\..\..\lib\dnssafe\aichencn.h"\
+	"..\..\..\lib\dnssafe\aichencr.h"\
+	"..\..\..\lib\dnssafe\ainfotyp.h"\
+	"..\..\..\lib\dnssafe\ainull.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\aichencr.c : \
+	"..\..\..\lib\dnssafe\ahchencr.h"\
+	"..\..\..\lib\dnssafe\ahencryp.h"\
+	"..\..\..\lib\dnssafe\aichencr.h"\
+	"..\..\..\lib\dnssafe\ainfotyp.h"\
+	"..\..\..\lib\dnssafe\algchoic.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\aichgen.c : \
+	"..\..\..\lib\dnssafe\ahchgen.h"\
+	"..\..\..\lib\dnssafe\ahgen.h"\
+	"..\..\..\lib\dnssafe\aichgen.h"\
+	"..\..\..\lib\dnssafe\ainfotyp.h"\
+	"..\..\..\lib\dnssafe\algchoic.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\aichrand.c : \
+	"..\..\..\lib\dnssafe\ahchrand.h"\
+	"..\..\..\lib\dnssafe\ahrandom.h"\
+	"..\..\..\lib\dnssafe\aichrand.h"\
+	"..\..\..\lib\dnssafe\ainfotyp.h"\
+	"..\..\..\lib\dnssafe\ainull.h"\
+	"..\..\..\lib\dnssafe\algchoic.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\aimd5.c : \
+	"..\..\..\lib\dnssafe\aichdig.h"\
+	"..\..\..\lib\dnssafe\ainfotyp.h"\
+	"..\..\..\lib\dnssafe\ainull.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\aimd5ran.c : \
+	"..\..\..\lib\dnssafe\aichrand.h"\
+	"..\..\..\lib\dnssafe\ainfotyp.h"\
+	"..\..\..\lib\dnssafe\ainull.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\ainfotyp.c : \
+	"..\..\..\lib\dnssafe\ainfotyp.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\ainull.c : \
+	"..\..\..\lib\dnssafe\ainfotyp.h"\
+	"..\..\..\lib\dnssafe\ainull.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\airsaepr.c : \
+	"..\..\..\lib\dnssafe\ahchencr.h"\
+	"..\..\..\lib\dnssafe\ahencryp.h"\
+	"..\..\..\lib\dnssafe\ahrsaenc.h"\
+	"..\..\..\lib\dnssafe\ahrsaepr.h"\
+	"..\..\..\lib\dnssafe\ainfotyp.h"\
+	"..\..\..\lib\dnssafe\ainull.h"\
+	"..\..\..\lib\dnssafe\algchoic.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\airsaepu.c : \
+	"..\..\..\lib\dnssafe\ahchencr.h"\
+	"..\..\..\lib\dnssafe\ahencryp.h"\
+	"..\..\..\lib\dnssafe\ahrsaenc.h"\
+	"..\..\..\lib\dnssafe\ahrsaepu.h"\
+	"..\..\..\lib\dnssafe\ainfotyp.h"\
+	"..\..\..\lib\dnssafe\ainull.h"\
+	"..\..\..\lib\dnssafe\algchoic.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\airsakgn.c : \
+	"..\..\..\lib\dnssafe\aichgen.h"\
+	"..\..\..\lib\dnssafe\ainfotyp.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dnssafe\intitem.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\airsaprv.c : \
+	"..\..\..\lib\dnssafe\aichencn.h"\
+	"..\..\..\lib\dnssafe\aichencr.h"\
+	"..\..\..\lib\dnssafe\ainfotyp.h"\
+	"..\..\..\lib\dnssafe\ainull.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\airsapub.c : \
+	"..\..\..\lib\dnssafe\aichencn.h"\
+	"..\..\..\lib\dnssafe\aichencr.h"\
+	"..\..\..\lib\dnssafe\ainfotyp.h"\
+	"..\..\..\lib\dnssafe\ainull.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\algchoic.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\algchoic.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balgmeth.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\algobj.c : \
+	"..\..\..\lib\dnssafe\ainfotyp.h"\
+	"..\..\..\lib\dnssafe\algobj.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dnssafe\keyobj.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\amcrte.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\amencdec.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balgmeth.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\crt2.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\ammd5.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\amdigest.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balgmeth.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dnssafe\md5.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\ammd5r.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\amrandom.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balgmeth.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\digrand.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dnssafe\md5.h"\
+	"..\..\..\lib\dnssafe\md5rand.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\amrkg.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\amgen.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balgmeth.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dnssafe\rsakeygn.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\amrsae.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\amencdec.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balgmeth.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dnssafe\rsa.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\balg.c : \
+	"..\..\..\lib\dnssafe\ainfotyp.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\bgclrbit.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\bgmdmpyx.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\bgmdsqx.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\bgmodexp.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dnssafe\surrendr.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\bgpegcd.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\big2exp.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\bigabs.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\bigacc.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\bigarith.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\bigcmp.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\bigconst.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\biginv.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\biglen.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\bigmodx.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\bigmpy.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\bigpdiv.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\bigpmpy.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\bigpmpyh.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\bigpmpyl.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\bigpsq.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\bigqrx.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\bigsmod.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\bigtocan.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\bigu.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\bigunexp.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dnssafe\surrendr.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\binfocsh.c : \
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\bkey.c : \
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dnssafe\kiitem.h"\
+	"..\..\..\lib\dnssafe\kinfotyp.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\bmempool.c : \
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\cantobig.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\crt2.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\crt2.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\digest.c : \
+	"..\..\..\lib\dnssafe\algobj.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dnssafe\keyobj.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\digrand.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\digrand.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\encrypt.c : \
+	"..\..\..\lib\dnssafe\algobj.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dnssafe\keyobj.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\generate.c : \
+	"..\..\..\lib\dnssafe\ainfotyp.h"\
+	"..\..\..\lib\dnssafe\algobj.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dnssafe\keyobj.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\intbits.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\intitem.c : \
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dnssafe\intitem.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\keyobj.c : \
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dnssafe\keyobj.h"\
+	"..\..\..\lib\dnssafe\kinfotyp.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\ki8byte.c : \
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dnssafe\ki8byte.h"\
+	"..\..\..\lib\dnssafe\kiitem.h"\
+	"..\..\..\lib\dnssafe\kinfotyp.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\kifulprv.c : \
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dnssafe\kifulprv.h"\
+	"..\..\..\lib\dnssafe\kinfotyp.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\kiitem.c : \
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dnssafe\kiitem.h"\
+	"..\..\..\lib\dnssafe\kinfotyp.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\kinfotyp.c : \
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dnssafe\kinfotyp.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\kipkcrpr.c : \
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dnssafe\intitem.h"\
+	"..\..\..\lib\dnssafe\kifulprv.h"\
+	"..\..\..\lib\dnssafe\kinfotyp.h"\
+	"..\..\..\lib\dnssafe\kipkcrpr.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\kirsacrt.c : \
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dnssafe\intitem.h"\
+	"..\..\..\lib\dnssafe\kifulprv.h"\
+	"..\..\..\lib\dnssafe\kinfotyp.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\kirsapub.c : \
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dnssafe\intitem.h"\
+	"..\..\..\lib\dnssafe\kifulprv.h"\
+	"..\..\..\lib\dnssafe\kinfotyp.h"\
+	"..\..\..\lib\dnssafe\kirsapub.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\md5.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dnssafe\md5.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\md5rand.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\digrand.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dnssafe\md5.h"\
+	"..\..\..\lib\dnssafe\md5rand.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\prime.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dnssafe\prime.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\random.c : \
+	"..\..\..\lib\dnssafe\ainfotyp.h"\
+	"..\..\..\lib\dnssafe\algobj.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\balg.h"\
+	"..\..\..\lib\dnssafe\binfocsh.h"\
+	"..\..\..\lib\dnssafe\bkey.h"\
+	"..\..\..\lib\dnssafe\bmempool.h"\
+	"..\..\..\lib\dnssafe\bsafe2.h"\
+	"..\..\..\lib\dnssafe\btypechk.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\rsa.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dnssafe\rsa.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\rsakeygn.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\bigmath.h"\
+	"..\..\..\lib\dnssafe\bigmaxes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dnssafe\prime.h"\
+	"..\..\..\lib\dnssafe\rsakeygn.h"\
+	"..\..\..\lib\dnssafe\surrendr.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\seccbcd.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dnssafe\secrcbc.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\seccbce.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\..\..\lib\dnssafe\secrcbc.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	
+
+..\..\..\lib\dnssafe\surrendr.c : \
+	"..\..\..\lib\dnssafe\algae.h"\
+	"..\..\..\lib\dnssafe\atypes.h"\
+	"..\..\..\lib\dnssafe\global.h"\
+	"..\include\bindwsock.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\time.h"\
+	

@@ -1,0 +1,115 @@
+# Microsoft Developer Studio Generated Dependency File, included by xfer.mak
+
+..\..\..\bin\named\db_glue.c : \
+	"..\..\..\bin\named\db_defs.h"\
+	"..\..\..\bin\named\db_func.h"\
+	"..\..\..\bin\named\db_glob.h"\
+	"..\..\..\bin\named\named.h"\
+	"..\..\..\bin\named\ns_defs.h"\
+	"..\..\..\bin\named\ns_func.h"\
+	"..\..\..\bin\named\ns_glob.h"\
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\isc\assertions.h"\
+	"..\..\..\include\isc\ctl.h"\
+	"..\..\..\include\isc\eventlib.h"\
+	"..\..\..\include\isc\list.h"\
+	"..\..\..\include\isc\logging.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	"..\include\sys\uio.h"\
+	"..\include\sys\un.h"\
+	"..\include\syslog.h"\
+	
+
+"..\..\..\bin\named-xfer\named-xfer.c" : \
+	"..\..\..\bin\named\db_defs.h"\
+	"..\..\..\bin\named\db_func.h"\
+	"..\..\..\bin\named\db_glob.h"\
+	"..\..\..\bin\named\named.h"\
+	"..\..\..\bin\named\ns_defs.h"\
+	"..\..\..\bin\named\ns_func.h"\
+	"..\..\..\bin\named\ns_glob.h"\
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\isc\assertions.h"\
+	"..\..\..\include\isc\ctl.h"\
+	"..\..\..\include\isc\dst.h"\
+	"..\..\..\include\isc\eventlib.h"\
+	"..\..\..\include\isc\list.h"\
+	"..\..\..\include\isc\logging.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\netdb.h"\
+	"..\..\..\include\resolv.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\file.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	"..\include\sys\uio.h"\
+	"..\include\sys\un.h"\
+	"..\include\syslog.h"\
+	"..\include\unistd.h"\
+	
+
+..\..\..\bin\named\ns_glue.c : \
+	"..\..\..\bin\named\db_defs.h"\
+	"..\..\..\bin\named\db_func.h"\
+	"..\..\..\bin\named\db_glob.h"\
+	"..\..\..\bin\named\named.h"\
+	"..\..\..\bin\named\ns_defs.h"\
+	"..\..\..\bin\named\ns_func.h"\
+	"..\..\..\bin\named\ns_glob.h"\
+	"..\..\..\include\arpa\inet.h"\
+	"..\..\..\include\arpa\nameser.h"\
+	"..\..\..\include\arpa\nameser_compat.h"\
+	"..\..\..\include\isc\assertions.h"\
+	"..\..\..\include\isc\ctl.h"\
+	"..\..\..\include\isc\eventlib.h"\
+	"..\..\..\include\isc\list.h"\
+	"..\..\..\include\isc\logging.h"\
+	"..\..\..\include\isc\memcluster.h"\
+	"..\..\..\include\resolv.h"\
+	"..\include\bindwsock.h"\
+	"..\include\netinet\in.h"\
+	"..\include\nt_fcntl.h"\
+	"..\include\nt_signal.h"\
+	"..\include\pathnames.h"\
+	"..\include\paths.h"\
+	"..\include\port_after.h"\
+	"..\include\port_before.h"\
+	"..\include\sys\bitypes.h"\
+	"..\include\sys\cdefs.h"\
+	"..\include\sys\param.h"\
+	"..\include\sys\socket.h"\
+	"..\include\sys\time.h"\
+	"..\include\sys\uio.h"\
+	"..\include\sys\un.h"\
+	"..\include\syslog.h"\
+	"..\include\unistd.h"\
+	

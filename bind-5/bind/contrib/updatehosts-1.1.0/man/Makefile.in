@@ -1,0 +1,39 @@
+#### Start of system configuration section. ####
+
+srcdir = @srcdir@
+VPATH = @srcdir@
+
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+M4 = @M4@
+AWK = @AWK@
+PERL = @PERL@
+CC = @CC@
+
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+
+# Directory in which to install scripts.
+bindir = @bindir@
+
+# man directory
+mandir = @mandir@
+
+# configuration file directory
+sysconfdir = @sysconfdir@
+
+#### End of system configuration section. ####
+
+SHELL = /bin/sh
+
+MANPAGES = bindv8conf_lister.1 cvtstatic.1 cvtzone.1 gendhcp.1 gendns.1 \
+	poke_dhcp.1 poke_ns.1 readinfo.1 readinfo_pp.1 updatehosts.1
+
+man: 
+	mkdir -p ${mandir}
+	for f in ${MANPAGES}; do ${INSTALL_PROGRAM} -m 444 $$f ${mandir}/man1; done
+
+clean:
+
+distclean:
+	rm -f Makefile

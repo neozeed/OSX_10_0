@@ -1,0 +1,4 @@
+.Named DNS-forward
+.Option	forward only;
+.Forwarders	nameserver.my.provider
+nameserver.my.provider	1.2.3.4

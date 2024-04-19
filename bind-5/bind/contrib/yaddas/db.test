@@ -1,0 +1,20 @@
+;
+; this is the example DNS zone file I use
+; for testing the dns2host script.
+; corresponding file is hosts.example
+;
+C1-bokel.tui.de. 9999999 IN CNAME bokel
+C2-bokel.tui.de. 9999999 IN CNAME bokel
+bokel.tui.de.    9999999 IN A 10.2.3.4
+A1-bokel.tui.de. 9999999 IN A 10.2.3.4
+rs5.tui.de.    9999999 IN A 10.5.6.7
+A1-rs5.tui.de. 9999999 IN A 10.5.6.7
+C1-rs5.tui.de. 9999999 IN CNAME rs5
+C2-rs5.tui.de. 9999999 IN CNAME rs5
+C1-A1-rs5.tui.de. 9999999 IN CNAME A1-rs5
+C1-mailserver.tui.de. 9999999 IN CNAME mailserver
+rs6.tui.de. 9999999 IN A 10.30.6.7
+A1-rs6.tui.de. 9999999 IN A 10.30.6.7
+A2-rs6.tui.de. 9999999 IN A 10.30.6.7
+multi.tui.de. 9999999 IN A 10.1.2.3
+multi.tui.de. 9999999 IN A 10.1.2.4

@@ -1,0 +1,12 @@
+Comparing files port_before.h and D:\BINDNT\SRC\PORT\WINNT\INCLUDE\PORT_BEFORE.H
+***** port_before.h
+
+/* DDNS */
+#define BIND_UPDATE
+
+/* we don't use group or user stuff */
+***** D:\BINDNT\SRC\PORT\WINNT\INCLUDE\PORT_BEFORE.H
+
+/* we don't use group or user stuff */
+*****
+

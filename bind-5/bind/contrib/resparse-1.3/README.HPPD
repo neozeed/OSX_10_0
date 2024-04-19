@@ -1,0 +1,16 @@
+Package name:     resparse
+Version number:   1.3
+Original author:  Dave Shield <D.T.Shield@csc.liv.ac.uk>
+Original URL:     
+Install tree:     /opt/resparse
+Report bugs to:   D.T.Shield@csc.liv.ac.uk
+Tested on:        HP 9000/777/C110 running HP-UX 10.10
+C compiler used:  Version A.10.32.12
+Purpose:
+Routines to assist programming using the DNS resolver. Simple name/address
+questions can be handled by the 'gethostent' routines, but more general queries
+have no equivalents. This package provides the means to unpack the opaque
+character string returned from the resolver into a C structure, together with
+simple routines to manipulate such structures.
+Date archived:    Thu 20 Nov 1997
+Special notes:    None

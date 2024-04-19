@@ -1,0 +1,28 @@
+# $Id: configure.in,v 1.1.1.1 2001/01/31 03:59:15 zarzycki Exp $
+dnl Process this file with autoconf to produce a configure script.
+AC_INIT
+dnl Checks for programs.
+AC_PROG_AWK
+AC_PROG_INSTALL
+AC_PROG_MAKE_SET
+AC_PATH_PROG(CC, cc, gcc, gcc2)
+AC_PATH_PROG(PERL, perl, noperl)
+AC_PATH_PROG(M4, m4, nom4)
+AC_PATH_PROG(FLEX, flex, noflex)
+AC_PATH_PROG(SH, sh)
+
+dnl Substitute for staff group
+AC_SUBST(staff_group)
+AC_ARG_ENABLE(staff_group, [staff_group - sets the staff group], [staff_group=$enableval], [staff_group=staff])
+
+dnl Checks for libraries.
+
+dnl Checks for header files.
+AC_HEADER_SYS_WAIT
+
+dnl Checks for typedefs, structures, and compiler characteristics.
+
+dnl Checks for library functions.
+
+AC_OUTPUT(Makefile man/Makefile)
+

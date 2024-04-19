@@ -1,0 +1,31 @@
+#
+# this is the host.example documenting the extended hosts file format
+# containing A and CNAME entries.
+# It's the corresponding file to db.test
+#
+# comments have '#' in first column
+# 
+# host2dns can qualify hostnames without tailing ".".
+# You may enter qualified hostnames with tailing "." which aren't
+# changed by host2dns
+
+# this is converted into 3 A records
+10.30.6.7      rs6             A2-rs6 A1-rs6
+
+# this is converted into 2 A records and 2 CNAME records
+10.5.6.7        rs5             A1-rs5 CNAME C1-rs5 C2-rs5
+
+# same as before, but line continues in second line indicated by
+# leading whitespace/tab.
+10.2.3.4        bokel           A1-bokel 
+	CNAME C1-bokel C2-bokel
+
+# same name for different IPs (machine with multiple interfaces)
+10.1.2.3		multi
+10.1.2.4		multi
+
+# CNAME only entries. These are needed if you use dynamic
+# A records i.e. with DHCP or to have CNAMEs pointing to different
+# names for the same IP. 
+CNAME           A1-rs5          C1-A1-rs5
+CNAME           mailserver      C1-mailserver

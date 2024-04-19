@@ -1,0 +1,64 @@
+
+		libmdn モジュールに対する Perl の拡張
+       (社) 日本ネットワークインフォメーションセンター (JPNIC)
+
+
+* 概要
+
+本パッケージは mDNkit に入っている libmdn (多言語ドメイン名ライブラリ)
+に対する Perl のインターフェースを提供します。
+
+現在のところ、以下の Perl モジュールが利用可能です。
+
+    MDN::Converter	libmdn の converter モジュールへのインターフェース
+    MDN::Log		libmdn の log モジュールへのインターフェース
+    MDN::Normalizer	libmdn の normalizer モジュールへのインターフェース
+    MDN::UTF8		libmdn の utf8 モジュールへのインターフェース
+    MDN::ResConf	libmdn の res, resoconf モジュールへのインターフェース
+
+詳細は以下のファイルに埋め込まれている pod ドキュメントをご覧ください。
+
+    Converter/Converter.pm
+    Log/Log.pm
+    Normalizer/Normalizer.pm
+    UTF8/UTF8.pm
+    ResConf/ResConf.pm
+
+なお、ja ディレクトリに日本語の pod ドキュメントも用意してあります。
+ただし、これらはあくまで参考品とし、英語版を正式文書とします。(日本語
+ドキュメントはインストールされません。)
+
+    ja/Converter.pod
+    ja/Log.pod
+    ja/Normalizer.pod
+    ja/UTF8.pod
+    ja/ResConf.pod
+
+
+* コンパイルとインストール
+
+0. 前準備
+
+このパッケージのコンパイルを行う前に、以下のものをインストールしておか
+なくてはなりません。
+
+    mDNkit		バージョン 1.0 またはそれ以降
+    perl		バージョン 5.005 またはそれ以降
+
+1. コンパイル
+
+必要に応じて Makefile.PL を編集します。$INC, $LIBS の値を変更して、C
+コンパイラに対して iconv や libmdn のヘッダファイルやライブラリファイ
+ルの位置を教える必要が場合によってあるかも知れません。
+
+次のコマンド行によってモジュールのコンパイルを行います。
+
+    perl Makefile.PL
+    make
+    make test
+
+2. インストール
+
+以下のコマンドを実行します。
+
+    make install

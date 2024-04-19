@@ -1,0 +1,30 @@
+# Microsoft Developer Studio Generated Dependency File, included by BINDInstall.mak
+
+.\BINDInstall.cpp : \
+	".\BINDInstall.h"\
+	".\BINDInstallDlg.h"\
+	".\StdAfx.h"\
+	
+
+.\BINDInstall.rc : \
+	".\res\BINDInstall.ico"\
+	".\res\BINDInstall.rc2"\
+	".\res\icon1.ico"\
+	
+
+.\BINDInstallDlg.cpp : \
+	".\BINDInstall.h"\
+	".\BINDInstallDlg.h"\
+	".\DirBrowse.h"\
+	".\StdAfx.h"\
+	
+
+.\DirBrowse.cpp : \
+	".\BINDInstall.h"\
+	".\DirBrowse.h"\
+	".\StdAfx.h"\
+	
+
+.\StdAfx.cpp : \
+	".\StdAfx.h"\
+	

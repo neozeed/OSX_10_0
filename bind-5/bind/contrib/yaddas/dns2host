@@ -1,0 +1,140 @@
+#!/bin/sh
+#
+# Copyright (c) 2000, Jan Kr"uger <jk@digitalanswers.de>
+# Released under Gnu Public License.
+#
+# This script generates the special host format from a nameserver
+# database file containing A and CNAME records. Other records like
+# MX and TXT are ignored.
+# This is not the perfect file format parser. It can handle ommitted
+# TTL numbers but has still some problems. As you need this script
+# normally only one time (in opposite to host2dns what you need many
+# times) this script isn't as sophisticated as host2dns and you must
+# edit the source to adjust the pattern in function unqual().
+#
+# The algorithm works as follows: Fill two hash indexed awk arrays.
+# 1. host[IP] = space separated list of names pointing to this
+#               IP using an A record
+# 2. cname[cnamevalue] = space separated list of names pointing to
+#                        this cnamevalue using a CNAME record.
+#
+# After filling up the arrays its generating output in two steps:
+# 1. Print the content of the host array index by index. Search 
+#    cname array for entries pointing to one of the names.
+#    If one cname entry is found, print the cnamevalue as first
+#    hostname, then the others and add 'CNAME cnames' to the line.
+#    If many cname entries are found, print the cnames of the last one found 
+#    and issue a warning message.
+# 2. Print all cnames which weren't printed before as CNAME only entries.
+#
+# If nawk isn't doing the job, try gawk.
+#
+
+
+nawk '
+function unqual(name) {
+	sub("\.tui\.de\.$", "", name)
+	return name
+}
+
+function whereIN(	i) {
+	for(i = 1; i <= NF; i++)
+		if(tolower($i) == "in")
+			return i
+}
+
+function rindex(s, p	,i, li) {
+	for(i = length(s); i > 0; i--) {
+		if(li = index(substr(s, i), p))
+		return i
+	} 
+	return 0
+}
+
+function breakline(l) {
+	len = 76
+	offset = ""
+	for(;;) {
+		if(length(l) < len) {
+			print offset l
+			return
+		} 
+		subl = substr(l, 0, len)
+		if(lspace = rindex(subl, " ")) {
+			# backward found space in subline 
+			print offset substr(l, 1, lspace)
+			l = substr(l, lspace + 1)
+			offset = "   "
+		} else {
+			# not found, search for next space in hole line
+			if(fspace = index(l, " ")) {
+				# space found
+				print offset substr(l, 1, fspace)
+				l = substr(l, fspace + 1)
+				offset = "   "
+			} else {
+				# no space, print rest of line
+				print offset l
+				return 
+			}
+		}
+	}
+}
+
+BEGIN { IGNORECASE=1 }
+
+/^[ 	]*;/ { next }
+
+/IN[ 	]+A/ {
+	valueind = whereIN() + 2		
+	ip = $valueind
+	unqhn = unqual($1);
+	if(index(host[ip], tolower(unqhn)) == 0) {
+		# name not in list
+		host[ip] = host[ip] " " tolower(unqhn);   # Hostnamen hier immer klein
+	}
+	# realhname[] is used to remember the right cases of writing
+	realhname[tolower(unqhn)] = unqhn;		
+#	print "host["$valueind"] =" unqual($1)
+}
+
+/IN[ 	]+CNAME/ {
+	valueind = whereIN() + 2
+	cvalue = tolower(unqual($valueind))	
+	cname[cvalue] = cname[cvalue] " " unqual($1)
+#   print "cname["$valueind"] =" unqual($1)
+}
+
+END {
+	for(ip in host) {
+		hostnamecnt = split(host[ip], h)
+		cnamevaluecnt = 0
+		for(n = hostnamecnt ; n > 0; n--) {
+			if(h[n] in cname) {
+				cnamevaluecnt++
+				cvalueindex = n
+			}
+		}
+		if(cnamevaluecnt > 1) {
+			print "*** WARNING:" FILENAME ":" FNR ":" ip "," host[ip] " is multiple cname value" | "/bin/cat 1>&2" 
+		}
+		if(cnamevaluecnt == 0) {
+			cvalueindex = 1
+		} 
+		outline = sprintf("%-15s %-15s", ip, realhname[h[cvalueindex]]);
+		for(n = hostnamecnt; n > 0; n--) {
+			if(n != cvalueindex)
+				outline = outline sprintf(" %s", realhname[h[n]]);
+		}
+		if(cnamevaluecnt) {
+			outline = outline sprintf(" CNAME%s", cname[h[cvalueindex]])
+			delete cname[h[cvalueindex]]
+		}
+		breakline(outline)
+	}
+	for(c in cname) {
+		outline = sprintf("CNAME           %-15s%s", c, cname[c])
+		breakline(outline)
+	}
+}
+' $*

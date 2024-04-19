@@ -1,0 +1,11 @@
+--- /home/mitchell/src/bind-8.2.1/clean/src/include/arpa/nameser.h	Thu Jun 10 20:25:57 1999
++++ nameser.h	Wed Jun 30 17:08:06 1999
+@@ -234,6 +234,8 @@
+ 	u_char *	r_data;		/* rdata fields as text string */
+ 	u_int16_t	r_size;		/* size of r_data field */
+ 	int		r_opcode;	/* type of operation */
++	u_int32_t	r_id;		/* record id */
++	u_int32_t	r_time;		/* last time record was updated */
+ 	/* following fields for private use by the resolver/server routines */
+ 	struct ns_updrec *r_grpnext;	/* next record when grouped */
+ 	struct databuf *r_dp;		/* databuf to process */

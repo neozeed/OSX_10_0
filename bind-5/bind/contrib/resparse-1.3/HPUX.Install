@@ -1,0 +1,13 @@
+There's no special instructions needed for installation.
+But the HP-PD archive mechanism insists on this file
+being present, so who am I to argue.
+
+  The library is simply copied into the specified destination
+directory.
+
+  Compiling the test binary requires that the library has first
+been installed.  This may be done by hand, or using the target
+
+	make all
+
+Clearly, this requires write access to the destination directory.

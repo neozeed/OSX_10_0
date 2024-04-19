@@ -1,0 +1,35 @@
+# Generated automatically from Makefile.in by configure.
+SHELL = /bin/sh
+CC =	gcc
+
+INCLUDE = -I. @MYSQL_INCLUDE@ @BIND_INCLUDE@ @BIND_PORT@
+LIBS = @MYSQL_LIBS@ @BIND_LIBS@ 
+
+CFLAGS = @CFLAGS@ 
+LDFLAGS = @LDFLAGS@ @BIND_LIBDIR@ @MYSQL_LFLAGS@
+
+PROG =	sqlbind
+SRC =	main.c mysql.c functions.c update.c
+OBJS =	main.o mysql.o functions.o update.o
+
+all:	$(PROG)
+
+$(PROG): $(OBJS)
+	$(CC) $(CFLAGS) \
+	$(INCLUDE) \
+	$(LDFLAGS) $(LIBS) $(OBJS) -o sqlbind 
+
+$(OBJS):
+	$(CC) $(CFLAGS) \
+	$(INCLUDE) -c $*.c
+
+clean:	
+	rm -f *.o sqlbind
+
+distclean: clean
+	rm -f config.cache config.log config.status Makefile Makefile.bak config.h
+
+install:
+	cp sqlbind /usr/sbin
+	cp sqlbind.conf /etc
+

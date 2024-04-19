@@ -1,0 +1,151 @@
+#### Start of system configuration section. ####
+# $Id: Makefile.in,v 1.1.1.1 2001/01/31 03:59:15 zarzycki Exp $
+
+srcdir = @srcdir@
+VPATH = @srcdir@
+
+INSTALL = @INSTALL@
+INSTALL_PROGRAM = @INSTALL_PROGRAM@
+M4 = @M4@
+AWK = @AWK@
+PERL = @PERL@
+CC = @CC@
+FLEX = @FLEX@
+
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+
+# Directory in which to install scripts.
+bindir = @bindir@
+
+# Directory in which to install config files.
+sysconfdir = @sysconfdir@
+
+# man directory
+mandir = @mandir@
+
+#### End of system configuration section. ####
+
+SHELL = @SH@
+
+PROGS= poke_ns poke_dhcp gendns readinfo updatehosts genstatic cvtstatic \
+	cvtzone genbootp gendhcp installdb readinfo_pp udh_stats tail_log \
+	bindv8conf_lister domain_list
+
+CONF= updatehosts.env poke_ns.env poke_dhcp.env
+
+# group which is allowed to execute poke_ns and poke_dhcp - default "staff"
+STAFF = @staff_group@
+
+# directory for nameserver database files - default is /var/named
+DBDIR = /var/named
+
+editsh = sed -e 's,@''bindir''@,$(bindir),g'\
+	-e 's,@''sysconfdir''@,$(sysconfdir),g'\
+	-e 's,@''SH''@,$(SHELL),g'\
+	-e 's,@''M4''@,$(M4),g'\
+	-e 's,@''AWK''@,$(AWK),g'
+
+editpl = sed -e 's,@''bindir''@,$(bindir),g'\
+	-e 's,@''datadir''@,$(acdatadir),g'\
+	-e 's,@''sysconfdir''@,$(sysconfdir),g'\
+	-e 's,@''PERL''@,$(PERL),g'
+
+all: hasm4 hasperl ${PROGS}
+
+hasperl:
+	@if [ ${PERL} = noperl ]; then \
+		echo "error - perl not found in PATH"; exit 1; fi
+ 
+hasm4:
+	@if [ ${M4} = nom4 ]; then \
+		echo "error - m4 not found in PATH"; exit 1; fi
+ 
+.SUFFIXES:
+.SUFFIXES: .sh .pl .c
+
+.sh:
+	rm -f $@ $@.tmp
+	$(editsh) $< > $@.tmp && chmod +x $@.tmp && mv $@.tmp $@
+
+.pl:
+	rm -f $@ $@.tmp
+	$(editpl) $< >$@.tmp && chmod +x $@.tmp && mv $@.tmp $@
+
+gendns: gendns.pl fields.pl
+	rm -f $@ $@.tmp
+	($(M4) gendns.pl | $(editpl)>$@.tmp) && chmod +x $@.tmp && mv $@.tmp $@
+	
+readinfo_pp: readinfo_pp.pl parse_line.pl
+	rm -f $@ $@.tmp
+	($(M4) readinfo_pp.pl | $(editpl)>$@.tmp) && chmod +x $@.tmp && mv $@.tmp $@
+	
+create_db: create_db.pl fields.pl
+	rm -f $@ $@.tmp
+	($(M4) $@.pl | $(editpl)>$@.tmp) && chmod +x $@.tmp && mv $@.tmp $@
+	
+readinfo: readinfo.pl parse_line.pl
+	rm -f $@ $@.tmp
+	($(M4) readinfo.pl | $(editpl)>$@.tmp) && chmod +x $@.tmp && mv $@.tmp $@
+	
+Makefile: Makefile.in config.status
+	./config.status
+
+config.status: configure
+	./config.status --recheck
+
+env.o: env.c
+	${CC} ${CFLAGS} -c env.c -o env.o
+	
+poke_ns: poke_ns.c env.o
+	${CC} ${CFLAGS} -DENVFILE=\"${sysconfdir}/poke_ns.env\" poke_ns.c env.o -o poke_ns
+
+poke_dhcp: poke_dhcp.c env.o
+	${CC} ${CFLAGS} -DENVFILE=\"${sysconfdir}/poke_dhcp.env\" poke_dhcp.c env.o -o poke_dhcp
+
+bindv8conf_lister: bindv8conf_lister.l
+	if [ ${FLEX} = noflex ]; then \
+		echo "error - flex not found in PATH"; \
+		echo "not making bindv8conf_lister";\
+	else \
+		${FLEX} bindv8conf_lister.l;\
+		${CC} ${CFLAGS} lex.yy.c -o $@ -lfl;\
+	fi
+
+install: install-bin install-conf install-man
+
+install-bin:
+	if [ ! -d ${bindir} ]; then \
+		mkdir -p ${bindir}; \
+	fi
+	for f in ${PROGS}; do \
+		${INSTALL_PROGRAM} $$f ${bindir}; \
+		if [ ${STAFF} ]; then chgrp ${STAFF} ${bindir}/$$f; fi; \
+	done
+	chown root ${bindir}/poke_ns
+	if [ ${STAFF} ]; then \
+		chmod 4710 ${bindir}/poke_ns; \
+		chmod 4710 ${bindir}/poke_dhcp; \
+	fi
+
+install-conf:
+	if [ ! -d ${sysconfdir} ]; then \
+		mkdir -p ${sysconfdir}; \
+	fi
+	for f in ${CONF}; do \
+		if [ ! -f ${sysconfdir}/$$f ]; then \
+			${INSTALL_PROGRAM} $$f ${sysconfdir}; \
+			if [ ${STAFF} ]; then \
+				chgrp ${STAFF} ${sysconfdir}/$$f; \
+			 fi; \
+		fi; \
+	done
+
+install-man:
+	cd man; ${MAKE}
+clean:
+	rm -f ${PROGS} *.o lex.yy.c
+
+distclean: clean
+	cd man; ${MAKE} distclean
+	rm -f config.cache config.log config.status Makefile

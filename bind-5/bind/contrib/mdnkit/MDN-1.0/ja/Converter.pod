@@ -1,0 +1,172 @@
+# $Id: Converter.pod,v 1.1.1.1 2001/01/31 03:58:53 zarzycki Exp $
+#
+# Copyright (c) 2000 Japan Network Information Center.  All rights reserved.
+#  
+# By using this file, you agree to the terms and conditions set forth bellow.
+# 
+#                      LICENSE TERMS AND CONDITIONS 
+# 
+# The following License Terms and Conditions apply, unless a different
+# license is obtained from Japan Network Information Center ("JPNIC"),
+# a Japanese association, Fuundo Bldg., 1-2 Kanda Ogawamachi, Chiyoda-ku,
+# Tokyo, Japan.
+# 
+# 1. Use, Modification and Redistribution (including distribution of any
+#    modified or derived work) in source and/or binary forms is permitted
+#    under this License Terms and Conditions.
+# 
+# 2. Redistribution of source code must retain the copyright notices as they
+#    appear in each source code file, this License Terms and Conditions.
+# 
+# 3. Redistribution in binary form must reproduce the Copyright Notice,
+#    this License Terms and Conditions, in the documentation and/or other
+#    materials provided with the distribution.  For the purposes of binary
+#    distribution the "Copyright Notice" refers to the following language:
+#    "Copyright (c) Japan Network Information Center.  All rights reserved."
+# 
+# 4. Neither the name of JPNIC may be used to endorse or promote products
+#    derived from this Software without specific prior written approval of
+#    JPNIC.
+# 
+# 5. Disclaimer/Limitation of Liability: THIS SOFTWARE IS PROVIDED BY JPNIC
+#    "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+#    LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A
+#    PARTICULAR PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL JPNIC BE LIABLE
+#    FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+#    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+#    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
+#    BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+#    WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
+
+__END__
+
+=head1 NAME
+
+MDN::Converter - libmdn の converter モジュール用の Perl の拡張
+
+=head1 SYNOPSIS
+
+  use MDN::Converter;
+  $context = MDN::Converter->new('RACE');
+  $local = $context->convert_utf8tolocal("utf8-domain-name"); 
+
+=head1 DESCRIPTION
+
+C<MDN::Converter> は、mDNkit に入っている MDN ライブラリ (多言語ドメイ
+ンを扱うための C のライブラリ) の中のエンコーディング変換モジュール
+(converter モジュール) に対して、Perl のオブジェクトインターフェースを
+提供します。
+
+変換モジュールの各オブジェクトは、特定のローカルエンコーディングと
+UTF-8 との間の変換を行うことができます。
+
+=head1 コンストラクタ
+
+=over 4
+
+=item new($encoding_name [, $options...])
+
+多言語ドメイン名の変換オブジェクトを生成します。
+C<$encoding_name> にはローカルエンコード名を指定します。
+このエンコード名としては、I<iconv> (MDN ライブラリが内部で使用している、
+汎用のコードセット変換関数) が受け付ける名前、および C<`RACE'> のよう
+に多言語ドメイン名用として特別に設計されたエンコード名が指定可能です。
+
+生成された変換オブジェクトを用いることで、ドメイン名を UTF-8 とローカ
+ルエンコーディングの間で変換することができます。
+
+現在のところ、変換オブジェクトは C<`delayedopen'> と C<`rtcheck'> とい
+う 2 つのオプションを認識するようになっています。
+C<`delayedopen'> は、実際の変換が行われるまで変換オブジェクトの内部に
+ある I<iconv> の変換オブジェクトを初期化しないようにします。
+C<`rtcheck'> は、変換の正確さを保証するためにラウンドトリップチェッ
+ク (訳注: 変換後に逆変換をして元に戻ることの確認) を行うようにします。
+
+変換オブジェクトが知らないエンコード名が指定されると、コンストラクタは
+C<undef> を返します。
+
+=back
+
+=head1 メソッド
+
+=over 4
+
+=item convert($from, $direction)
+
+文字列 C<$from> のエンコーディングを変換し、結果を返します。
+C<$direction> が C<`l2u'> か C<`localtoutf8'> の場合、変換オブジェクト
+は C<$from> がローカルエンコーディングで書かれているものとして、UTF-8
+への変換を行います。
+C<$direction> が C<`u2l'> か C<`utf8tolocal'> の場合、変換オブジェクト
+は C<$from> が UTF-8 で書かれているものとして、ローカルエンコーディン
+グへの変換を行います。
+
+C<$from> がローカルエンコーディングあるいは UTF-8 として正しくないか、
+不正な C<$direction> が与えられると、このメソッドは C<undef> を返し
+ます。
+
+=item convert_localtoutf8($from)
+
+C<convert($from, 'l2u')> と等価です。
+
+=item convert_l2u($from)
+
+C<convert($from, 'l2u')> と等価です。
+
+=item convert_utf8tolocal($from)
+
+C<convert($from, 'u2l')> と等価です。
+
+=item convert_u2l($from)
+
+C<convert($from, 'u2l')> と等価です。
+
+=item localencoding()
+
+ローカルエンコード名を文字列にして返します。
+
+=item isasciicompatible()
+
+ローカルエンコーディングが ASCII 互換エンコーディング (ASCII
+Compatible Encoding, 略して ACE) であれば 1 を返します。
+ACE は特殊なエンコーディングで、ACE によって書かれた文字列は、ASCII で
+書かれた通常のドメイン名のように見える (つまり、英数字およびハイフンだ
+けから構成される) という特性を持っています。
+ローカルエンコーディングが ACE でなければ 0 を返します。
+多言語ドメイン用に特別に設計されたエンコーディング (例えば RACE) も
+ACE に含まれます。
+
+=back
+
+=head1 クラスメソッド
+
+=over 4
+
+=item addalias($alias_name, $real_name)
+
+ローカルエンコード名 C<$real_name> の別名として C<$alias_name> を定義
+します。
+C<$real_name> は既に定義されている別名でも構いません。
+
+=item aliasfile($file_name)
+
+指定されたファイルに定義されている別名を登録します。
+
+=item resetalias()
+
+定義されている別名の登録をすべて解除します。
+
+=item lasterror()
+
+このモジュール内で一番最後に発生したエラーのエラーメッセージ文字列を
+返します。
+
+=back
+
+=head1 SEE ALSO
+
+L<MDN::Normalizer>
+
+MDN ライブラリ仕様書
+
+=cut

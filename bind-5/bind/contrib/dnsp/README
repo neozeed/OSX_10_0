@@ -1,0 +1,41 @@
+Return-Path: ken@arpa.com
+Delivery-Date: Sat Aug 14 01:15:06 1999
+Received: from isrv3.pa.vix.com (isrv3.pa.vix.com [204.152.184.182]) 
+	by bb.rc.vix.com (8.9.1/8.9.1) via ESMTP id BAA17970
+	for <vixie@bb.rc.vix.com>; Sat, 14 Aug 1999 01:15:06 -0700 (PDT)
+	env-from (ken@arpa.com)
+Received: from arpa.com (rage.arpa.com [199.245.173.3]) 
+	by isrv3.pa.vix.com (8.9.1/8.9.1) via ESMTP id BAA11743
+	for <vixie@mibh.net>; Sat, 14 Aug 1999 01:15:06 -0700 (PDT)
+	env-from (ken@arpa.com)
+Received: (from ken@localhost)
+	by arpa.com (8.9.3/8.9.3) id DAA42516;
+	Sat, 14 Aug 1999 03:15:05 -0500 (CDT)
+From: "ken harris." <ken@arpa.com>
+Message-Id: <199908140815.DAA42516@arpa.com>
+Subject: new dns related tool.
+To: vixie@mibh.net
+Date: Sat, 14 Aug 1999 03:15:05 -0500 (CDT)
+Cc: Chris_Yarnell@isc.org
+X-Disclaimer: Opinions are mine, and no one else's. Period.
+X-SheWantsMe: <acire> access-list 101 deny kenny any any
+X-Mailer: ELM [version 2.4ME+ PL43 (25)]
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
+
+hey paul,
+
+thought you might like to take a peek at this tool,
+and possibly throw it into the bind contrib.
+
+useful, and im sure it'll help the other geeks out
+there who have been coding it themselves.
+
+great for diagnosing your network, and others.
+
+any opinions, additions or whatnot would be
+gratefully appreciated.
+
+- ken harris
+`-> arpa.com adminstrator

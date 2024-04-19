@@ -1,0 +1,157 @@
+	Windows NT BIND 8.2.3 fixes:
+
+Date:18-Nov-2000
+
+
+  The following changes were made to BIND 8.2.3 to support the Windows NT
+  build.  A few of the fixes were bugs in the generic code.  The rest are
+  NT-specific.  No IP V6 testing has been done so it is not known if the
+  NT version will listen on IP V6 sockets.
+ 
+  A great deal of effort has gone into minimizing changes to non-Windows
+  NT specific code, however, in a few places this was found to be necessary
+  and macros have been used to #ifdef the code and provide generic
+  style of content.
+
+	There has not been a lot of testing of all of the features of
+  BIND as I have limited resources. This will be up to the people
+  installing this release to test.
+
+HOST
+host.c: Fixed single ampersand (&) instead of double (&&) in two if
+	statements.  Added #ifdef for the ERROR macro.
+
+NSLOOKUP
+debug.c: Added HAVE_DECL_RES_OPCODES Macro around
+	 "extern char *_res_opcodes[]" declaration, due to the
+	 fact that on Windows NT the declaration needs to be
+	 different since they reside in the libbind DLL.
+
+pathnames.h: Modified to define PATH_PAGERCMD only if it is not already
+	     defined.  This allows NT to declare it in the NT-specific
+	     port_before.h file.
+
+res.h:	Added #ifdef ERROR declaration to undefine ERROR before it is
+	declared again.
+
+LIB/RESOLV:
+res_init.c:  Added "last-chance" code to fetch nameserver list and domain
+	     name through a call to get_nameservers().  The NO_RESOLV_CONF
+	     is required to be defined in order to include this.
+
+ns_parse.c	Changed to replace macro ns_msg_getflag to a function.
+		Removed macro from header file.
+
+WINDOWS NT Specific Files:
+
+PORT/WINNT
+makeversion.pl:	This is a new file. It's designed to take the
+		Version file and apply it to the version.c file
+		in named along with some other information, like
+		build date, user name, machine info, etc.  This
+		is a perl script and needs to be run once just
+		before building the software.
+
+readme1st.txt:	This is a new file.  It details installation
+		instructions, details about the tools and
+		general information.
+
+readme1sttools.txt: This is a new file. It details installation information
+		    about the tools and general information.
+
+BIND8.2.3NT-src-changes.txt: This file.  This is a new file.
+
+Readme.txt:	Updated text for this release.
+
+PORT/WINNT/INCLUDE
+path.h:	Added definitions for PATH_NDCSOCK, PATH_HELPFILE (for
+	nslookup) and PATH_PAGERCMD (for nslookup).
+
+port_after.h:	Many changes to support the tools as well as
+		proper implementation of named port.
+
+port_before.h:	Many changes to support the tools as well as
+		proper implementation of named port.
+
+unistd.h:	Added descrip to the _fddata struct to hold
+		the file descriptor information.
+
+PORT/WINNT/LIBBIND
+files.c:	Many changes in InitPaths to prevent failures to
+		find registry keys causing libbind to exit and
+		prevent the tools from working.  Added definition
+		for PATH_NDCSOCK.
+
+interface.c:	Removed SNMP calls.  Now uses the WSAIoctl
+		calls only to fetch the available interfaces.
+		These changes are from NortelNetworks.  Added
+		call to support IP v6 and have those interfaces
+		added to the list of available interfaces.
+
+(snmpmib.c):	This file has been removed as it's no longer
+		needed and was the cause of numerous problems
+		(see interface.c).
+
+nameserver.c:	This is a new file and is designed to fetch the
+		registry information on the nameservers to be
+		used and the domain name of the system.  This is
+		used in the resolv_conf call to set up the
+		resolv.conf file if one doesn't exist in
+		system32\Drivers\etc and as an interface when the
+		resolv library needs the nameservers and host
+		domain name and resolv.conf does not exist when
+		using the tools.
+
+socket.c:	This file has been extensively rewritten to properly
+		handle the fcntl call for sockets and opening, closing
+		sockets and dealing with their flags and descriptors.
+
+unistd.c:	This file has been extensively rewritten to properly
+		handle the fcntl call for files and opening, closing
+		files and dealing with their flags and decriptors.
+		Support was added for fopen (NTfopen) and
+		fclose (NTfclose).  rename (NTrename) was added to
+		ensure that the file that it was being renamed to was
+		first deleted.
+
+ioctl_if.c:	Changes to support a large number of interfaces 200 for
+		IP v4 and 200 for IP v6. Changed the order of the
+		Interfaces received since the call to the OS retrieves
+		them in reverse order.
+
+libbind.def:	Added a number of routine names to support the changes
+		made and to support the tools requirements for linkage.
+
+PORT/WINNT/NAMED:
+ns_ntxfer.c:	Added includes to allow the file to compile cleanly.
+
+ns_ntmisc.c:	Modified resolv_conf to take advantage of the routines
+		in nameserver.c in the library.  Conditionally creates
+		resolv.conf if it doesn't exist.  Will not overwrite
+		existing resolv.conf file.  The console title (for
+		debug) has been changed to use ShortVersion (from
+		the verion.c file.
+
+ns_ntservice:	Modified Service Loop to only send "Interrogated"
+		message to debug log. BINDCtrl was making too many
+		status requests and this was filling up the Application
+		Event Log.
+
+PORT/WINNT/NSLOOKUP, DIG, HOST:
+		Added build files for the tools: nslookup, dig and host.
+
+Miscellaneous:
+
+*.dsp, *.dsw files. Either created them or modified them to take care
+		of changes made.  Added the dig, nslookup and host
+		project files to build the tools.  Fixes were made to
+		the BINDInstall to correctly copy the kit into the correct
+		directories.  Modified the BINDInstall.dsp and BINDCtrl.dsp
+		to build with shareable MFC DLL's.
+
+
+	If I have missed anything, please let me know.
+
+	Danny Mayer
+	mayer@gis.net
+
